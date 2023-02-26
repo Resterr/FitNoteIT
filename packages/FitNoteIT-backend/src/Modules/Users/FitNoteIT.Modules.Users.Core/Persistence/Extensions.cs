@@ -13,7 +13,7 @@ internal static class Extensions
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddPostgres<UsersDbContext>(configuration);
+        services.AddSqlServer<UsersDbContext>(configuration);
         services.AddHostedService<UsersDbSeeder>();
 
         services.AddScoped<IUserRepository, UserRepository>();

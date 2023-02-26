@@ -6,10 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 namespace FitNoteIT.Shared.Postgres;
 public static class Extensions
 {
-    public static IServiceCollection AddPostgres<T>(this IServiceCollection services, IConfiguration configuration) where T : DbContext
+    public static IServiceCollection AddSqlServer<T>(this IServiceCollection services, IConfiguration configuration) where T : DbContext
     {
-        var options = configuration.GetOptions<PostgresOptions>("Postgres");
-        services.AddDbContext<T>(ctx => ctx.UseNpgsql(options.ConnectionString));
+        var options = configuration.GetOptions<SqlOptions>("SqlServer");
+        services.AddDbContext<T>(ctx => ctx.UseSqlServer(options.ConnectionString));
 
         return services;
     }
