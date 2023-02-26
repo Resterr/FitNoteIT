@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import HomeInfoGray from "../../components/homeInfoGray/homeInfoGray";
 import HomeInfoGold from "../../components/homeInfoGold/homeInfoGold";
-
 // import { Navbar } from '../../components';
 import "./home.scss"
 import backgroundPhoto from "../../assets/homeBackground.png"

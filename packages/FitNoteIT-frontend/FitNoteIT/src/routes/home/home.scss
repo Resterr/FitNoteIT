@@ -1,17 +1,19 @@
 .App {
-   
+   height: 100%;
     .home { 
-        &__img {
+        &__img,&__container {
             margin: 0;
             padding: 0;
-            width: 100%;
+            width: 100%!important;
+
+        }
+
+
+        &__img {
             height: auto;
         }
 
         &__container {
-            margin: 0 ;
-            padding: 0;
-            width: 100% !important;
             display: flex;
             flex-direction: row;
 
