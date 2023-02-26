@@ -1,1 +1,8 @@
-/*# sourceMappingURL=navbar.css.map */
+.navbar {
+  padding: 0;
+  margin: 0;
+  height: 100px;
+}
+.navbar h1 {
+  margin: 0;
+}/*# sourceMappingURL=navbar.css.map */

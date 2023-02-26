@@ -1,1 +1,18 @@
-/*# sourceMappingURL=home.css.map */
+.App .home__img {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+}
+.App .home__container {
+  margin: 0;
+  padding: 0;
+  width: 100% !important;
+  display: flex;
+  flex-direction: row;
+}
+@media only screen and (max-width: 950px) {
+  .App .home__container {
+    flex-direction: column;
+  }
+}/*# sourceMappingURL=home.css.map */

@@ -5,7 +5,9 @@ import "./navbar.scss";
 function Navbar() {
   return (
     <Fragment>
-     <h1>navbar</h1>
+      <div className="navbar">
+        <h1>navbar</h1>
+      </div>
      <Outlet/>
     </Fragment>
   );

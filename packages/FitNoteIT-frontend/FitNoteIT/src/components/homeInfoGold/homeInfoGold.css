@@ -1,0 +1,8 @@
+.home__gold-element {
+  width: 33.33%;
+}
+@media only screen and (max-width: 950px) {
+  .home__gold-element {
+    width: 100vw;
+  }
+}/*# sourceMappingURL=homeInfoGold.css.map */

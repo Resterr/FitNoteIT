@@ -1,0 +1,23 @@
+.home__info {
+  width: 33.33%;
+  background-color: #1E1D1D;
+  padding: 19px 24px;
+}
+@media only screen and (max-width: 950px) {
+  .home__info {
+    width: 100vw;
+  }
+}
+.home__info h2 {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 38px;
+  color: #b17a41;
+}
+.home__info-text {
+  margin-top: 50px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 38px;
+  color: #525150;
+}/*# sourceMappingURL=homeInfoGray.css.map */
