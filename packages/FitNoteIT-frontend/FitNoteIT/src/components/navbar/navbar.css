@@ -54,6 +54,14 @@
 .navbar__bottom .left2 a p:hover {
   color: #f1ad64;
 }
+.navbar__bottom .left a .navabar__logo,
+.navbar__bottom .center a .navabar__logo,
+.navbar__bottom .right a .navabar__logo,
+.navbar__bottom .right2 a .navabar__logo,
+.navbar__bottom .left2 a .navabar__logo {
+  height: 69px;
+  width: auto;
+}
 .navbar__bottom .left .navbar__start-button,
 .navbar__bottom .center .navbar__start-button,
 .navbar__bottom .right .navbar__start-button,
