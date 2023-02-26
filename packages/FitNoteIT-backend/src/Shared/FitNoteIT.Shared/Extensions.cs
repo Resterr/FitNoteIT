@@ -1,0 +1,42 @@
+﻿using FitNoteIT.Shared.Exceptions;
+using FitNoteIT.Shared.PipelineBehaviours;
+using FitNoteIT.Shared.Services;
+using FitNoteIT.Shared.Time;
+using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace FitNoteIT.Shared;
+public static class Extensions
+{
+    public static IServiceCollection AddSharedFramework(this IServiceCollection services)
+    {
+        services.AddErrorHandling();
+        services.AddAuthorization();
+        services.AddHttpContextAccessor();
+        
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        ValidatorOptions.Global.LanguageManager.Enabled = false;
+
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddSingleton<IClock, Clock>();
+
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+
+        return services;
+    }
+
+    public static IApplicationBuilder UseSharedFramework(this IApplicationBuilder app)
+    {
+        app.UseErrorHandling();
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.UseSwagger();
+        app.UseSwaggerUI();
+
+        return app;
+    }
+}
