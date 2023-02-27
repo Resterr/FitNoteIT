@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FF31296A-1797-4FEB-B363-33C07659F0A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{48E70722-2703-4F2A-BBEF-88ED75AE433A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstrapper", "Bootstrapper", "{F984B574-B66E-42FB-80E5-726C5AB49081}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{849F422F-853E-40EE-843F-ABC5DFBCE9A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitNoteIT.Shared", "src\Shared\FitNoteIT.Shared\FitNoteIT.Shared.csproj", "{7D5114E1-68D2-4E63-9E16-C8E2AF2EE467}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitNoteIT.Bootstrapper", "src\Bootstrapper\FitNoteIT.Bootstrapper\FitNoteIT.Bootstrapper.csproj", "{C61253A0-CF0E-4241-BD8B-14EEB7710396}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{FDFAD207-623B-40F0-A8F5-DE9D68B6E57A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitNoteIT.Modules.Users.Core", "src\Modules\Users\FitNoteIT.Modules.Users.Core\FitNoteIT.Modules.Users.Core.csproj", "{983656E7-935B-47C8-8B65-42FF4B5BC7C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitNoteIT.Modules.Users.Api", "src\Modules\Users\FitNoteIT.Modules.Users.Api\FitNoteIT.Modules.Users.Api.csproj", "{34E17708-B2F8-4960-AA64-2BA7BD644B9C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D5114E1-68D2-4E63-9E16-C8E2AF2EE467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D5114E1-68D2-4E63-9E16-C8E2AF2EE467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D5114E1-68D2-4E63-9E16-C8E2AF2EE467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D5114E1-68D2-4E63-9E16-C8E2AF2EE467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C61253A0-CF0E-4241-BD8B-14EEB7710396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C61253A0-CF0E-4241-BD8B-14EEB7710396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C61253A0-CF0E-4241-BD8B-14EEB7710396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C61253A0-CF0E-4241-BD8B-14EEB7710396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{983656E7-935B-47C8-8B65-42FF4B5BC7C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{983656E7-935B-47C8-8B65-42FF4B5BC7C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{983656E7-935B-47C8-8B65-42FF4B5BC7C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{983656E7-935B-47C8-8B65-42FF4B5BC7C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34E17708-B2F8-4960-AA64-2BA7BD644B9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E17708-B2F8-4960-AA64-2BA7BD644B9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E17708-B2F8-4960-AA64-2BA7BD644B9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E17708-B2F8-4960-AA64-2BA7BD644B9C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{48E70722-2703-4F2A-BBEF-88ED75AE433A} = {FF31296A-1797-4FEB-B363-33C07659F0A0}
+		{F984B574-B66E-42FB-80E5-726C5AB49081} = {FF31296A-1797-4FEB-B363-33C07659F0A0}
+		{849F422F-853E-40EE-843F-ABC5DFBCE9A2} = {FF31296A-1797-4FEB-B363-33C07659F0A0}
+		{7D5114E1-68D2-4E63-9E16-C8E2AF2EE467} = {849F422F-853E-40EE-843F-ABC5DFBCE9A2}
+		{C61253A0-CF0E-4241-BD8B-14EEB7710396} = {F984B574-B66E-42FB-80E5-726C5AB49081}
+		{FDFAD207-623B-40F0-A8F5-DE9D68B6E57A} = {48E70722-2703-4F2A-BBEF-88ED75AE433A}
+		{983656E7-935B-47C8-8B65-42FF4B5BC7C8} = {FDFAD207-623B-40F0-A8F5-DE9D68B6E57A}
+		{34E17708-B2F8-4960-AA64-2BA7BD644B9C} = {FDFAD207-623B-40F0-A8F5-DE9D68B6E57A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4B47DD7-AA80-460A-BB47-9E42014D8B79}
+	EndGlobalSection
+EndGlobal
