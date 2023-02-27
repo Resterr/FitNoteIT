@@ -2,7 +2,7 @@
   "name": "fitnoteit",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://Resterr.github.io/FitNoteIT",
+  "homepage": "https://resterr.github.io/FitNoteIT",
   "type": "module",
   "scripts": {
 	"predeploy": "npm run build",
