@@ -1,6 +1,7 @@
 ﻿using FitNoteIT.Modules.Users.Core.Entities;
 using FitNoteIT.Modules.Users.Core.Persistence.Contexts;
 using FitNoteIT.Modules.Users.Core.Security;
+using FitNoteIT.Shared.Options;
 using FitNoteIT.Shared.Time;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -45,12 +46,12 @@ internal class UsersDbSeeder : IHostedService
 
         if (await dbContext.Users.AnyAsync(cancellationToken) == false)
         {
-            var superAdminEmail = _configuration.GetSection("SuperAdminAccount").GetValue<string>("Email");
-            var superAdminPassword = _configuration.GetSection("SuperAdminAccount").GetValue<string>("Password");
-            var superAdminRole = await dbContext.Roles.SingleAsync(x => x.Name == "SuperAdmin", cancellationToken);
-            var securedPassword = _passwordManager.Secure(superAdminPassword);
+            var superAdminConfig = _configuration.GetOptions<SuperAdminOptions>("SuperAdminAccount");
 
-            var superAdmin = new User(Guid.NewGuid(), superAdminEmail, securedPassword, "superadmin", _clock.CurrentDate(), superAdminRole);
+            var superAdminRole = await dbContext.Roles.SingleAsync(x => x.Name == "SuperAdmin", cancellationToken);
+            var securedPassword = _passwordManager.Secure(superAdminConfig.Password);
+
+            var superAdmin = new User(Guid.NewGuid(), superAdminConfig.Email, securedPassword, superAdminConfig.UserName, _clock.CurrentDate(), superAdminRole);
 
             await dbContext.Users.AddAsync(superAdmin, cancellationToken);
             await dbContext.SaveChangesAsync(cancellationToken); ;
