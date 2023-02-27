@@ -1,5 +1,5 @@
 ﻿namespace FitNoteIT.Shared.Postgres;
 internal sealed class SqlOptions
 {
-    public string ConnectionString { get; set; }
+    public string DbConnection { get; set; }
 }

@@ -8,8 +8,8 @@ public static class Extensions
 {
     public static IServiceCollection AddSqlServer<T>(this IServiceCollection services, IConfiguration configuration) where T : DbContext
     {
-        var options = configuration.GetOptions<SqlOptions>("SqlServer");
-        services.AddDbContext<T>(ctx => ctx.UseSqlServer(options.ConnectionString));
+        var options = configuration.GetOptions<SqlOptions>("ConnectionStrings");
+        services.AddDbContext<T>(ctx => ctx.UseSqlServer(options.DbConnection));
 
         return services;
     }
