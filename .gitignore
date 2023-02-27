@@ -348,3 +348,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+packages/FitNoteIT-backend/src/Bootstrapper/FitNoteIT.Bootstrapper/Properties/ServiceDependencies/FitNoteIT - Web Deploy/profile.arm.json
