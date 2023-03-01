@@ -10,31 +10,31 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitNoteIT.Modules.Users.Api.Requests;
-internal static class UsersRequests
+internal static class Users
 {
     public static WebApplication RegisterUsersRequests(this WebApplication app)
     {
-        app.MapGet("/users", UsersRequests.GetAllUsers)
+        app.MapGet("/users", Users.GetAllUsers)
             .Produces<List<UserDto>>()
             .RequireAuthorization("is-admin");
 
-        app.MapGet("/users/get/{id}", UsersRequests.GetUserById)
+        app.MapGet("/users/get/{id}", Users.GetUserById)
             .Produces<UserDto>()
             .Produces(StatusCodes.Status404NotFound)
             .RequireAuthorization("is-admin");
 
-        app.MapGet("/users/me", UsersRequests.SelfGetUser)
+        app.MapGet("/users/me", Users.SelfGetUser)
             .Produces<UserDto>()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .RequireAuthorization();
 
-        app.MapPost("/users/register", UsersRequests.RegisterUser)
+        app.MapPost("/users/register", Users.RegisterUser)
             .Produces(StatusCodes.Status200OK)
             .Accepts<RegisterUser>("application/json")
             .AllowAnonymous();
 
-        app.MapPost("/users/login", UsersRequests.LoginUser)
+        app.MapPost("/users/login", Users.LoginUser)
             .Produces<JwtDto>()
             .Accepts<LoginUser>("application/json")
             .AllowAnonymous();
