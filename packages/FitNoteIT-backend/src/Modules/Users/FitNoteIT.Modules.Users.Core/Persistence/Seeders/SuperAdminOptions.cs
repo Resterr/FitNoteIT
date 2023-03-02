@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FitNoteIT.Modules.Users.Core.Persistence.Seeders;
+﻿namespace FitNoteIT.Modules.Users.Core.Persistence.Seeders;
 internal class SuperAdminOptions
 {
     public string Email { get; set; }

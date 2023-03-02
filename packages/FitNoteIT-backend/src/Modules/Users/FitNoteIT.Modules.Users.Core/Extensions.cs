@@ -15,8 +15,6 @@ public static class Extensions
         services.AddAuth(configuration);
         services.AddSecurity();
 
-        var test = Assembly.GetExecutingAssembly();
-
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
