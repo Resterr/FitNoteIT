@@ -4,6 +4,7 @@ using FitNoteIT.Modules.Users.Core.Features.Commands.RegisterUser;
 using FitNoteIT.Modules.Users.Core.Features.Queries.GetAllUsers;
 using FitNoteIT.Modules.Users.Core.Features.Queries.GetUserById;
 using FitNoteIT.Modules.Users.Core.Features.Queries.SelfGetUser;
+using FitNoteIT.Shared.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +19,7 @@ internal static class Users
             .Produces<List<UserDto>>()
             .RequireAuthorization("is-admin");
 
-        app.MapGet("/users/get/{id}", Users.GetUserById)
+        app.MapGet("/users/{id}", Users.GetUserById)
             .Produces<UserDto>()
             .Produces(StatusCodes.Status404NotFound)
             .RequireAuthorization("is-admin");
@@ -48,9 +49,11 @@ internal static class Users
         return Results.Ok(user);
     }
 
-    private static async Task<IResult> GetUserById(IMediator mediator, [AsParameters] GetUserById request)
+    private static async Task<IResult> GetUserById(IMediator mediator, string input)
     {
+        if (!Guid.TryParse(input, out Guid id)) throw new BadRequestException("Invalid GUID format");
 
+        var request = new GetUserById(id);
         var user = await mediator.Send(request);
         return Results.Ok(user);
     }
