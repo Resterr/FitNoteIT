@@ -9,6 +9,8 @@ public class User
     public string UserName { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime? VerifiedAt { get; private set; }
+    public string RefreshToken { get; private set; }
+    public DateTime? RefreshTokenExpiryTime { get; private set; }
     public Role UserRole { get; private set; }
 
     private User() { }
@@ -31,5 +33,27 @@ public class User
         }
 
         VerifiedAt = verifiedAt;
+    }
+
+    internal void SetRefreshToken(string token)
+    {
+        RefreshToken = token;
+    }
+
+    internal void SetRefreshTokenExpiryTime(DateTime tokenExpireTime)
+    {
+        RefreshTokenExpiryTime = tokenExpireTime;
+    }
+
+    internal bool IsTokenValid(string token, DateTime currentDate)
+    {
+        if (RefreshToken == token && RefreshTokenExpiryTime <= currentDate) return true;
+        else return false;
+    }
+
+    internal void RemoveRefreshToken()
+    {
+        RefreshToken = null;
+        RefreshTokenExpiryTime = null;
     }
 }

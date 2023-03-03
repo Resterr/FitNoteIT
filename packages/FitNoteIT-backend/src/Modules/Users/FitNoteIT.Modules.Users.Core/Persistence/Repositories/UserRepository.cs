@@ -34,6 +34,16 @@ internal sealed class UserRepository : IUserRepository
         return query;
     }
 
+    public Task<User> GetByUserName(string userName)
+    {
+        var query = _dbContext.Users
+            .AsQueryable()
+            .Include(x => x.UserRole)
+            .SingleOrDefaultAsync(x => x.UserName == userName);
+
+        return query;
+    }
+
     public async Task<(List<User> items, int totalItemCount)> GetAllAsync(int pageSize, int pageNumber)
     {
         var baseQuery = _dbContext.Users

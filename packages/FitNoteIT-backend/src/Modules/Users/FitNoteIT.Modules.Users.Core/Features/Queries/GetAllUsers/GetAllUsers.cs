@@ -5,7 +5,7 @@ using FitNoteIT.Modules.Users.Core.Common.DTO;
 using FitNoteIT.Shared.DTO;
 
 namespace FitNoteIT.Modules.Users.Core.Features.Queries.GetAllUsers;
-public record GetAllUsers(int PageSize, int PageNumber) : IRequest<PagedResultDto<UserDto>>;
+public record GetAllUsers(int PageSize = 0, int PageNumber = 0) : IRequest<PagedResultDto<UserDto>>;
 
 internal sealed class GetAllUsersHandler : IRequestHandler<GetAllUsers, PagedResultDto<UserDto>>
 {
