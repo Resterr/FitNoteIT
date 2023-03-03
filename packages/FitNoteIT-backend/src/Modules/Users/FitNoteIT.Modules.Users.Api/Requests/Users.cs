@@ -1,6 +1,8 @@
 ﻿using FitNoteIT.Modules.Users.Core.Common.DTO;
 using FitNoteIT.Modules.Users.Core.Features.Commands.LoginUser;
 using FitNoteIT.Modules.Users.Core.Features.Commands.RegisterUser;
+using FitNoteIT.Modules.Users.Core.Features.Commands.TokenRefresh;
+using FitNoteIT.Modules.Users.Core.Features.Commands.TokenRemove;
 using FitNoteIT.Modules.Users.Core.Features.Queries.GetAllUsers;
 using FitNoteIT.Modules.Users.Core.Features.Queries.GetUserById;
 using FitNoteIT.Modules.Users.Core.Features.Queries.SelfGetUser;
@@ -16,29 +18,41 @@ internal static class Users
     public static WebApplication RegisterUsersRequests(this WebApplication app)
     {
         app.MapGet("/users", Users.GetAllUsers)
+            .RequireAuthorization("is-admin")
             .Produces<List<UserDto>>()
-            .RequireAuthorization("is-admin");
+            .Produces(StatusCodes.Status400BadRequest);
 
         app.MapGet("/users/{id}", Users.GetUserById)
-            .Produces<UserDto>()
-            .Produces(StatusCodes.Status404NotFound)
-            .RequireAuthorization("is-admin");
-
-        app.MapGet("/users/me", Users.SelfGetUser)
+            .RequireAuthorization("is-admin")
             .Produces<UserDto>()
             .Produces(StatusCodes.Status400BadRequest)
-            .Produces(StatusCodes.Status404NotFound)
-            .RequireAuthorization();
+            .Produces(StatusCodes.Status404NotFound);
+
+        app.MapGet("/users/me", Users.SelfGetUser)
+            .RequireAuthorization()
+            .Produces<UserDto>()
+            .Produces(StatusCodes.Status400BadRequest);
 
         app.MapPost("/users/register", Users.RegisterUser)
-            .Produces(StatusCodes.Status200OK)
+            .AllowAnonymous()
             .Accepts<RegisterUser>("application/json")
-            .AllowAnonymous();
+            .Produces(StatusCodes.Status400BadRequest);
 
         app.MapPost("/users/login", Users.LoginUser)
-            .Produces<JwtDto>()
+            .AllowAnonymous()   
             .Accepts<LoginUser>("application/json")
-            .AllowAnonymous();
+            .Produces<TokensDto>()
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound);
+
+        app.MapPost("/token/refresh", Users.TokenRefresh)
+            .AllowAnonymous()
+            .Accepts<TokenRefresh>("application/json")
+            .Produces(StatusCodes.Status400BadRequest);
+            
+        app.MapPatch("/token/remove", Users.TokenRemove)
+            .RequireAuthorization()
+            .Produces(StatusCodes.Status400BadRequest);
 
         return app;
     }
@@ -74,5 +88,17 @@ internal static class Users
     {
         var token = await mediator.Send(request);
         return Results.Ok(token);
+    }
+
+    private static async Task<IResult> TokenRefresh(IMediator mediator, [FromBody] TokenRefresh request)
+    {
+        var token = await mediator.Send(request);
+        return Results.Ok(token);
+    }
+
+    private static async Task<IResult> TokenRemove(IMediator mediator)
+    {
+        await mediator.Send(new TokenRemove());
+        return Results.NoContent();
     }
 }

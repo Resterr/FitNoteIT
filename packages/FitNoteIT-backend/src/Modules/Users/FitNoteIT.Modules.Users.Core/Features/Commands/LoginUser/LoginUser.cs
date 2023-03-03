@@ -4,11 +4,12 @@ using FitNoteIT.Modules.Users.Core.Repositories;
 using FitNoteIT.Modules.Users.Core.Security;
 using FitNoteIT.Modules.Users.Core.Auth;
 using FitNoteIT.Modules.Users.Core.Common.DTO;
+using System.Security.Claims;
 
 namespace FitNoteIT.Modules.Users.Core.Features.Commands.LoginUser;
-public record LoginUser(string Email, string Password) : IRequest<JwtDto>;
+public record LoginUser(string UserName, string Password) : IRequest<TokensDto>;
 
-internal sealed class LoginUserHandler : IRequestHandler<LoginUser, JwtDto>
+internal sealed class LoginUserHandler : IRequestHandler<LoginUser, TokensDto>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
@@ -18,19 +19,37 @@ internal sealed class LoginUserHandler : IRequestHandler<LoginUser, JwtDto>
     {
         _userRepository = userRepository;
         _passwordManager = passwordManager;
-        _authenticator = authenticator;
+        _authenticator = authenticator;;
     }
 
-    public async Task<JwtDto> Handle(LoginUser request, CancellationToken cancellationToken)
+    public async Task<TokensDto> Handle(LoginUser request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByEmailAsync(request.Email);
+        var user = await _userRepository.GetByUserName(request.UserName);
 
         if (user is null) throw new NotFoundException("User not found");
 
         if (!_passwordManager.Validate(request.Password, user.PasswordHash)) throw new BadRequestException("Invalid password");
 
-        var jwt = _authenticator.CreateToken(user.Id, user.UserRole.Name);
+        var claims = new List<Claim>
+        {
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Email, user.Id.ToString()),
+            new(ClaimTypes.Role, user.UserRole.Name)
+        };
 
-        return jwt;
+        var accessToken = _authenticator.GenerateAccessToken(claims);
+        var refreshToken = _authenticator.GenerateRefreshToken();
+        var refreshTokenExpiryDate = _authenticator.GetRefreshExpiryDate();
+
+        user.SetRefreshToken(refreshToken);
+        user.SetRefreshTokenExpiryTime(refreshTokenExpiryDate);
+
+        await _userRepository.UpdateAsync(user);
+
+        return new TokensDto
+        {
+            AccessToken = accessToken,
+            RefreshToken = refreshToken
+        };
     }
 }
