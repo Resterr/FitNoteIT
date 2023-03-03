@@ -21,7 +21,7 @@ function RegisterForm() {
                 setStatus("Nie udało się zarejestrować")
                 break;
               case 401:
-                console.log('Brak autoryzacji');
+                console.log('Nie ma autoryzacji');
                 setStatus("Nie udało się zarejestrować")
                 break;
               case 404:
