@@ -21,7 +21,7 @@ function RegisterForm() {
                 setStatus("Nie udało się zarejestrować")
                 break;
               case 401:
-                console.log('Nie ma autoryzacji');
+                console.log('Brak autoryzacji');
                 setStatus("Nie udało się zarejestrować")
                 break;
               case 404:
@@ -61,7 +61,9 @@ function RegisterForm() {
      };
     return (
         <div className="register__form">
+          <div className="register__form-status">
             <h1>{status}</h1>
+            </div>
             <form onSubmit={handleSubmit(onSubmit)} id="my-form">
                 <div className="register__form-email">
                     <label htmlFor="email"> email:</label><br/>
