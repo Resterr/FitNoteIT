@@ -23,7 +23,7 @@ internal sealed class SelfGetUserHandler : IRequestHandler<SelfGetUser, UserDto>
     }
     public async Task<UserDto> Handle(SelfGetUser request, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.GetUserId;
+        var userId = _currentUserService.UserId;
 
         if (userId is null) throw new BadRequestException("Invalid user"); 
 

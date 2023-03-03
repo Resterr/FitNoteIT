@@ -6,6 +6,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 
 namespace FitNoteIT.Shared;
 public static class Extensions
@@ -23,7 +24,14 @@ public static class Extensions
         services.AddSingleton<IClock, Clock>();
 
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(swagger =>
+        {
+            swagger.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "FitNoteIT",
+                Version = "1.0"
+            });
+        });
 
         return services;
     }

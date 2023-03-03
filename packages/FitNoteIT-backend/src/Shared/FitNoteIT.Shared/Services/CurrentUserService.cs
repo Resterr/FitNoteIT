@@ -5,8 +5,9 @@ namespace FitNoteIT.Shared.Services;
 
 public interface ICurrentUserService
 {
-    Guid? GetUserId { get; }
-    ClaimsPrincipal User { get; }
+    ClaimsPrincipal Principal { get; }
+    Guid? UserId { get; }
+    string UserRole { get; }
 }
 
 public class CurrentUserService : ICurrentUserService
@@ -18,7 +19,9 @@ public class CurrentUserService : ICurrentUserService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public ClaimsPrincipal User => _httpContextAccessor.HttpContext?.User;
+    public ClaimsPrincipal Principal => _httpContextAccessor.HttpContext?.User;
 
-    public Guid? GetUserId => User is null ? null : Guid.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+    public Guid? UserId => Guid.Parse(Principal?.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+    public string UserRole => Principal?.FindFirst(c => c.Type == ClaimTypes.Role).Value;
 }

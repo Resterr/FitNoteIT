@@ -29,8 +29,10 @@ internal static class Extensions
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidIssuer = options.Issuer,
+                    ValidAudience = options.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SigningKey)),
                     ClockSkew = TimeSpan.Zero,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SigningKey))
+                    ValidateIssuerSigningKey = true               
                 };
             });
 
