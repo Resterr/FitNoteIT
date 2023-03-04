@@ -33,7 +33,7 @@ internal sealed class LoginUserHandler : IRequestHandler<LoginUser, TokensDto>
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new(ClaimTypes.Email, user.Id.ToString()),
+            new(ClaimTypes.Email, user.Email),
             new(ClaimTypes.Role, user.UserRole.Name)
         };
 
