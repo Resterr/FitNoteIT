@@ -16,6 +16,17 @@
     width: 100%;
   }
 }
+.login__form-status h1 {
+  font-size: 48px;
+  text-align: center;
+  margin: 40px 0 0;
+  color: #b17a41;
+}
+@media only screen and (max-width: 950px) {
+  .login__form-status h1 {
+    font-size: 32px;
+  }
+}
 .login__form form {
   margin: 10% 40px;
 }

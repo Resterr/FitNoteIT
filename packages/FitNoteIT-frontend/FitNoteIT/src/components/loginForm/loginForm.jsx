@@ -72,7 +72,9 @@ function LoginForm() {
 
     return (
         <div className="login__form">
+          <div className="login__form-status">
             <h1>{status}</h1>
+            </div>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="login__form-login">
                     <label htmlFor="fname">Login:</label><br/>
