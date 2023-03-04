@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
 .register__form {
   position: absolute;
   left: 0;
@@ -62,6 +63,7 @@
 .register__form form .register__form-password input,
 .register__form form .register__form-password-again input,
 .register__form form .register__form-email input {
+  font-family: "Oswald", sans-serif;
   background-color: #1E1D1D;
   border: none;
   color: #b17a41;
