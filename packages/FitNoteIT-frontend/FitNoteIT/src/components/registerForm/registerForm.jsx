@@ -63,8 +63,10 @@ function RegisterForm() {
      };
     return (
         <div className="register__form">
+          <div className="register__form-status">
             <h1>{status}</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)} id="my-form">
                 <div className="register__form-email">
                     <label htmlFor="email"> email:</label><br/>
                     <input id="form-id" {...register('email',{required: "This is required", minLength: 6})} /><br/>

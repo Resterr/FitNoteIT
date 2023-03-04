@@ -15,11 +15,24 @@
         width: 100%;
     }
 
+    &-status {
+        h1 {
+            font-size: 48px;
+            text-align: center;
+            margin: 40px 0 0;
+            color: $gold;
+
+            @media only screen and (max-width: 950px) {
+                font-size: 32px;
+            }
+        }
+    }
+
     form {
-        margin: 10% 40px;
+        margin: 5% 40px;
 
         .register__form-button {
-            display: flex; 
+            display: flex;
             justify-content: center;
             align-items: center;
 
@@ -30,14 +43,17 @@
                 color: black;
                 border: none;
                 font-size: 18px;
-                
+
                 &:hover {
                     background-color: #f1ad64;
                 }
             }
         }
 
-        .register__form-login, .register__form-password,.register__form-password-again,.register__form-email {
+        .register__form-login,
+        .register__form-password,
+        .register__form-password-again,
+        .register__form-email {
             label {
                 color: $gold;
                 font-size: 32px;
@@ -48,13 +64,14 @@
             }
 
             input {
+                font-family: 'Oswald', sans-serif;
                 background-color: $background-color;
                 border: none;
                 color: $gold;
                 width: 100%;
                 margin-bottom: 30px;
                 height: 45px;
-            } 
+            }
         }
-    }  
+    }
 }
