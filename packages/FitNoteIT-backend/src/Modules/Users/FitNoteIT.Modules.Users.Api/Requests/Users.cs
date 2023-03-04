@@ -20,39 +20,39 @@ internal static class Users
         app.MapGet("/users", Users.GetAllUsers)
             .RequireAuthorization("is-admin")
             .Produces<List<UserDto>>()
-            .Produces(StatusCodes.Status400BadRequest);
+            .Produces(StatusCodes.Status200OK);
 
         app.MapGet("/users/{id}", Users.GetUserById)
             .RequireAuthorization("is-admin")
             .Produces<UserDto>()
-            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound);
 
         app.MapGet("/users/me", Users.SelfGetUser)
             .RequireAuthorization()
             .Produces<UserDto>()
-            .Produces(StatusCodes.Status400BadRequest);
+            .Produces(StatusCodes.Status200OK);
 
         app.MapPost("/users/register", Users.RegisterUser)
             .AllowAnonymous()
             .Accepts<RegisterUser>("application/json")
-            .Produces(StatusCodes.Status400BadRequest);
+            .Produces(StatusCodes.Status200OK);
 
         app.MapPost("/users/login", Users.LoginUser)
             .AllowAnonymous()   
             .Accepts<LoginUser>("application/json")
             .Produces<TokensDto>()
-            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound);
 
         app.MapPost("/token/refresh", Users.TokenRefresh)
             .AllowAnonymous()
             .Accepts<TokenRefresh>("application/json")
-            .Produces(StatusCodes.Status400BadRequest);
-            
+            .Produces(StatusCodes.Status200OK);
+
         app.MapPatch("/token/remove", Users.TokenRemove)
             .RequireAuthorization()
-            .Produces(StatusCodes.Status400BadRequest);
+            .Produces(StatusCodes.Status200OK);
 
         return app;
     }
