@@ -17,7 +17,6 @@ internal static class Extensions
         services.AddHostedService<UsersDbSeeder>();
 
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IUserReadService, UserReadService>();
         services.AddScoped<IRoleReadService, RoleReadService>();
 
         return services;
