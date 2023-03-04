@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./registerForm.scss"
 import {useForm} from 'react-hook-form';
 import axios from "axios";
@@ -7,8 +7,14 @@ import axios from "axios";
 
 
 function RegisterForm() {
+    const currentUser = localStorage.getItem("currentUser");
     const {register, handleSubmit, formState: {errors}} = useForm();
     const [status, setStatus] = useState();
+    useEffect(() => {
+      if (currentUser) {
+          window.location.href = "/";
+        } 
+    }, []);
 
     axios.interceptors.response.use(
         response => response,
@@ -18,10 +24,6 @@ function RegisterForm() {
             switch (error.response.status) {
               case 400:
                 console.log('Nieprawidłowe żądanie');
-                setStatus("Nie udało się zarejestrować")
-                break;
-              case 401:
-                console.log('Brak autoryzacji');
                 setStatus("Nie udało się zarejestrować")
                 break;
               case 404:
