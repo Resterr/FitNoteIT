@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using FitNoteIT.Shared.Exceptions;
 using AutoMapper;
-using FitNoteIT.Modules.Users.Core.Repositories;
 using FitNoteIT.Modules.Users.Core.Common.DTO;
+using FitNoteIT.Modules.Users.Core.Abstractions.Repositories;
 
 namespace FitNoteIT.Modules.Users.Core.Features.Queries.GetUserById;
 public record GetUserById(Guid Id) : IRequest<UserDto>;

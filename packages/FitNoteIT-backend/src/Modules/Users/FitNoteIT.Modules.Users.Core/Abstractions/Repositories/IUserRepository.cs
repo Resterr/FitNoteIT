@@ -1,6 +1,6 @@
 ﻿using FitNoteIT.Modules.Users.Core.Entities;
 
-namespace FitNoteIT.Modules.Users.Core.Repositories;
+namespace FitNoteIT.Modules.Users.Core.Abstractions.Repositories;
 
 public interface IUserRepository
 {

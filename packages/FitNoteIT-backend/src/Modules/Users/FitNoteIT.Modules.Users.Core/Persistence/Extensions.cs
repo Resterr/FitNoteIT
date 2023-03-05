@@ -1,9 +1,9 @@
-﻿using FitNoteIT.Modules.Users.Core.Persistence.Contexts;
+﻿using FitNoteIT.Modules.Users.Core.Abstractions.Repositories;
+using FitNoteIT.Modules.Users.Core.Abstractions.Services;
+using FitNoteIT.Modules.Users.Core.Persistence.Contexts;
 using FitNoteIT.Modules.Users.Core.Persistence.Repositories;
 using FitNoteIT.Modules.Users.Core.Persistence.Seeders;
 using FitNoteIT.Modules.Users.Core.Persistence.Services;
-using FitNoteIT.Modules.Users.Core.Repositories;
-using FitNoteIT.Modules.Users.Core.Services;
 using FitNoteIT.Shared.Database;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

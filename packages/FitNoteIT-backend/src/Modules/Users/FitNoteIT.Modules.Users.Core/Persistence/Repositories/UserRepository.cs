@@ -1,6 +1,6 @@
-﻿using FitNoteIT.Modules.Users.Core.Entities;
+﻿using FitNoteIT.Modules.Users.Core.Abstractions.Repositories;
+using FitNoteIT.Modules.Users.Core.Entities;
 using FitNoteIT.Modules.Users.Core.Persistence.Contexts;
-using FitNoteIT.Modules.Users.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Persistence.Repositories;

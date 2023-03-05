@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using FitNoteIT.Shared.Exceptions;
-using FitNoteIT.Modules.Users.Core.Repositories;
 using FitNoteIT.Modules.Users.Core.Security;
 using FitNoteIT.Modules.Users.Core.Auth;
 using FitNoteIT.Modules.Users.Core.Common.DTO;
 using System.Security.Claims;
+using FitNoteIT.Modules.Users.Core.Abstractions.Repositories;
 
 namespace FitNoteIT.Modules.Users.Core.Features.Commands.LoginUser;
 public record LoginUser(string UserName, string Password) : IRequest<TokensDto>;
