@@ -3,7 +3,7 @@ import "./loginForm.scss"
 import {useForm} from 'react-hook-form';
 import axios from "axios";
 import { UsersContext } from "../../contexts/user.context";
-
+import { useNavigate  } from 'react-router-dom';
 
 
 function LoginForm() {
@@ -11,10 +11,12 @@ function LoginForm() {
     const { currentUser2,setCurrentUser2 } = useContext(UsersContext);
     const {register, handleSubmit, formState: {errors}} = useForm();
     const [status, setStatus] = useState();
+    let navigate = useNavigate();
+
 
     useEffect(() => {
         if (currentUser) {
-            window.location.href = "/";
+          navigate('/');
           } 
       }, []);
     
@@ -59,14 +61,20 @@ function LoginForm() {
                 localStorage.setItem("currentUser", data.userName);
                 localStorage.setItem("accessToken", response.data.accessToken); 
                 localStorage.setItem("refreshToken", response.data.refreshToken); 
+                let myDate=Date.now();  
+                localStorage.setItem("tokenDate", myDate);
                 setCurrentUser2( data.userName)
                 setStatus(`Witaj ${data.userName}!`)
                 console.log(response)
+                
 
             }
             else {
                 setStatus("Nie udało się zalogować")
             } 
+        }).then(()=>{
+
+          navigate('/');
         });
      };
 
