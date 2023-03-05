@@ -19,7 +19,7 @@ function Navbar() {
  
   const logoutHandler = () => {
     localStorage.setItem("currentUser", "");
-    localStorage.setItem("AccessToken", "");
+    localStorage.setItem("accessToken", "");
     localStorage.setItem("refreshToken", "");
     setCurrentUser2("");
   }

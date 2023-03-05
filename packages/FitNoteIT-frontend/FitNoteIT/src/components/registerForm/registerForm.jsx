@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import "./registerForm.scss"
 import {useForm} from 'react-hook-form';
 import axios from "axios";
-
-
-
+import { useNavigate  } from 'react-router-dom';
 
 function RegisterForm() {
     const currentUser = localStorage.getItem("currentUser");
     const {register, handleSubmit, formState: {errors}} = useForm();
     const [status, setStatus] = useState();
-    useEffect(() => {
-      if (currentUser) {
-          window.location.href = "/";
-        } 
-    }, []);
+    let navigate = useNavigate();
+
+     useEffect(() => {
+        if (currentUser) {
+          navigate('/');
+          } 
+      }, []);
 
     axios.interceptors.response.use(
         response => response,
