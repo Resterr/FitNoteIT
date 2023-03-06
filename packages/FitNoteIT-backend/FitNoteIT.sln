@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitNoteIT.Modules.Users.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitNoteIT.Modules.Users.Api", "src\Modules\Users\FitNoteIT.Modules.Users.Api\FitNoteIT.Modules.Users.Api.csproj", "{34E17708-B2F8-4960-AA64-2BA7BD644B9C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{704329E4-08DB-4610-9032-2A6B4E7BBA02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitNoteIT.Modules.Users.Tests", "tests\Modules\Users\FitNoteIT.Modules.Users.Tests\FitNoteIT.Modules.Users.Tests.csproj", "{7900C04D-2E94-4DFD-B41B-334B8F7C351E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{34E17708-B2F8-4960-AA64-2BA7BD644B9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34E17708-B2F8-4960-AA64-2BA7BD644B9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34E17708-B2F8-4960-AA64-2BA7BD644B9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7900C04D-2E94-4DFD-B41B-334B8F7C351E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7900C04D-2E94-4DFD-B41B-334B8F7C351E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7900C04D-2E94-4DFD-B41B-334B8F7C351E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7900C04D-2E94-4DFD-B41B-334B8F7C351E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +64,7 @@ Global
 		{FDFAD207-623B-40F0-A8F5-DE9D68B6E57A} = {48E70722-2703-4F2A-BBEF-88ED75AE433A}
 		{983656E7-935B-47C8-8B65-42FF4B5BC7C8} = {FDFAD207-623B-40F0-A8F5-DE9D68B6E57A}
 		{34E17708-B2F8-4960-AA64-2BA7BD644B9C} = {FDFAD207-623B-40F0-A8F5-DE9D68B6E57A}
+		{7900C04D-2E94-4DFD-B41B-334B8F7C351E} = {704329E4-08DB-4610-9032-2A6B4E7BBA02}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4B47DD7-AA80-460A-BB47-9E42014D8B79}

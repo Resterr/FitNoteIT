@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using AutoMapper;
-using FitNoteIT.Modules.Users.Core.Repositories;
 using FitNoteIT.Modules.Users.Core.Common.DTO;
 using FitNoteIT.Shared.DTO;
+using FitNoteIT.Modules.Users.Core.Abstractions.Repositories;
 
 namespace FitNoteIT.Modules.Users.Core.Features.Queries.GetAllUsers;
 public record GetAllUsers(int PageSize = 0, int PageNumber = 0) : IRequest<PagedResultDto<UserDto>>;

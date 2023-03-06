@@ -1,4 +1,5 @@
 ﻿using FitNoteIT.Modules.Users.Core.Auth;
+using FitNoteIT.Modules.Users.Core.Factories;
 using FitNoteIT.Modules.Users.Core.Persistence;
 using FitNoteIT.Modules.Users.Core.Security;
 using FluentValidation;
@@ -14,6 +15,7 @@ public static class Extensions
         services.AddPersistence(configuration);
         services.AddAuth(configuration);
         services.AddSecurity();
+        services.AddFactories();
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddAutoMapper(Assembly.GetExecutingAssembly());

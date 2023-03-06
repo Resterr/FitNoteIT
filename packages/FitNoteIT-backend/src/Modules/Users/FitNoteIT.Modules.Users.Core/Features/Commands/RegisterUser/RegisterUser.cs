@@ -1,7 +1,7 @@
-﻿using FitNoteIT.Modules.Users.Core.Entities;
-using FitNoteIT.Modules.Users.Core.Repositories;
+﻿using FitNoteIT.Modules.Users.Core.Abstractions.Factories;
+using FitNoteIT.Modules.Users.Core.Abstractions.Repositories;
+using FitNoteIT.Modules.Users.Core.Abstractions.Services;
 using FitNoteIT.Modules.Users.Core.Security;
-using FitNoteIT.Modules.Users.Core.Services;
 using FitNoteIT.Shared.Exceptions;
 using FitNoteIT.Shared.Time;
 using MediatR;
@@ -15,13 +15,15 @@ internal sealed class RegisterUserHandler : IRequestHandler<RegisterUser, Unit>
     private readonly IPasswordManager _passwordManager;
     private readonly IClock _clock;
     private readonly IRoleReadService _roleReadService;
+    private readonly IUserFactory _userFactory;
 
-    public RegisterUserHandler(IUserRepository userRepository, IPasswordManager passwordManager, IClock clock, IRoleReadService roleReadService)
+    public RegisterUserHandler(IUserRepository userRepository, IPasswordManager passwordManager, IClock clock, IRoleReadService roleReadService, IUserFactory userFactory)
     {
         _userRepository = userRepository;
         _passwordManager = passwordManager;
         _clock = clock;
         _roleReadService = roleReadService;
+        _userFactory = userFactory;
     }
 
     public async Task<Unit> Handle(RegisterUser request, CancellationToken cancellationToken)
@@ -38,7 +40,7 @@ internal sealed class RegisterUserHandler : IRequestHandler<RegisterUser, Unit>
     
         var hashedPassword = _passwordManager.Secure(password);
 
-        var user = new User(id, email, hashedPassword, userName, creationDate, defaultRole);
+        var user = _userFactory.Create(id, email, hashedPassword, userName, creationDate, defaultRole);
 
         await _userRepository.AddAsync(user);
 
