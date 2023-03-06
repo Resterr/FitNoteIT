@@ -29,7 +29,7 @@ internal class UsersInitializer : IHostedService
             await dbContext.SaveChangesAsync(cancellationToken); ;
         }
 
-        if (await dbContext.Users.AnyAsync(cancellationToken) == false)
+        if (await dbContext.Users.FirstOrDefaultAsync(x => x.UserRole.Name == "SuperAdmin") == null)
         {
             var superAdminRole = await dbContext.Roles.SingleAsync(x => x.Name == "SuperAdmin", cancellationToken);
 
