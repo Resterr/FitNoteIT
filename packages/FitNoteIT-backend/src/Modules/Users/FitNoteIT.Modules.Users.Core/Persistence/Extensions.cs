@@ -14,7 +14,8 @@ internal static class Extensions
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSqlServer<UsersDbContext>(configuration);
-        services.AddHostedService<UsersDbSeeder>();
+        services.AddScoped<IUsersSeeder, UsersSeeder>();
+        services.AddHostedService<UsersInitializer>();
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoleReadService, RoleReadService>();

@@ -1,8 +1,6 @@
 ﻿using FitNoteIT.Modules.Users.Core.Abstractions.Factories;
 using FitNoteIT.Modules.Users.Core.Entities;
 using FitNoteIT.Modules.Users.Core.Factories;
-using FitNoteIT.Modules.Users.Core.Security;
-using Microsoft.AspNetCore.Identity;
 
 namespace FitNoteIT.Modules.Users.Tests.Seeders;
 internal class UserSeeder
