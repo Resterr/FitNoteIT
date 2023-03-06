@@ -1,4 +1,5 @@
 ﻿using FitNoteIT.Shared.Exceptions;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FitNoteIT.Modules.Users.Core.Entities;
 public class User
@@ -25,33 +26,36 @@ public class User
         UserRole = userRole;
     }
 
-    internal void Verify(DateTime verifiedAt)
+    public void Verify(DateTime verifiedAt)
     {
-        if (VerifiedAt.HasValue)
-        {
-            throw new BadRequestException("User already verified");
-        }
+        if (VerifiedAt.HasValue) throw new BadRequestException("User already verified");
+
+        if (verifiedAt < CreatedAt) throw new BadRequestException("Invalid date");
 
         VerifiedAt = verifiedAt;
     }
 
-    internal void SetRefreshToken(string token)
+    public void SetRefreshToken(string token)
     {
+        if (token.IsNullOrEmpty()) throw new BadRequestException("Empty token");
+
         RefreshToken = token;
     }
 
-    internal void SetRefreshTokenExpiryTime(DateTime tokenExpireTime)
+    public void SetRefreshTokenExpiryTime(DateTime tokenExpireTime)
     {
+        if (tokenExpireTime < CreatedAt) throw new BadRequestException("Invalid date");
+
         RefreshTokenExpiryTime = tokenExpireTime;
     }
 
-    internal bool IsTokenValid(string token, DateTime currentDate)
+    public bool IsTokenValid(string token, DateTime currentDate)
     {
-        if (RefreshToken == token && RefreshTokenExpiryTime <= currentDate) return true;
+        if (RefreshToken == token && RefreshTokenExpiryTime >= currentDate) return true;
         else return false;
     }
 
-    internal void RemoveRefreshToken()
+    public void RemoveRefreshToken()
     {
         RefreshToken = null;
         RefreshTokenExpiryTime = null;

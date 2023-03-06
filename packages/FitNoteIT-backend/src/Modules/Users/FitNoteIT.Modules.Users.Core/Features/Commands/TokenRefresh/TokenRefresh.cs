@@ -38,8 +38,7 @@ internal sealed class TokenRefreshHandler : IRequestHandler<TokenRefresh, Tokens
 
         var user = await _userRepository.GetByIdAsync(Guid.Parse(userId));
 
-        if (user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= _clock.CurrentDate()) 
-            throw new BadRequestException("Invalid client request");
+        if (!user.IsTokenValid(refreshToken, _clock.CurrentDate())) throw new BadRequestException("Invalid client request");
 
         var newAccessToken = _authenticator.GenerateAccessToken(principal.Claims);
         var newRefreshToken = _authenticator.GenerateRefreshToken();
