@@ -26,7 +26,7 @@ public class User
         UserRole = userRole;
     }
 
-    public void Verify(DateTime verifiedAt)
+    internal void Verify(DateTime verifiedAt)
     {
         if (VerifiedAt.HasValue) throw new BadRequestException("User already verified");
 
@@ -35,7 +35,7 @@ public class User
         VerifiedAt = verifiedAt;
     }
 
-    public void SetRefreshToken(string token)
+    internal void SetRefreshToken(string token)
     {
         if (token.IsNullOrEmpty()) throw new BadRequestException("Empty token");
 
@@ -49,13 +49,13 @@ public class User
         RefreshTokenExpiryTime = tokenExpireTime;
     }
 
-    public bool IsTokenValid(string token, DateTime currentDate)
+    internal bool IsTokenValid(string token, DateTime currentDate)
     {
         if (RefreshToken == token && RefreshTokenExpiryTime >= currentDate) return true;
         else return false;
     }
 
-    public void RemoveRefreshToken()
+    internal void RemoveRefreshToken()
     {
         RefreshToken = null;
         RefreshTokenExpiryTime = null;

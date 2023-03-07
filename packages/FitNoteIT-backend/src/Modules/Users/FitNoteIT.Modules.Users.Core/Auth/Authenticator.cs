@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace FitNoteIT.Modules.Users.Core.Auth;
 
-public interface IAuthenticator
+internal interface IAuthenticator
 {
     string GenerateAccessToken(IEnumerable<Claim> claims);
     string GenerateRefreshToken();
