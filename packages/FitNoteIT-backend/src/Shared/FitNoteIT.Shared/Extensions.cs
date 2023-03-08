@@ -1,17 +1,19 @@
-﻿using FitNoteIT.Shared.Exceptions;
+﻿using FitNoteIT.Shared.Auth;
+using FitNoteIT.Shared.Exceptions;
 using FitNoteIT.Shared.PipelineBehaviours;
 using FitNoteIT.Shared.Services;
 using FitNoteIT.Shared.Time;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 namespace FitNoteIT.Shared;
 public static class Extensions
 {
-    public static IServiceCollection AddSharedFramework(this IServiceCollection services)
+    public static IServiceCollection AddSharedFramework(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddErrorHandling();
         services.AddAuthorization();
@@ -20,6 +22,7 @@ public static class Extensions
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         ValidatorOptions.Global.LanguageManager.Enabled = false;
 
+        services.AddAuth(configuration);
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddSingleton<IClock, Clock>();
 

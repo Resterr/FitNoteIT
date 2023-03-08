@@ -1,8 +1,7 @@
 ﻿using FitNoteIT.Modules.Users.Core.Abstractions.Repositories;
-using FitNoteIT.Modules.Users.Core.Auth;
 using FitNoteIT.Modules.Users.Core.Common.DTO;
+using FitNoteIT.Shared.Auth;
 using FitNoteIT.Shared.Exceptions;
-using FitNoteIT.Shared.Services;
 using FitNoteIT.Shared.Time;
 using MediatR;
 using System.Security.Claims;
@@ -13,14 +12,12 @@ public record TokenRefresh(string AccessToken, string RefreshToken) : IRequest<T
 internal sealed class TokenRefreshHandler : IRequestHandler<TokenRefresh, TokensDto>
 {
     private readonly IUserRepository _userRepository;
-    private readonly ICurrentUserService _currentUserService;
     private readonly IAuthenticator _authenticator;
     private readonly IClock _clock;
 
-    public TokenRefreshHandler(IUserRepository userRepository, ICurrentUserService currentUserService, IAuthenticator authenticator, IClock clock)
+    public TokenRefreshHandler(IUserRepository userRepository, IAuthenticator authenticator, IClock clock)
     {
         _userRepository = userRepository;
-        _currentUserService = currentUserService;
         _authenticator = authenticator;
         _clock = clock;
     }
@@ -40,7 +37,7 @@ internal sealed class TokenRefreshHandler : IRequestHandler<TokenRefresh, Tokens
 
         if (!user.IsTokenValid(refreshToken, _clock.CurrentDate())) throw new BadRequestException("Invalid client request");
 
-        var newAccessToken = _authenticator.GenerateAccessToken(principal.Claims);
+        var newAccessToken = _authenticator.GenerateAccessTokenFromClaims(principal.Claims);
         var newRefreshToken = _authenticator.GenerateRefreshToken();
 
         user.SetRefreshToken(newRefreshToken);

@@ -1,5 +1,4 @@
-﻿using FitNoteIT.Modules.Users.Core.Auth;
-using FitNoteIT.Modules.Users.Core.Factories;
+﻿using FitNoteIT.Modules.Users.Core.Factories;
 using FitNoteIT.Modules.Users.Core.Persistence;
 using FitNoteIT.Modules.Users.Core.Security;
 using FluentValidation;
@@ -13,7 +12,6 @@ public static class Extensions
     public static IServiceCollection AddCoreLayer(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddPersistence(configuration);
-        services.AddAuth(configuration);
         services.AddSecurity();
         services.AddFactories();
 

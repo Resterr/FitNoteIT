@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddSharedFramework();
+builder.Services.AddSharedFramework(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
 
 var app = builder.Build();

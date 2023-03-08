@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace FitNoteIT.Modules.Users.Core.Auth;
+namespace FitNoteIT.Shared.Auth;
 internal static class Extensions
 {
     private const string _optionsSectionName = "Auth";

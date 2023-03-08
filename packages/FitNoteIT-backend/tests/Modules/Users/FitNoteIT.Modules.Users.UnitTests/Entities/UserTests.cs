@@ -1,8 +1,8 @@
-using FitNoteIT.Modules.Users.Tests.Seeders;
+using FitNoteIT.Shared.Tests.Seeders;
 using FluentAssertions;
+using Xunit;
 
-namespace FitNoteIT.Modules.Users.Tests.Unit.Entities;
-
+namespace FitNoteIT.Modules.Users.UnitTests.Entities;
 public class UserTests
 {
     private readonly UserSeeder _seeder;
@@ -16,7 +16,7 @@ public class UserTests
     {
         //Arrange
         var user = _seeder.GetDefaultUser();
-        var currentDate = DateTime.UtcNow;
+        var currentDate = new DateTime(2023, 04, 02, 21, 37, 0);
 
         //Act
         var exception = Record.Exception(() => user.Verify(currentDate));
@@ -44,7 +44,7 @@ public class UserTests
     {
         //Arrange
         var user = _seeder.GetDefaultUser();
-        var currentDate = DateTime.UtcNow;
+        var currentDate = new DateTime(2023, 04, 02, 21, 37, 0);
 
         //Act
         user.Verify(currentDate);
@@ -120,7 +120,7 @@ public class UserTests
     {
         //Arrange
         var user = _seeder.GetDefaultUser();
-        
+
         var currentRefreshToken = "+BFs4/6wjGFTHI7glPGuoQXQNLTuKk+pH4m712RrNew=";
         var currentExpiryDate = new DateTime(2023, 04, 02, 21, 37, 30);
 

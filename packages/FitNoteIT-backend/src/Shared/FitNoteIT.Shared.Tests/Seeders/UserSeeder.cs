@@ -2,8 +2,8 @@
 using FitNoteIT.Modules.Users.Core.Entities;
 using FitNoteIT.Modules.Users.Core.Factories;
 
-namespace FitNoteIT.Modules.Users.Tests.Seeders;
-internal class UserSeeder
+namespace FitNoteIT.Shared.Tests.Seeders;
+public class UserSeeder
 {
     private readonly IUserFactory _userFactory;
     private readonly IRoleFactory _roleFactory;
@@ -14,9 +14,9 @@ internal class UserSeeder
         _roleFactory = new RoleFactory();
     }
 
-    public User GetDefaultUser()
+    public User GetDefaultUser(string password = "TestPassword")
     {
-        var user = _userFactory.Create(new Guid(), "Test@test.com", "Test", "Test", new DateTime(2023, 01, 01, 0, 0, 0), GetUserRole());
+        var user = _userFactory.Create(new Guid(), "Test@test.com", password, "Test", new DateTime(2023, 01, 01, 0, 0, 0), GetUserRole());
         return user;
     }
 

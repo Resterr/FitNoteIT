@@ -18,7 +18,12 @@ internal class UsersInitializer : IHostedService
     {
         using var scope = _serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<UsersDbContext>();
-        await dbContext.Database.MigrateAsync(cancellationToken);
+
+        if (dbContext.Database.IsRelational())
+        {
+            await dbContext.Database.MigrateAsync(cancellationToken);
+        }
+
         var userSeeder = scope.ServiceProvider.GetRequiredService<IUsersSeeder>();
 
         if (await dbContext.Roles.AnyAsync(cancellationToken) == false)
