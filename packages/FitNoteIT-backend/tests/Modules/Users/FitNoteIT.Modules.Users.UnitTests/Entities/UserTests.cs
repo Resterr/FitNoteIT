@@ -1,4 +1,4 @@
-using FitNoteIT.Shared.Tests.Seeders;
+using FitNoteIT.Modules.Users.UnitTests.Seeders;
 using FluentAssertions;
 using Xunit;
 

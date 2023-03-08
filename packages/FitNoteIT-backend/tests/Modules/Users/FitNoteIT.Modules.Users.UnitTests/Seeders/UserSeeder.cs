@@ -2,7 +2,7 @@
 using FitNoteIT.Modules.Users.Core.Entities;
 using FitNoteIT.Modules.Users.Core.Factories;
 
-namespace FitNoteIT.Shared.Tests.Seeders;
+namespace FitNoteIT.Modules.Users.UnitTests.Seeders;
 public class UserSeeder
 {
     private readonly IUserFactory _userFactory;
