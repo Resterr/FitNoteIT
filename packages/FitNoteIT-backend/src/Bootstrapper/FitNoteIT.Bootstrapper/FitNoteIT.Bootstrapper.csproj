@@ -12,7 +12,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\Modules\Exercises\FitNoteIT.Modules.Exercises.Api\FitNoteIT.Modules.Exercises.Api.csproj" />
 		<ProjectReference Include="..\..\Modules\Users\FitNoteIT.Modules.Users.Api\FitNoteIT.Modules.Users.Api.csproj" />
+		<ProjectReference Include="..\..\Modules\Workouts\FitNoteIT.Modules.Workouts.Api\FitNoteIT.Modules.Workouts.Api.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
