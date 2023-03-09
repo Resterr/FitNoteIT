@@ -1,5 +1,5 @@
 ﻿namespace FitNoteIT.Modules.Users.Core.Entities;
-public class Role
+internal class Role
 {
 	public int Id { get; private set; }
 	public string Name { get; private set; }

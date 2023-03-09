@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 
 namespace FitNoteIT.Modules.Users.Core.Entities;
-public class User
+internal sealed class User
 {
     public Guid Id { get; private set; }
     public string Email { get; private set; }
