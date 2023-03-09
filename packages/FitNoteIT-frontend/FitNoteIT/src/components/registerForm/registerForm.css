@@ -28,7 +28,7 @@
   }
 }
 .register__form form {
-  margin: 5% 40px;
+  margin: 2% 20px;
 }
 .register__form form .register__form-button {
   display: flex;
@@ -53,11 +53,20 @@
   color: #b17a41;
   font-size: 32px;
 }
+@media only screen and (min-width: 951px) and (max-height: 750px) {
+  .register__form form .register__form-login label,
+  .register__form form .register__form-password label,
+  .register__form form .register__form-password-again label,
+  .register__form form .register__form-email label {
+    font-size: 24px;
+  }
+}
 .register__form form .register__form-login p,
 .register__form form .register__form-password p,
 .register__form form .register__form-password-again p,
 .register__form form .register__form-email p {
   color: #b17a41;
+  margin-bottom: 10px;
 }
 .register__form form .register__form-login input,
 .register__form form .register__form-password input,
@@ -68,6 +77,14 @@
   border: none;
   color: #b17a41;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   height: 45px;
+}
+@media only screen and (min-width: 951px) and (max-height: 750px) {
+  .register__form form .register__form-login input,
+  .register__form form .register__form-password input,
+  .register__form form .register__form-password-again input,
+  .register__form form .register__form-email input {
+    margin-bottom: 5px;
+  }
 }/*# sourceMappingURL=registerForm.css.map */
