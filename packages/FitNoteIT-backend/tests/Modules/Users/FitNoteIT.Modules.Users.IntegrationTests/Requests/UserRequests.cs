@@ -1,11 +1,11 @@
 ﻿using FitNoteIT.Modules.Users.Core.Abstractions.Factories;
-using FitNoteIT.Modules.Users.Core.Common.DTO;
 using FitNoteIT.Modules.Users.Core.Entities;
 using FitNoteIT.Modules.Users.Core.Factories;
 using FitNoteIT.Modules.Users.Core.Features.Commands.LoginUser;
 using FitNoteIT.Modules.Users.Core.Features.Commands.RegisterUser;
 using FitNoteIT.Modules.Users.Core.Features.Commands.TokenRefresh;
 using FitNoteIT.Modules.Users.Core.Security;
+using FitNoteIT.Modules.Users.Shared.DTO;
 using FitNoteIT.Shared.Tests;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;

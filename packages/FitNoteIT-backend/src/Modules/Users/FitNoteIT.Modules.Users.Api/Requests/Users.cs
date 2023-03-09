@@ -1,11 +1,11 @@
-﻿using FitNoteIT.Modules.Users.Core.Common.DTO;
-using FitNoteIT.Modules.Users.Core.Features.Commands.LoginUser;
+﻿using FitNoteIT.Modules.Users.Core.Features.Commands.LoginUser;
 using FitNoteIT.Modules.Users.Core.Features.Commands.RegisterUser;
 using FitNoteIT.Modules.Users.Core.Features.Commands.TokenRefresh;
 using FitNoteIT.Modules.Users.Core.Features.Commands.TokenRemove;
 using FitNoteIT.Modules.Users.Core.Features.Queries.GetAllUsers;
 using FitNoteIT.Modules.Users.Core.Features.Queries.GetUserById;
 using FitNoteIT.Modules.Users.Core.Features.Queries.SelfGetUser;
+using FitNoteIT.Modules.Users.Shared.DTO;
 using FitNoteIT.Shared.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;

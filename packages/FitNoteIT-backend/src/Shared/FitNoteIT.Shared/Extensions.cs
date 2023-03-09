@@ -1,5 +1,4 @@
-﻿using FitNoteIT.Shared.Auth;
-using FitNoteIT.Shared.Exceptions;
+﻿using FitNoteIT.Shared.Exceptions;
 using FitNoteIT.Shared.PipelineBehaviours;
 using FitNoteIT.Shared.Services;
 using FitNoteIT.Shared.Time;
@@ -13,7 +12,7 @@ using Microsoft.OpenApi.Models;
 namespace FitNoteIT.Shared;
 public static class Extensions
 {
-    public static IServiceCollection AddSharedFramework(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddSharedFramework(this IServiceCollection services)
     {
         services.AddErrorHandling();
         services.AddAuthorization();
@@ -22,7 +21,6 @@ public static class Extensions
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         ValidatorOptions.Global.LanguageManager.Enabled = false;
 
-        services.AddAuth(configuration);
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddSingleton<IClock, Clock>();
 

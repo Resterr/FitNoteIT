@@ -1,4 +1,4 @@
-﻿namespace FitNoteIT.Modules.Users.Core.Common.DTO;
+﻿namespace FitNoteIT.Modules.Users.Shared.DTO;
 public class TokensDto
 {
     public string AccessToken { get; set; }

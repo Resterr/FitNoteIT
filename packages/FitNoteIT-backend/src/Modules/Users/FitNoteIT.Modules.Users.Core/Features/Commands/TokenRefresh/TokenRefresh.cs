@@ -1,6 +1,6 @@
 ﻿using FitNoteIT.Modules.Users.Core.Abstractions.Repositories;
-using FitNoteIT.Modules.Users.Core.Common.DTO;
-using FitNoteIT.Shared.Auth;
+using FitNoteIT.Modules.Users.Core.Auth;
+using FitNoteIT.Modules.Users.Shared.DTO;
 using FitNoteIT.Shared.Exceptions;
 using FitNoteIT.Shared.Time;
 using MediatR;

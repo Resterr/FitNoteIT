@@ -1,4 +1,4 @@
-﻿namespace FitNoteIT.Modules.Users.Core.Common.DTO;
+﻿namespace FitNoteIT.Modules.Users.Shared.DTO;
 public class UserDto
 {
     public Guid Id { get; private set; }

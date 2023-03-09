@@ -9,11 +9,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\Shared\FitNoteIT.Shared\FitNoteIT.Shared.csproj" />
+		<InternalsVisibleTo Include="FitNoteIT.Modules.Users.IntegrationTests" />
+		<InternalsVisibleTo Include="FitNoteIT.Modules.Users.UnitTests" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="FitNoteIT.Modules.Users.IntegrationTests" />
-		<InternalsVisibleTo Include="FitNoteIT.Modules.Users.UnitTests" />
+	  <ProjectReference Include="..\FitNoteIT.Modules.Users.Shared\FitNoteIT.Modules.Users.Shared.csproj" />
 	</ItemGroup>
 </Project>

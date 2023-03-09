@@ -7,10 +7,10 @@ using FitNoteIT.Shared.Time;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace FitNoteIT.Shared.Auth;
+namespace FitNoteIT.Modules.Users.Core.Auth;
 public interface IAuthenticator
 {
-    string GenerateAccessToken(Guid userId, string userEmail, string userRole);
+    string GenerateAccessToken(Guid userId, string userEmail, string userName, string userRole);
     string GenerateAccessTokenFromClaims(IEnumerable<Claim> claims);
     string GenerateRefreshToken();
     DateTime GetRefreshExpiryDate();
@@ -41,12 +41,13 @@ internal sealed class Authenticator : IAuthenticator
                 SecurityAlgorithms.HmacSha256);
     }
 
-    public string GenerateAccessToken(Guid userId, string userEmail, string userRole)
+    public string GenerateAccessToken(Guid userId, string userEmail, string userName, string userRole)
     {
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, userId.ToString()),
             new(ClaimTypes.Email, userEmail),
+            new(ClaimTypes.Name, userName),
             new(ClaimTypes.Role, userRole)
         };
 
@@ -97,7 +98,6 @@ internal sealed class Authenticator : IAuthenticator
 
         try
         {
-
             var tokenHandler = new JwtSecurityTokenHandler();
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
             if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
