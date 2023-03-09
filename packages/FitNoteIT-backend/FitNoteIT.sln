@@ -8,9 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{48E70722-2703-4F2A-BBEF-88ED75AE433A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstrapper", "Bootstrapper", "{F984B574-B66E-42FB-80E5-726C5AB49081}"
-	ProjectSection(SolutionItems) = preProject
-		src\Bootstrapper\FitNoteIT.Bootstrapper\appsettings.test.json = src\Bootstrapper\FitNoteIT.Bootstrapper\appsettings.test.json
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{849F422F-853E-40EE-843F-ABC5DFBCE9A2}"
 EndProject
@@ -34,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{1C7F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{266FAEBF-3E24-4F26-8345-820E76CD9D7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitNoteIT.Shared.Tests", "src\Shared\FitNoteIT.Shared.Tests\FitNoteIT.Shared.Tests.csproj", "{9EC365AB-79C7-4DEE-A3B6-B62C98CF34E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitNoteIT.Shared.Tests", "src\Shared\FitNoteIT.Shared.Tests\FitNoteIT.Shared.Tests.csproj", "{9EC365AB-79C7-4DEE-A3B6-B62C98CF34E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
