@@ -10,7 +10,6 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id).IsRequired();
-
         builder.Property(x => x.Name).IsRequired();
 
         builder.ToTable("Roles");
