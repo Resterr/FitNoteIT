@@ -17,7 +17,6 @@ internal sealed class UserRepository : IUserRepository
     public Task<User> GetByIdAsync(Guid id)
     {
         var query = _dbContext.Users
-            .AsQueryable()
             .Include(x => x.UserRole)
             .SingleOrDefaultAsync(x => x.Id == id);
 
@@ -27,7 +26,6 @@ internal sealed class UserRepository : IUserRepository
     public Task<User> GetByEmailAsync(string email)
     {
         var query = _dbContext.Users
-            .AsQueryable()
             .Include(x => x.UserRole)
             .SingleOrDefaultAsync(x => x.Email == email);
 
@@ -37,7 +35,6 @@ internal sealed class UserRepository : IUserRepository
     public Task<User> GetByUserName(string userName)
     {
         var query = _dbContext.Users
-            .AsQueryable()
             .Include(x => x.UserRole)
             .SingleOrDefaultAsync(x => x.UserName == userName);
 
@@ -47,8 +44,8 @@ internal sealed class UserRepository : IUserRepository
     public async Task<(List<User> items, int totalItemCount)> GetAllAsync(int pageSize, int pageNumber)
     {
         var baseQuery = _dbContext.Users
-            .AsQueryable()
-            .Include(x => x.UserRole);
+            .Include(x => x.UserRole)
+            .AsQueryable();
 
         var totalItemsCount = baseQuery.Count();
 
