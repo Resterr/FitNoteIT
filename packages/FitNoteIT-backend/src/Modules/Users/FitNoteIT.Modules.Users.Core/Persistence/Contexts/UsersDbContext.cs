@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Persistence.Contexts;
-internal class UsersDbContext : DbContext
+internal sealed class UsersDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }

@@ -12,8 +12,8 @@ public static class Extensions
 {
     public static IServiceCollection AddCoreLayer(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddPersistence(configuration);
         services.AddAuth(configuration);
+        services.AddPersistence(configuration);
         services.AddSecurity();
         services.AddFactories();
 

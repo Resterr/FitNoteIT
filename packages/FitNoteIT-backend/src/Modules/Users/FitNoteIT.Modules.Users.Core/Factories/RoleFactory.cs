@@ -2,7 +2,7 @@
 using FitNoteIT.Modules.Users.Core.Entities;
 
 namespace FitNoteIT.Modules.Users.Core.Factories;
-public sealed class RoleFactory : IRoleFactory
+internal sealed class RoleFactory : IRoleFactory
 {
     public Role Create(string name)
         => new(name);

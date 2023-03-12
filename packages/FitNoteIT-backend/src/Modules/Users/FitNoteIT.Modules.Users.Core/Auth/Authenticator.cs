@@ -8,10 +8,10 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FitNoteIT.Modules.Users.Core.Auth;
-
 public interface IAuthenticator
 {
-    string GenerateAccessToken(IEnumerable<Claim> claims);
+    string GenerateAccessToken(Guid userId, string userEmail, string userName, string userRole);
+    string GenerateAccessTokenFromClaims(IEnumerable<Claim> claims);
     string GenerateRefreshToken();
     DateTime GetRefreshExpiryDate();
     ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
@@ -41,7 +41,25 @@ internal sealed class Authenticator : IAuthenticator
                 SecurityAlgorithms.HmacSha256);
     }
 
-    public string GenerateAccessToken(IEnumerable<Claim> claims)
+    public string GenerateAccessToken(Guid userId, string userEmail, string userName, string userRole)
+    {
+        var claims = new List<Claim>
+        {
+            new(ClaimTypes.NameIdentifier, userId.ToString()),
+            new(ClaimTypes.Email, userEmail),
+            new(ClaimTypes.Name, userName),
+            new(ClaimTypes.Role, userRole)
+        };
+
+        var now = _clock.CurrentDate();
+        var expires = now.Add(_accessTokenExpiry);
+        var jwt = new JwtSecurityToken(_issuer, _audience, claims, now, expires, _signingCredentials);
+        var token = _jwtSecurityToken.WriteToken(jwt);
+
+        return token;
+    }
+
+    public string GenerateAccessTokenFromClaims(IEnumerable<Claim> claims)
     {
         var now = _clock.CurrentDate();
         var expires = now.Add(_accessTokenExpiry);
@@ -80,7 +98,6 @@ internal sealed class Authenticator : IAuthenticator
 
         try
         {
-
             var tokenHandler = new JwtSecurityTokenHandler();
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
             if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))

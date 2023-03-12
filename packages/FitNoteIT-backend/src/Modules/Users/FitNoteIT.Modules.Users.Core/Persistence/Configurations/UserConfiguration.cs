@@ -12,13 +12,9 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasIndex(x => x.UserName).IsUnique();
 
         builder.Property(x => x.Id).IsRequired();
-
         builder.Property(x => x.Email).IsRequired();
-
         builder.Property(x => x.PasswordHash).IsRequired();
-
         builder.Property(x => x.UserName).IsRequired();
-
         builder.Property(x => x.CreatedAt).IsRequired();
             
         builder.ToTable("Users");

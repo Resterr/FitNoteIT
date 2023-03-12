@@ -6,7 +6,7 @@ using FitNoteIT.Shared.Time;
 using Microsoft.Extensions.Configuration;
 
 namespace FitNoteIT.Modules.Users.Core.Persistence.Seeders;
-public interface IUsersSeeder
+internal interface IUsersSeeder
 {
     List<Role> SeedRoles();
     User SeedSuperAdmin(Role role);

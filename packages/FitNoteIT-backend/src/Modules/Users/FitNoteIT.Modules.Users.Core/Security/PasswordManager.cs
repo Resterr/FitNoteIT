@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FitNoteIT.Modules.Users.Core.Security;
 
-public interface IPasswordManager
+internal interface IPasswordManager
 {
     string Secure(string password);
     bool Validate(string password, string securedPassword);

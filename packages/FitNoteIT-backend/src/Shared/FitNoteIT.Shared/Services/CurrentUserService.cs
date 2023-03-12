@@ -10,7 +10,7 @@ public interface ICurrentUserService
     string UserRole { get; }
 }
 
-public class CurrentUserService : ICurrentUserService
+internal sealed class CurrentUserService : ICurrentUserService
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 

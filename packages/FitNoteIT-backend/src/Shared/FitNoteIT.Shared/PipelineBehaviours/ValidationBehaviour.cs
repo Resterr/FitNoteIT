@@ -3,7 +3,7 @@ using MediatR;
 using ValidationException = FitNoteIT.Shared.Exceptions.ValidationException;
 
 namespace FitNoteIT.Shared.PipelineBehaviours;
-public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : class, IRequest<TResponse>
+internal sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : class, IRequest<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
     public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators) => _validators = validators;

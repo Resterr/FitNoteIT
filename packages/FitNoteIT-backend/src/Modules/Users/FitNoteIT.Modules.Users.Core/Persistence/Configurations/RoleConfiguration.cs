@@ -8,9 +8,9 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
     public void Configure(EntityTypeBuilder<Role> builder)
     {
         builder.HasKey(x => x.Id);
+        builder.HasIndex(x => x.Name).IsUnique();
 
         builder.Property(x => x.Id).IsRequired();
-
         builder.Property(x => x.Name).IsRequired();
 
         builder.ToTable("Roles");

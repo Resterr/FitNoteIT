@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Bootstrapper\FitNoteIT.Bootstrapper\FitNoteIT.Bootstrapper.csproj" />
+		<ProjectReference Include="..\FitNoteIT.Shared\FitNoteIT.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="FitNoteIT.Modules.Users.IntegrationTests" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.3" />
+		<PackageReference Include="xunit" Version="2.4.2" />
+	</ItemGroup>
+</Project>

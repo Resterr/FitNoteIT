@@ -2,7 +2,7 @@
 using FitNoteIT.Modules.Users.Core.Entities;
 
 namespace FitNoteIT.Modules.Users.Core.Factories;
-public sealed class UserFactory : IUserFactory
+internal sealed class UserFactory : IUserFactory
 {
     public User Create(Guid id, string email, string passwordHash, string userName, DateTime createdAt, Role userRole)
         => new(id, email, passwordHash, userName, createdAt, userRole);

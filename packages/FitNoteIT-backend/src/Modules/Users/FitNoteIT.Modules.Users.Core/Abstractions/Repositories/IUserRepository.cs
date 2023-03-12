@@ -1,7 +1,7 @@
 ﻿using FitNoteIT.Modules.Users.Core.Entities;
 
 namespace FitNoteIT.Modules.Users.Core.Abstractions.Repositories;
-public interface IUserRepository
+internal interface IUserRepository
 {
     Task<User> GetByIdAsync(Guid id);
     Task<User> GetByEmailAsync(string email);

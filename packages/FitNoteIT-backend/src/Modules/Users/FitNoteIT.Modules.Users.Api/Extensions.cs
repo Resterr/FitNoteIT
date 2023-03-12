@@ -1,8 +1,8 @@
 ﻿using FitNoteIT.Modules.Users.Core;
 using FitNoteIT.Modules.Users.Api.Requests;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 namespace FitNoteIT.Modules.Users.Api;
 public static class Extensions
