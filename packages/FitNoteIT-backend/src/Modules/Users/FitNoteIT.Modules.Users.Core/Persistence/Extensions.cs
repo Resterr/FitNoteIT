@@ -4,6 +4,7 @@ using FitNoteIT.Modules.Users.Core.Persistence.Contexts;
 using FitNoteIT.Modules.Users.Core.Persistence.Repositories;
 using FitNoteIT.Modules.Users.Core.Persistence.Seeders;
 using FitNoteIT.Modules.Users.Core.Persistence.Services;
+using FitNoteIT.Modules.Users.Shared;
 using FitNoteIT.Shared.Database;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,8 @@ internal static class Extensions
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoleReadService, RoleReadService>();
+
+        services.AddScoped<IUsersModuleApi, UsersModuleApi>();
 
         return services;
     }
