@@ -3,5 +3,5 @@
 namespace FitNoteIT.Modules.Exercises.Core.Abstractions.Factories;
 internal interface IRecordFactory
 {
-    Record Create(Guid id, Guid userId, Exercise exercise, double result, DateTime recordDate);
+    Record Create(Guid id, Guid userId, Guid exerciseId, double? result, DateTime? recordDate);
 }

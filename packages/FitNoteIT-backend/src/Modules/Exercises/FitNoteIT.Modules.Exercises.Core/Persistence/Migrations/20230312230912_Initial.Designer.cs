@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitNoteIT.Modules.Exercises.Core.Persistence.Migrations
 {
     [DbContext(typeof(ExercisesDbContext))]
-    [Migration("20230312135111_Init")]
-    partial class Init
+    [Migration("20230312230912_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,13 +53,13 @@ namespace FitNoteIT.Modules.Exercises.Core.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ExerciseId")
+                    b.Property<Guid>("ExerciseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("RecordDate")
+                    b.Property<DateTime?>("RecordDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("Result")
+                    b.Property<double?>("Result")
                         .HasColumnType("float");
 
                     b.Property<Guid>("UserId")
@@ -76,7 +76,9 @@ namespace FitNoteIT.Modules.Exercises.Core.Persistence.Migrations
                 {
                     b.HasOne("FitNoteIT.Modules.Exercises.Core.Entities.Exercise", "Exercise")
                         .WithMany()
-                        .HasForeignKey("ExerciseId");
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Exercise");
                 });

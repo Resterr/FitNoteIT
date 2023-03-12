@@ -5,7 +5,7 @@
 namespace FitNoteIT.Modules.Exercises.Core.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,9 +34,9 @@ namespace FitNoteIT.Modules.Exercises.Core.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ExerciseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Result = table.Column<double>(type: "float", nullable: false),
-                    RecordDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ExerciseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Result = table.Column<double>(type: "float", nullable: true),
+                    RecordDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,7 +46,8 @@ namespace FitNoteIT.Modules.Exercises.Core.Persistence.Migrations
                         column: x => x.ExerciseId,
                         principalSchema: "Exercises",
                         principalTable: "Exercises",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

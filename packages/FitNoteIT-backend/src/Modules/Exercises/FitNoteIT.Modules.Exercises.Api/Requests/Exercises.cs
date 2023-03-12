@@ -15,12 +15,12 @@ internal static class Exercises
     public static WebApplication RegisterExercisesRequests(this WebApplication app)
     {
         app.MapGet("/exercises", Exercises.GetAllExercises)
-            .RequireAuthorization("is-admin")
+            .RequireAuthorization()
             .Produces<List<ExerciseDto>>()
             .Produces(StatusCodes.Status200OK);
 
         app.MapGet("/exercises/{id}", Exercises.GetExerciseById)
-            .RequireAuthorization("is-admin")
+            .RequireAuthorization()
             .Produces<ExerciseDto>()
             .Produces(StatusCodes.Status200OK);
 
@@ -43,15 +43,15 @@ internal static class Exercises
 
     private static async Task<IResult> GetAllExercises(IMediator mediator, [AsParameters] GetAllExercises request)
     {
-        var user = await mediator.Send(request);
-        return Results.Ok(user);
+        var exercise = await mediator.Send(request);
+        return Results.Ok(exercise);
     }
 
     private static async Task<IResult> GetExerciseById(IMediator mediator, Guid id)
     {
         var request = new GetExerciseById(id);
-        var user = await mediator.Send(request);
-        return Results.Ok(user);
+        var exercise = await mediator.Send(request);
+        return Results.Ok(exercise);
     }
 
     private static async Task<IResult> CreateExercise(IMediator mediator, [FromBody] CreateExercise request)
@@ -66,9 +66,9 @@ internal static class Exercises
         return Results.Ok();
     }
 
-    private static async Task<IResult> DeleteExercise(IMediator mediator, Guid id)
+    private static async Task<IResult> DeleteExercise(IMediator mediator, string exerciseName)
     {
-        var request = new DeleteExercise(id);
+        var request = new DeleteExercise(exerciseName);
         await mediator.Send(request);
         return Results.NoContent();
     }

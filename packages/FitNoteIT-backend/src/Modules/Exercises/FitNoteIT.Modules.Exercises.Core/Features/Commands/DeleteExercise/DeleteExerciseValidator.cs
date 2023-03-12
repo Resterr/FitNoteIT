@@ -5,6 +5,6 @@ public class DeleteExerciseValidator : AbstractValidator<DeleteExercise>
 {
 	public DeleteExerciseValidator()
 	{
-		RuleFor(x => x.Id).NotEmpty();
+		RuleFor(x => x.ExerciseName).NotEmpty();
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using FitNoteIT.Modules.Exercises.Core.Persistence.Contexts;
+using FitNoteIT.Modules.Exercises.Core.Persistence.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +22,16 @@ internal class ExercisesInitializer : IHostedService
         if (dbContext.Database.IsRelational())
         {
             await dbContext.Database.MigrateAsync(cancellationToken);
+        }
+
+        var exerciseSeeder = scope.ServiceProvider.GetRequiredService<IExercisesSeeder>();
+
+        if (await dbContext.Exercises.AnyAsync(cancellationToken) == false)
+        {
+            var exercises = exerciseSeeder.SeedExercises();
+
+            await dbContext.Exercises.AddRangeAsync(exercises, cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken); ;
         }
     }
 

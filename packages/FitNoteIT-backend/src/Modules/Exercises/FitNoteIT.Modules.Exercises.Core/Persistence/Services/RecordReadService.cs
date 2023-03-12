@@ -7,11 +7,13 @@ internal sealed class RecordReadService : IRecordReadService
 {
     private readonly IUsersModuleApi _usersModule;
     private readonly IRecordRepository _recordRepository;
+    private readonly IExerciseRepository _exerciseRepository;
 
-    public RecordReadService(IUsersModuleApi usersModule, IRecordRepository recordRepository)
+    public RecordReadService(IUsersModuleApi usersModule, IRecordRepository recordRepository, IExerciseRepository exerciseRepository)
     {
         _usersModule = usersModule;
         _recordRepository = recordRepository;
+        _exerciseRepository = exerciseRepository;
     }
 
     public async Task<bool> IsUserExistsAsync(Guid? id)
@@ -23,11 +25,9 @@ internal sealed class RecordReadService : IRecordReadService
         return true;
     }
 
-    public async Task<bool> RecordAlreadyExistsAsync(Guid userId, Guid exerciseId)
+    public async Task<bool> IsRecordsAlreadyAdded(Guid userId)
     {
-        var userRecords = await _recordRepository.GetAllForUserAsync(100, 1, userId);
-
-        if (userRecords.items.Any(x => x.Exercise.Id == exerciseId)) return true;
+        if ((await _recordRepository.GetAllForUserAsync(100, 1, userId)).totalItemCount == (await _exerciseRepository.GetAllAsync(100, 1)).totalItemCount) return true;
 
         return false;
     }

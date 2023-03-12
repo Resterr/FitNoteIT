@@ -24,6 +24,17 @@ internal sealed class RecordRepository : IRecordRepository
         return query;
     }
 
+    public Task<Record> GetByNameAsync(string exerciseName, Guid userId)
+    {
+        var query = _dbContext.Records
+            .Include(x => x.Exercise)
+            .Where(x => x.UserId == userId)
+            .AsQueryable()
+            .SingleOrDefaultAsync(x => x.Exercise.Name == exerciseName);
+
+        return query;
+    }
+
     public async Task<(List<Record> items, int totalItemCount)> GetAllForUserAsync(int pageSize, int pageNumber, Guid userId)
     {
         var baseQuery = _dbContext.Records
@@ -45,6 +56,12 @@ internal sealed class RecordRepository : IRecordRepository
     public async Task AddAsync(Record record)
     {
         await _dbContext.Records.AddAsync(record);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task AddInRangeAsync(IList<Record> records)
+    {
+        await _dbContext.Records.AddRangeAsync(records);
         await _dbContext.SaveChangesAsync();
     }
 
