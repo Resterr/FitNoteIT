@@ -1,3 +1,4 @@
+using FitNoteIT.Modules.Exercises.Api;
 using FitNoteIT.Modules.Users.Api;
 using FitNoteIT.Shared;
 
@@ -20,6 +21,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSharedFramework();
 builder.Services.AddUsersModule(builder.Configuration);
+builder.Services.AddExercisesModule(builder.Configuration);
 
 var app = builder.Build();
 
@@ -29,5 +31,6 @@ app.UseCors("CorsPolicy");
 
 app.MapGet("/", ctx => ctx.Response.WriteAsync("FitNoteIT API is ok"));
 app.RegisterUsersModuleRequests();
+app.RegisterExercisesModuleRequests();
 
 app.Run();
