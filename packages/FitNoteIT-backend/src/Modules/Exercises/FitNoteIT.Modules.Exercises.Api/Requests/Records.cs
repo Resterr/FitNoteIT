@@ -1,6 +1,6 @@
 ﻿using FitNoteIT.Modules.Exercises.Core.Features.Commands.UpdateRecord;
-using FitNoteIT.Modules.Exercises.Core.Features.Queries.GerRecordById;
 using FitNoteIT.Modules.Exercises.Core.Features.Queries.GetAllRecordsForUser;
+using FitNoteIT.Modules.Exercises.Core.Features.Queries.GetRecordById;
 using FitNoteIT.Modules.Exercises.Shared.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Builder;

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace FitNoteIT.Modules.Exercises.Core.Features.Queries.GerRecordById;
+namespace FitNoteIT.Modules.Exercises.Core.Features.Queries.GetRecordById;
 public class GetRecordByIdValidator : AbstractValidator<GetRecordById>
 {
 	public GetRecordByIdValidator()
