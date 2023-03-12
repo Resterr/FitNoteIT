@@ -6,7 +6,7 @@ using FitNoteIT.Shared.Exceptions;
 using FitNoteIT.Shared.Services;
 using MediatR;
 
-namespace FitNoteIT.Modules.Exercises.Core.Features.Queries.GerRecordById;
+namespace FitNoteIT.Modules.Exercises.Core.Features.Queries.GetRecordById;
 public record GetRecordById(Guid Id) : IRequest<RecordDto>;
 
 internal sealed class GetRecordByIdHandler : IRequestHandler<GetRecordById, RecordDto>
