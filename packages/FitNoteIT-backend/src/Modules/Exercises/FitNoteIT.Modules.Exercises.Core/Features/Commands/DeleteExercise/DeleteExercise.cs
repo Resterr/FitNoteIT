@@ -3,7 +3,7 @@ using FitNoteIT.Shared.Exceptions;
 using MediatR;
 
 namespace FitNoteIT.Modules.Exercises.Core.Features.Commands.DeleteExercise;
-public record DeleteExercise(Guid Id) : IRequest<Unit>;
+public record DeleteExercise(string ExerciseName) : IRequest<Unit>;
 
 internal sealed class DeleteExerciseHandler : IRequestHandler<DeleteExercise, Unit>
 {
@@ -16,7 +16,7 @@ internal sealed class DeleteExerciseHandler : IRequestHandler<DeleteExercise, Un
 
     public async Task<Unit> Handle(DeleteExercise request, CancellationToken cancellationToken)
     {
-        var exercise = await _exerciseRepository.GetByIdAsync(request.Id);
+        var exercise = await _exerciseRepository.GetByNameAsync(request.ExerciseName);
 
         if (exercise is null) throw new NotFoundException("Exercise not found");
 

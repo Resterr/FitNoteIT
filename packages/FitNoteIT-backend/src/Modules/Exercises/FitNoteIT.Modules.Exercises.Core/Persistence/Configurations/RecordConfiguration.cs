@@ -11,8 +11,6 @@ internal sealed class RecordConfiguration : IEntityTypeConfiguration<Record>
 
         builder.Property(x => x.Id).IsRequired();
         builder.Property(x => x.UserId).IsRequired();
-        builder.Property(x => x.Result).IsRequired();
-        builder.Property(x => x.RecordDate).IsRequired();
 
         builder.ToTable("Records");
     }

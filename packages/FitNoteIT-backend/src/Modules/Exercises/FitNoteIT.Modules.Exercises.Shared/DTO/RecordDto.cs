@@ -2,8 +2,7 @@
 public class RecordDto
 {
     public Guid Id { get; set; }
-    public Guid UserId { get; set; }
     public string ExerciseName { get; set; }
-    public double Result { get; set; }
-    public DateTime RecordDate { get; set; }
+    public double? Result { get; set; }
+    public DateTime? RecordDate { get; set; }
 }

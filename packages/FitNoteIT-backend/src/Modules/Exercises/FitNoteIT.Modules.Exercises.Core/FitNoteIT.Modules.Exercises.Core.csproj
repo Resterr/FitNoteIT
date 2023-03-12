@@ -10,4 +10,8 @@
     <ProjectReference Include="..\FitNoteIT.Modules.Exercises.Shared\FitNoteIT.Modules.Exercises.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\Migrations\" />
+  </ItemGroup>
+
 </Project>
