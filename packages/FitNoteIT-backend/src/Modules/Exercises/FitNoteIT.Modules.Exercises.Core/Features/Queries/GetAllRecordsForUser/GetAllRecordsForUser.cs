@@ -39,13 +39,13 @@ internal sealed class GetAllRecordsForUserHandler : IRequestHandler<GetAllRecord
 
         if (await _recordReadService.IsRecordsAlreadyAdded((Guid)userId) == false)
         {
-            var exercises = await _exerciseRepository.GetAllAsync(100, 1);
-            var currentRecords = await _recordRepository.GetAllForUserAsync(100, 1, (Guid)userId);
+            var exercises = await _exerciseRepository.GetAllAsync();
+            var currentRecords = await _recordRepository.GetAllForUserAsync((Guid)userId);
             var recordsToAdd = new List<Record>();
 
-            foreach (var exercise in exercises.items)
+            foreach (var exercise in exercises)
             {
-                if (!currentRecords.items.Select(x => x.Exercise.Id).Contains(exercise.Id))
+                if (!currentRecords.Select(x => x.Exercise.Id).Contains(exercise.Id))
                 {
                     var record = _recordFactory.Create(Guid.NewGuid(), (Guid)userId, exercise.Id, null, null);                 
                     recordsToAdd.Add(record);
@@ -55,7 +55,7 @@ internal sealed class GetAllRecordsForUserHandler : IRequestHandler<GetAllRecord
             await _recordRepository.AddInRangeAsync(recordsToAdd);
         }
 
-        var (items, totalItemCount) = await _recordRepository.GetAllForUserAsync(request.PageSize, request.PageNumber, (Guid)userId);
+        var (items, totalItemCount) = await _recordRepository.PaginatedGetAllForUserAsync(request.PageSize, request.PageNumber, (Guid)userId);
         var result = new PagedResultDto<RecordDto>(_mapper.Map<List<RecordDto>>(items), totalItemCount, request.PageSize, request.PageNumber);
 
         return result;

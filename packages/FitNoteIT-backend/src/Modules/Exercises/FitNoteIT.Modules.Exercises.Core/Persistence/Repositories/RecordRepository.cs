@@ -35,7 +35,7 @@ internal sealed class RecordRepository : IRecordRepository
         return query;
     }
 
-    public async Task<(List<Record> items, int totalItemCount)> GetAllForUserAsync(int pageSize, int pageNumber, Guid userId)
+    public async Task<(List<Record> items, int totalItemCount)> PaginatedGetAllForUserAsync(int pageSize, int pageNumber, Guid userId)
     {
         var baseQuery = _dbContext.Records
             .Include(x => x.Exercise)
@@ -51,6 +51,16 @@ internal sealed class RecordRepository : IRecordRepository
             .ToListAsync();
 
         return (resultQuery, totalItemsCount);
+    }
+
+    public Task<List<Record>> GetAllForUserAsync(Guid userId)
+    {
+        var resultQuery = _dbContext.Records
+            .Include(x => x.Exercise)
+            .Where(x => x.UserId == userId)
+            .ToListAsync();
+
+        return resultQuery;
     }
 
     public async Task AddAsync(Record record)

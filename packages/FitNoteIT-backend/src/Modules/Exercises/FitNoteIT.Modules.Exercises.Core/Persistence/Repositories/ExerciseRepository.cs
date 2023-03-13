@@ -31,7 +31,7 @@ internal sealed class ExerciseRepository : IExerciseRepository
         return query;
     }
 
-    public async Task<(List<Exercise> items, int totalItemCount)> GetAllAsync(int pageSize, int pageNumber)
+    public async Task<(List<Exercise> items, int totalItemCount)> PaginatedGetAllAsync(int pageSize, int pageNumber)
     {
         var baseQuery = _dbContext.Exercises
             .AsQueryable();
@@ -45,6 +45,14 @@ internal sealed class ExerciseRepository : IExerciseRepository
             .ToListAsync();
 
         return (resultQuery, totalItemsCount);
+    }
+
+    public Task<List<Exercise>> GetAllAsync()
+    {
+        var resultQuery = _dbContext.Exercises
+            .ToListAsync();
+
+        return resultQuery;
     }
 
     public async Task AddAsync(Exercise exercise)
