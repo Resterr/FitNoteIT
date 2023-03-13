@@ -1,19 +1,18 @@
 ﻿using FitNoteIT.Modules.Exercises.Core.Abstractions.Repositories;
 using FitNoteIT.Modules.Exercises.Core.Abstractions.Services;
+using FitNoteIT.Modules.Exercises.Core.Persistence.Contexts;
 using FitNoteIT.Modules.Users.Shared;
 
 namespace FitNoteIT.Modules.Exercises.Core.Persistence.Services;
 internal sealed class RecordReadService : IRecordReadService
 {
+    private readonly ExercisesDbContext _dbContext;
     private readonly IUsersModuleApi _usersModule;
-    private readonly IRecordRepository _recordRepository;
-    private readonly IExerciseRepository _exerciseRepository;
 
-    public RecordReadService(IUsersModuleApi usersModule, IRecordRepository recordRepository, IExerciseRepository exerciseRepository)
+    public RecordReadService(ExercisesDbContext dbContext, IUsersModuleApi usersModule)
     {
+        _dbContext = dbContext;
         _usersModule = usersModule;
-        _recordRepository = recordRepository;
-        _exerciseRepository = exerciseRepository;
     }
 
     public async Task<bool> IsUserExistsAsync(Guid? id)
@@ -27,8 +26,13 @@ internal sealed class RecordReadService : IRecordReadService
 
     public async Task<bool> IsRecordsAlreadyAdded(Guid userId)
     {
-        if ((await _recordRepository.GetAllForUserAsync(100, 1, userId)).totalItemCount == (await _exerciseRepository.GetAllAsync(100, 1)).totalItemCount) return true;
+        await Task.CompletedTask;
 
-        return false;
+        var exerciseCount = _dbContext.Exercises.Count();
+        var userRecordsCount = _dbContext.Records.Where(x => x.UserId == userId).Count();
+
+        if (exerciseCount == userRecordsCount) return true;
+
+        return false;     
     }
 }
