@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import logo from "./logo.svg";
 import "./App.css";
-import { Navbar } from "react-bootstrap";
-import { Home } from "@mui/icons-material";
+
 import axios from "axios";
 import { UsersContext, UsersContextType } from "./contexts/user.context";
+import { Home } from "./pages/home";
+import { Navbar } from "./components/navbar";
 
 function App() {
   const { setCurrentUser2 } = useContext(UsersContext) as UsersContextType;
@@ -80,7 +81,6 @@ function App() {
       refreshToken: rToken,
     };
 
-    let currentUser = localStorage.getItem("currentUser");
     if (
       currentUser !== undefined &&
       currentUser !== null &&
@@ -103,14 +103,16 @@ function App() {
   };
   return (
     <div className="App">
-      <Routes>
-        <Route element={<Navbar />}>
-          <Route index element={<Home />} />
-          {/* <Route path="login" element={<Login />} />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Navbar />}>
+            <Route index element={<Home />} />
+            {/* <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="records" element={<Records />} /> */}
-        </Route>
-      </Routes>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

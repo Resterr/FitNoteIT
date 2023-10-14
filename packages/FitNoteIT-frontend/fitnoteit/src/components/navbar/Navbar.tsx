@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import logo from "../../assets/Logo.png";
+import logo from "../../utils/Logo.png";
 import { UsersContext, UsersContextType } from "../../contexts/user.context";
 
 export const Navbar: React.FC = () => {
