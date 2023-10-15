@@ -7,6 +7,8 @@ import axios from "axios";
 import { UsersContext, UsersContextType } from "./contexts/user.context";
 import { Home } from "./pages/home";
 import { Navbar } from "./components/navbar";
+import { Login } from "./pages/login";
+import { Register } from "./pages/register";
 
 function App() {
   const { setCurrentUser2 } = useContext(UsersContext) as UsersContextType;
@@ -25,7 +27,6 @@ function App() {
     (response) => response,
     (error) => {
       if (error.response) {
-        // Obsługa błędu na podstawie kodu statusu odpowiedzi
         switch (error.response.status) {
           case 400:
             logout();
@@ -107,9 +108,9 @@ function App() {
         <Routes>
           <Route element={<Navbar />}>
             <Route index element={<Home />} />
-            {/* <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="records" element={<Records />} /> */}
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            {/* <Route path="records" element={<Records />} /> */}
           </Route>
         </Routes>
       </BrowserRouter>
