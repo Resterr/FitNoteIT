@@ -9,6 +9,7 @@ import { Home } from "./pages/home";
 import { Navbar } from "./components/navbar";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
+import axiosInstance from "./utils/axiosInstance";
 
 function App() {
   const { setCurrentUser2 } = useContext(UsersContext) as UsersContextType;
@@ -87,19 +88,17 @@ function App() {
       currentUser !== null &&
       currentUser !== ""
     ) {
-      await axios
-        .post("https://fitnoteit.azurewebsites.net/api/token/refresh", data)
-        .then((response) => {
-          if (response.status == 200) {
-            localStorage.setItem("accessToken", response.data.accessToken);
-            localStorage.setItem("refreshToken", response.data.refreshToken);
-            let myDate = Date.now();
-            localStorage.setItem("tokenDate", myDate.toString());
-            console.log(response);
-          } else {
-            console.log("złe dane do odswieźenia tokenów");
-          }
-        });
+      await axiosInstance.post("/api/token/refresh", data).then((response) => {
+        if (response.status == 200) {
+          localStorage.setItem("accessToken", response.data.accessToken);
+          localStorage.setItem("refreshToken", response.data.refreshToken);
+          let myDate = Date.now();
+          localStorage.setItem("tokenDate", myDate.toString());
+          console.log(response);
+        } else {
+          console.log("złe dane do odswieźenia tokenów");
+        }
+      });
     }
   };
   return (

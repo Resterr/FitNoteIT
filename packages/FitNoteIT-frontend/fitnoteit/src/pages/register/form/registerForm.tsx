@@ -3,6 +3,7 @@ import "./registerForm.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../../utils/axiosInstance";
 
 interface FormData {
   email: string;
@@ -53,10 +54,7 @@ export const RegisterForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      const response = await axios.post(
-        "https://fitnoteit.azurewebsites.net/api/users/register",
-        data
-      );
+      const response = await axiosInstance.post("/api/users/register", data);
       if (response.status === 200) {
         setStatus("Udało się zarejestrować");
         const formId = document.getElementById("form-id") as HTMLInputElement;

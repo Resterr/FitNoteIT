@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { UsersContext, UsersContextType } from "../../../contexts/user.context";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../../utils/axiosInstance";
 
 type FormData = {
   userName: string;
@@ -59,10 +60,7 @@ export const LoginForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      const response = await axios.post(
-        "https://fitnoteit.azurewebsites.net/api/users/login",
-        data
-      );
+      const response = await axiosInstance.post("/api/users/login", data);
 
       if (response.status === 200) {
         localStorage.setItem("currentUser", data.userName);
