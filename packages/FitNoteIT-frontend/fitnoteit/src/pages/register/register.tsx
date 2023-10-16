@@ -1,6 +1,6 @@
 import React from "react";
 import "./register.scss";
-import mobilephoneWoman from "../../assets/mobilephoneWoman.png";
+import mobilephoneWoman from "../../utils/mobilephoneWoman.png";
 import { Footer } from "../../components/footer";
 import { RegisterForm } from "./form/registerForm";
 
