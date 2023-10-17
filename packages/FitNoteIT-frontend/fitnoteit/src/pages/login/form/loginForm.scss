@@ -8,11 +8,25 @@
   background-color: $background-color-form;
   height: calc(100vh - 140px);
 
+  &::-webkit-scrollbar {
+    width: 8px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $gold !important;
+    border-radius: 9999px !important;
+  }
+
   @media only screen and (max-width: 950px) {
     position: static;
     text-align: center;
     height: 100%;
     width: 100%;
+  }
+
+  @media only screen and (min-width: 951px) {
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
   }
 
   &-status {
