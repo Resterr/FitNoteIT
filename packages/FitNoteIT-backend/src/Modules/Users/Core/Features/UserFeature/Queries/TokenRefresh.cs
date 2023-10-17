@@ -3,6 +3,7 @@ using FitNoteIT.Modules.Users.Core.Exceptions;
 using FitNoteIT.Modules.Users.Shared.DTO;
 using FitNoteIT.Shared.Queries;
 using FitNoteIT.Shared.Services;
+using FluentValidation;
 
 namespace FitNoteIT.Modules.Users.Core.Features.UserFeature.Queries;
 public record TokenRefresh(string AccessToken, string RefreshToken) : IQuery<TokensDto>;
@@ -47,4 +48,13 @@ internal sealed class TokenRefreshHandler : IQueryHandler<TokenRefresh, TokensDt
             RefreshToken = newRefreshToken
         };
     }
+}
+
+public class TokenRefreshValidator : AbstractValidator<TokenRefresh>
+{
+	public TokenRefreshValidator()
+	{
+		RuleFor(x => x.AccessToken).NotNull();
+		RuleFor(x => x.RefreshToken).NotNull();
+	}
 }

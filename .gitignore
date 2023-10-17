@@ -392,3 +392,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+packages/FitNoteIT-backend/src/Bootstrapper/Properties/ServiceDependencies/fitnoteitdev - Web Deploy/profile.arm.json

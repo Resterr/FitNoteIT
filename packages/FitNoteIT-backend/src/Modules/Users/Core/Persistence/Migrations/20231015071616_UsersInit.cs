@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace FitNoteIT.Modules.Users.Core.Persistence.Migrations
 {
-    /// <inheritdoc />
-    public partial class UsersInit : Migration
+	/// <inheritdoc />
+	public partial class UsersInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
