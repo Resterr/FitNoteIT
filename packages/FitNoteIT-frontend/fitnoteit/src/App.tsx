@@ -10,6 +10,7 @@ import { Navbar } from "./components/navbar";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import axiosInstance from "./utils/axiosInstance";
+import { AdminPanel } from "./pages/adminPanel/adminPanel";
 
 function App() {
   const { setCurrentUser2 } = useContext(UsersContext) as UsersContextType;
@@ -109,6 +110,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="admin" element={<AdminPanel />} />
             {/* <Route path="records" element={<Records />} /> */}
           </Route>
         </Routes>

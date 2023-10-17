@@ -1,0 +1,55 @@
+@import "../../utils/variables.scss";
+
+.adminPanel {
+  .MuiTableContainer-root {
+    border-bottom: none;
+  }
+
+  .MuiTable-root,
+  .MuiTable-root tr,
+  .MuiTable-root th,
+  .MuiTable-root td,
+  .MuiTable-root p,
+  .MuiTable-root select,
+  .MuiTableContainer-root,
+  .MuiTableContainer-root button,
+  .MuiTableContainer-root select {
+    color: white;
+  }
+
+  .MuiTableContainer-root select option {
+    color: black;
+  }
+
+  .MuiTableContainer-root,
+  .MuiTable-root {
+    width: 100vw;
+    background-color: $background-color-form !important;
+  }
+
+  .MuiTable-root {
+    margin: 40px 25%;
+    max-width: 50vw;
+
+    @media only screen and (min-width: 500px) and (max-width: 999px) {
+      margin: 40px 0 40px calc(50vw - 250px) !important;
+    }
+
+    @media only screen and (max-width: 499px) {
+      margin: 40px 0 0 !important;
+    }
+
+    tr,
+    th,
+    td,
+    p,
+    select {
+      border-color: $gold;
+    }
+
+    .MuiTablePagination-selectLabel,
+    .MuiTablePagination-displayedRows {
+      margin: 0 !important;
+    }
+  }
+}
