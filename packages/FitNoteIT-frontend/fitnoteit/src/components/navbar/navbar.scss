@@ -25,6 +25,15 @@
     }
 
     .left,
+    .left2,
+    .right,
+    .right2 {
+      @media only screen and (max-width: 951px) {
+        display: none !important;
+      }
+    }
+
+    .left,
     .center,
     .right,
     .right2,

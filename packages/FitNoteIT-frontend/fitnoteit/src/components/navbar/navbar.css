@@ -22,6 +22,14 @@
   position: relative;
   top: -5px;
 }
+@media only screen and (max-width: 951px) {
+  .navbar__bottom .left,
+  .navbar__bottom .left2,
+  .navbar__bottom .right,
+  .navbar__bottom .right2 {
+    display: none !important;
+  }
+}
 .navbar__bottom .left,
 .navbar__bottom .center,
 .navbar__bottom .right,

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import logo from "../../utils/Logo.png";
 import { UsersContext, UsersContextType } from "../../contexts/user.context";
+import HamburgerMenu from "../hamburgerMenu/hamburgerMenu";
 
 export const Navbar: React.FC = () => {
   const { currentUser2, setCurrentUser2 } = useContext(
@@ -30,6 +31,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <Fragment>
+      <HamburgerMenu />
       <div className="navbar">
         <div className="navbar__top"></div>
         <div className="navbar__bottom">
