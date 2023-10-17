@@ -23,7 +23,7 @@ internal static class Extensions
 		using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
 		{
 			using var context = scope.ServiceProvider.GetRequiredService<UsersDbContext>();
-			if (context.Database.GetPendingMigrations().Count() == 0)
+			if (!context.Database.GetPendingMigrations().Any())
 			{
 				var usersSeeder = scope.ServiceProvider.GetRequiredService<IUsersSeeder>();
 

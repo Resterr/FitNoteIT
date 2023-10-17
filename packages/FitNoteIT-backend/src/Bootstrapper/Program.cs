@@ -22,7 +22,7 @@ app.UseCorsPolicy();
 app.UseUsersModule();
 app.UseSharedFramework();
 
-app.MapControllers();
+app.RegisterUsersModuleRequests();
 app.MapGet("/", ctx => ctx.Response.WriteAsync("FitNoteIT API"));
 
 app.Run();

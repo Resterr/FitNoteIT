@@ -2,6 +2,7 @@
 using FitNoteIT.Modules.Users.Core.Exceptions;
 using FitNoteIT.Modules.Users.Shared.DTO;
 using FitNoteIT.Shared.Queries;
+using FluentValidation;
 
 namespace FitNoteIT.Modules.Users.Core.Features.UserFeature.Queries;
 
@@ -43,4 +44,13 @@ internal sealed class LoginUserHandler : IQueryHandler<LoginUser, TokensDto>
             RefreshToken = refreshToken
         };
     }
+}
+
+public class LoginUserValidator : AbstractValidator<LoginUser>
+{
+	public LoginUserValidator()
+	{
+        RuleFor(x => x.UserName).NotNull();
+        RuleFor(x => x.Password).NotNull();
+	}
 }
