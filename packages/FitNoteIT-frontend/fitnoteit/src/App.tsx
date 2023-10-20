@@ -1,8 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import logo from "./logo.svg";
 import "./App.css";
-
 import axios from "axios";
 import {UsersContext, UsersContextType} from "./contexts/user.context";
 import {Home} from "./pages/home";
@@ -11,7 +9,6 @@ import {Login} from "./pages/login";
 import {Register} from "./pages/register";
 import axiosInstance from "./utils/axiosInstance";
 import {AdminPanel} from "./pages/adminPanel/adminPanel";
-import {sassNull} from "sass";
 
 function App() {
     const {setCurrentUser2} = useContext(UsersContext) as UsersContextType;
