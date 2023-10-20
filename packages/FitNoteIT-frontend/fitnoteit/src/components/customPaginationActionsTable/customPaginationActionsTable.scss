@@ -1,0 +1,46 @@
+@import "../../utils/variables.scss";
+
+
+.table {
+  &-h4 {
+    color: $gold !important;
+  }
+
+  &-user-row {
+    cursor: pointer;
+  }
+
+  &-user-row:hover {
+    background-color: $background-color
+  }
+}
+
+.custom-select {
+  background-color: white !important;
+  color: black !important;
+  font-size: 16px !important;
+  padding: 10px !important;
+  border-radius: 5px !important;
+  margin-top: 20px !important;
+}
+
+.button-role-confirm:hover {
+  background-color: #f1ad64 !important;
+}
+
+.custom-modal, .custom-modal:focus, .custom-box, .custom-box:focus, .custom-select {
+  outline: none !important;
+}
+
+.custom-modal:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+.custom-box {
+  .Mui-disabled {
+    background-color: #9595959c !important;
+    color: #ddb4b4 !important;
+  }
+}
+
