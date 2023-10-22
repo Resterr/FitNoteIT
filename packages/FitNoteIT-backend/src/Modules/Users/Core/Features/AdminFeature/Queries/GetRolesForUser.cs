@@ -6,12 +6,12 @@ using FitNoteIT.Shared.Queries;
 namespace FitNoteIT.Modules.Users.Core.Features.AdminFeature.Queries;
 public record GetRolesForUser(Guid Id) : IQuery<List<RoleDto>>;
 
-internal sealed class GetUserByIdHandler : IQueryHandler<GetRolesForUser, List<RoleDto>>
+internal sealed class GetRolesForHandler : IQueryHandler<GetRolesForUser, List<RoleDto>>
 {
 	private readonly IUserRepository _userRepository;
 	private readonly IMapper _mapper;
 
-	public GetUserByIdHandler(IUserRepository userRepository, IMapper mapper)
+	public GetRolesForHandler(IUserRepository userRepository, IMapper mapper)
 	{
 		_userRepository = userRepository;
 		_mapper = mapper;
