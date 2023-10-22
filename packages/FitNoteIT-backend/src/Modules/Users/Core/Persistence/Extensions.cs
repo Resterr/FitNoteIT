@@ -32,8 +32,8 @@ internal static class Extensions
 					context.Roles.AddRange(usersSeeder.SeedDefaultRoles());
 					context.SaveChanges();
 				}
-
-				if (!context.Users.Any())
+				
+				if (!context.Users.Include(x => x.Roles).Any(x => x.Roles.Select(y => y.Name).Contains("SuperAdmin")))
 				{
 					var superAdmin = usersSeeder.SeedSuperAdmin();
 					var role = context.Roles.Single(x => x.Name == "SuperAdmin");
