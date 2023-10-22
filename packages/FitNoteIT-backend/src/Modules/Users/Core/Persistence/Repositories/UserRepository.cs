@@ -13,21 +13,30 @@ internal sealed class UserRepository : IUserRepository
 		_dbContext = dbContext;
 	}
 
+	public async Task<List<User>> GetAllAsync()
+	{
+		var query = await _dbContext.Users.Include(x => x.Roles).ToListAsync();
+		
+		return query;
+	}
+	
 	public async Task<User> GetByIdAsync(Guid id)
 	{
-		var query = await _dbContext.Users.SingleOrDefaultAsync(x => x.Id == id) ?? throw new UserNotFoundException(id);
+		var query = await _dbContext.Users.Include(x => x.Roles).SingleOrDefaultAsync(x => x.Id == id) ?? throw new UserNotFoundException(id);
+		
 		return query;
 	}
 
 	public async Task<User> GetByEmailAsync(string email)
 	{
-		var query = await _dbContext.Users.SingleOrDefaultAsync(x => x.Email == email) ?? throw new UserNotFoundException(email, "email");
+		var query = await _dbContext.Users.Include(x => x.Roles).SingleOrDefaultAsync(x => x.Email == email) ?? throw new UserNotFoundException(email, "email");
+		
 		return query;
 	}
 
 	public async Task<User> GetByUserNameAsync(string userName)
 	{
-		var query = await _dbContext.Users.SingleOrDefaultAsync(x => x.UserName == userName) ?? throw new UserNotFoundException(userName, "username");
+		var query = await _dbContext.Users.Include(x => x.Roles).SingleOrDefaultAsync(x => x.UserName == userName) ?? throw new UserNotFoundException(userName, "username");
 		return query;
 	}
 

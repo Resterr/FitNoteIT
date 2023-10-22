@@ -32,12 +32,14 @@ internal static class Extensions
 					context.Roles.AddRange(usersSeeder.SeedDefaultRoles());
 					context.SaveChanges();
 				}
-
-				if (!context.Users.Any())
+				
+				if (!context.Users.Include(x => x.Roles).Any(x => x.Roles.Select(y => y.Name).Contains("SuperAdmin")))
 				{
 					var superAdmin = usersSeeder.SeedSuperAdmin();
-					var role = context.Roles.Single(x => x.Name == "SuperAdmin");
-					superAdmin.AddRole(role);
+					var superAdminRole = context.Roles.Single(x => x.Name == "SuperAdmin");
+					var adminRole = context.Roles.Single(x => x.Name == "Admin");
+					superAdmin.AddRole(superAdminRole);
+					superAdmin.AddRole(adminRole);
 					context.Users.Add(superAdmin);
 					context.SaveChanges();
 				}
