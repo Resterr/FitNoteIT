@@ -16,9 +16,9 @@ internal sealed class GetRolesForHandler : IQueryHandler<GetRolesForUser, List<R
 		_userRepository = userRepository;
 		_mapper = mapper;
 	}
-	public async Task<List<RoleDto>> HandleAsync(GetRolesForUser query, CancellationToken cancellationToken)
+	public async Task<List<RoleDto>> HandleAsync(GetRolesForUser request, CancellationToken cancellationToken)
 	{
-		var user = await _userRepository.GetByIdAsync(query.Id);
+		var user = await _userRepository.GetByIdAsync(request.Id);
 		var result = _mapper.Map<List<RoleDto>>(user.Roles);
 		
 		return result;

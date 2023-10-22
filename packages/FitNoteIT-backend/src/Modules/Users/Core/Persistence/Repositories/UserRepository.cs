@@ -1,7 +1,6 @@
 ﻿using FitNoteIT.Modules.Users.Core.Abstractions;
 using FitNoteIT.Modules.Users.Core.Entities;
 using FitNoteIT.Modules.Users.Core.Exceptions;
-using FitNoteIT.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Persistence.Repositories;

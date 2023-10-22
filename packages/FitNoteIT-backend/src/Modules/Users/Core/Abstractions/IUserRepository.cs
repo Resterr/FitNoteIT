@@ -1,5 +1,4 @@
 ﻿using FitNoteIT.Modules.Users.Core.Entities;
-using FitNoteIT.Shared.Models;
 
 namespace FitNoteIT.Modules.Users.Core.Abstractions;
 public interface IUserRepository
