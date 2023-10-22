@@ -1,4 +1,5 @@
-﻿using FitNoteIT.Modules.Users.Core.Abstractions;
+﻿using AutoMapper;
+using FitNoteIT.Modules.Users.Core.Abstractions;
 using FitNoteIT.Modules.Users.Core.Exceptions;
 using FitNoteIT.Modules.Users.Core.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -9,21 +10,10 @@ internal sealed class AuthorizationService : IAuthorizationService
 	private readonly UsersDbContext _dbContext;
 	private readonly IUserRepository _userRepository;
 
-	public AuthorizationService(UsersDbContext dbContext, IUserRepository userRepository)
+	public AuthorizationService(UsersDbContext dbContext, IUserRepository userRepository, IMapper mapper)
 	{
 		_dbContext = dbContext;
 		_userRepository = userRepository;
-	}
-
-	public async Task<bool> AuthenticateUserAsync(Guid userId)
-	{
-		return await _dbContext.Users.AnyAsync(x => x.Id == userId); ;
-	}
-
-	public async Task<bool> AuthorizeUserAsync(Guid userId, string roleName)
-	{
-		var user = await _dbContext.Users.Include(x => x.Roles).SingleOrDefaultAsync(x => x.Id == userId) ?? throw new UnauthorizedAccessException();
-		return user.Roles.Select(x => x.Name).Contains(roleName);
 	}
 
 	public async Task AddUserToRoleAsync(Guid userId, string roleName)
@@ -54,13 +44,5 @@ internal sealed class AuthorizationService : IAuthorizationService
 		{
 			throw new RoleNotFoundException(roleName);
 		}
-	}
-
-	public async Task<IEnumerable<string>> GetRolesForUserAsync(Guid userId)
-	{
-		var user = await _userRepository.GetByIdAsync(userId);
-		var roles = await _dbContext.Roles.Include(x => x.Users).Where(x => x.Users.Contains(user)).ToListAsync();
-
-		return roles.Select(x => x.Name);
 	}
 }

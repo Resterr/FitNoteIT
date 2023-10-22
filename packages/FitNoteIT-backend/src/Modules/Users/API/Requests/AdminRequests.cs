@@ -1,5 +1,6 @@
 ﻿using FitNoteIT.Modules.Users.Core.Features.AdminFeature.Commands;
 using FitNoteIT.Modules.Users.Core.Features.AdminFeature.Queries;
+using FitNoteIT.Modules.Users.Shared.DTO;
 using FitNoteIT.Shared.Dispatchers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +29,7 @@ internal static class AdminRequests
 			var result = await dispatcher.QueryAsync(request);
 			return Results.Ok(result);
 		}).RequireAuthorization("admin")
-			.Produces<List<string>>(StatusCodes.Status200OK)
+			.Produces<List<RoleDto>>(StatusCodes.Status200OK)
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status403Forbidden)
 			.Produces(StatusCodes.Status404NotFound)

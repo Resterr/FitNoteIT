@@ -23,11 +23,23 @@ internal static class UsersRequests
 
 	private static RouteGroupBuilder MapUsersEndpoints(this RouteGroupBuilder group)
 	{
+		group.MapGet("", async (IDispatcher dispatcher, [AsParameters] GetAllUsers request) =>
+			{
+				//var request = new GetUserById(id);
+				var result = await dispatcher.QueryAsync(request);
+				return Results.Ok(result);
+			}).RequireAuthorization("admin")
+			.Produces<UserDto>(StatusCodes.Status200OK)
+			.Produces(StatusCodes.Status401Unauthorized)
+			.Produces(StatusCodes.Status403Forbidden)
+			.Produces(StatusCodes.Status404NotFound)
+			.WithMetadata(new SwaggerOperationAttribute("Paginated get all users"));
+		
 		group.MapGet("{id}", async (IDispatcher dispatcher, Guid id) =>
 		{
 			var request = new GetUserById(id);
 			var result = await dispatcher.QueryAsync(request);
-			return result != null ? Results.Ok(result) : Results.NotFound();
+			return Results.Ok(result);
 		}).RequireAuthorization("admin")
 			.Produces<UserDto>(StatusCodes.Status200OK)
 			.Produces(StatusCodes.Status401Unauthorized)
@@ -39,7 +51,7 @@ internal static class UsersRequests
 		{
 			var request = new SelfGetUser();
 			var result = await dispatcher.QueryAsync(request);
-			return result != null ? Results.Ok(result) : Results.Unauthorized();
+			return Results.Ok(result);
 		}).RequireAuthorization("user")
 			.Produces<UserDto>(StatusCodes.Status200OK)
 			.Produces(StatusCodes.Status401Unauthorized)
