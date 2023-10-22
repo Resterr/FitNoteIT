@@ -14,9 +14,9 @@ internal sealed class UserRepository : IUserRepository
 		_dbContext = dbContext;
 	}
 
-	public async Task<PaginatedList<User>> PaginatedGetAllAsync(int pageNumber, int pageSize)
+	public async Task<List<User>> GetAllAsync()
 	{
-		var query = await _dbContext.Users.Include(x => x.Roles).PaginatedListAsync(pageNumber, pageSize);
+		var query = await _dbContext.Users.Include(x => x.Roles).ToListAsync();
 		
 		return query;
 	}

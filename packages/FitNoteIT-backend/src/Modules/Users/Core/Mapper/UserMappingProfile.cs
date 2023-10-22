@@ -9,8 +9,6 @@ internal class UserMappingProfile : Profile
     public UserMappingProfile()
     {
         CreateMap<User, UserDto>();
-        CreateMap<PaginatedList<User>, PaginatedList<UserDto>>()
-            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
         CreateMap<Role, RoleDto>();
     }
 }

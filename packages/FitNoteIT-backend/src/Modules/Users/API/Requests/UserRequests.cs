@@ -25,7 +25,6 @@ internal static class UsersRequests
 	{
 		group.MapGet("", async (IDispatcher dispatcher, [AsParameters] GetAllUsers request) =>
 			{
-				//var request = new GetUserById(id);
 				var result = await dispatcher.QueryAsync(request);
 				return Results.Ok(result);
 			}).RequireAuthorization("admin")
@@ -33,7 +32,7 @@ internal static class UsersRequests
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status403Forbidden)
 			.Produces(StatusCodes.Status404NotFound)
-			.WithMetadata(new SwaggerOperationAttribute("Paginated get all users"));
+			.WithMetadata(new SwaggerOperationAttribute("Get all users"));
 		
 		group.MapGet("{id}", async (IDispatcher dispatcher, Guid id) =>
 		{
