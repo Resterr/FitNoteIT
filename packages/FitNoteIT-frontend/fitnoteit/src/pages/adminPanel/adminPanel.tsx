@@ -10,6 +10,9 @@ export const AdminPanel: React.FC = () => {
   const [roles, setRoles] = useState<RoleType | undefined>(undefined);
   const currentUser = localStorage.getItem("currentUser");
   const navigate = useNavigate();
+  useEffect(() => {
+    console.log(roles);
+  }, [roles]);
 
   useEffect(() => {
     if (!currentUser) {

@@ -14,17 +14,17 @@ type MenuState = {
 };
 
 export const Menu: React.FC<MenuProps> = ({ className }) => {
-  const { currentUser2, setCurrentUser2 } = useContext(
-    UsersContext
+  const { currentUserFromContext, setCurrentUserFromContext } = useContext(
+    UsersContext,
   ) as UsersContextType;
 
   const currentUser: string | null = localStorage.getItem("currentUser");
 
   useEffect(() => {
     if (currentUser) {
-      setCurrentUser2(currentUser);
+      setCurrentUserFromContext(currentUser);
     } else {
-      setCurrentUser2(undefined);
+      setCurrentUserFromContext(undefined);
     }
   }, []);
 
@@ -35,7 +35,7 @@ export const Menu: React.FC<MenuProps> = ({ className }) => {
     localStorage.setItem("accessToken", "");
     localStorage.setItem("refreshToken", "");
 
-    setCurrentUser2("");
+    setCurrentUserFromContext("");
   };
 
   return (
@@ -44,7 +44,8 @@ export const Menu: React.FC<MenuProps> = ({ className }) => {
         <li className={styles.navigation__item}>
           {currentUser ? (
             <button className="navbar__logout-button" onClick={logoutHandler}>
-              Wyloguj {currentUser2 ? `${currentUser2}` : ""}
+              Wyloguj{" "}
+              {currentUserFromContext ? `${currentUserFromContext}` : ""}
             </button>
           ) : location.pathname === "/" ? (
             <Link to="/login">

@@ -11,7 +11,9 @@ import axiosInstance from "./utils/axiosInstance";
 import { AdminPanel } from "./pages/adminPanel/adminPanel";
 
 function App() {
-  const { setCurrentUser2 } = useContext(UsersContext) as UsersContextType;
+  const { setCurrentUserFromContext } = useContext(
+    UsersContext,
+  ) as UsersContextType;
   const currentUser = localStorage.getItem("currentUser");
   const [intervalToken, setIntervalToken] = useState<
     number | null | NodeJS.Timer
@@ -20,7 +22,7 @@ function App() {
     localStorage.setItem("currentUser", "");
     localStorage.setItem("accessToken", "");
     localStorage.setItem("refreshToken", "");
-    setCurrentUser2("");
+    setCurrentUserFromContext("");
   };
 
   axios.interceptors.response.use(
@@ -68,9 +70,9 @@ function App() {
 
   useEffect(() => {
     if (currentUser) {
-      setCurrentUser2(currentUser);
+      setCurrentUserFromContext(currentUser);
     } else {
-      setCurrentUser2(undefined);
+      setCurrentUserFromContext(undefined);
     }
   }, []);
 

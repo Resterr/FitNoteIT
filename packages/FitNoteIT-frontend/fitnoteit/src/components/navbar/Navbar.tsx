@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
@@ -6,31 +6,81 @@ import { useLocation } from "react-router-dom";
 import logo from "../../utils/Logo.png";
 import { UsersContext, UsersContextType } from "../../contexts/user.context";
 import HamburgerMenu from "../hamburgerMenu/hamburgerMenu";
-
+import axiosInstance from "../../utils/axiosInstance";
+import AdminPanelSVG from "../../utils/adminpanel.svg";
+import { AxiosResponse } from "axios";
+type RoleType = { name: string }[];
 export const Navbar: React.FC = () => {
-  const { currentUser2, setCurrentUser2 } = useContext(
-    UsersContext
+  const { currentUserFromContext, setCurrentUserFromContext } = useContext(
+    UsersContext,
   ) as UsersContextType;
   const currentUser = localStorage.getItem("currentUser");
+  const [adminPanelVisible, SetAdminPanelVisible] = useState<boolean>(false);
 
   useEffect(() => {
     if (!currentUser) {
       return;
     }
-    setCurrentUser2(currentUser);
+    setCurrentUserFromContext(currentUser);
+    checkRole();
   }, []);
+
+  useEffect(() => {
+    checkRole();
+  }, [currentUser, currentUserFromContext]);
+
+  const checkRole = async () => {
+    let token: string | null = localStorage.getItem("accessToken");
+    let config2: { headers: { Authorization: string } } = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    try {
+      await axiosInstance
+        .get("/api/users/current", config2)
+        .then((response: AxiosResponse<any, any>): void => {
+          if (response.status == 200) {
+            let roles: RoleType = response.data.roles;
+            if (
+              roles.some(
+                (role: { name: string }): boolean => role.name === "Admin",
+              )
+            ) {
+              SetAdminPanelVisible(true);
+            }
+          } else {
+            console.log("blad sprawdzania usera");
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const location = useLocation();
 
   const logoutHandler = () => {
+    SetAdminPanelVisible(false);
     localStorage.setItem("currentUser", "");
     localStorage.setItem("accessToken", "");
     localStorage.setItem("refreshToken", "");
-    setCurrentUser2(undefined);
+    setCurrentUserFromContext(undefined);
   };
 
   return (
     <Fragment>
+      {adminPanelVisible === true ? (
+        <div className={"AdminPanel"}>
+          <Link to="/admin">
+            <img
+              className={"AdminPanel__img"}
+              alt={"adminPanelMenu"}
+              src={AdminPanelSVG}
+            ></img>{" "}
+          </Link>
+        </div>
+      ) : null}
+
       <HamburgerMenu />
       <div className="navbar">
         <div className="navbar__top"></div>
@@ -82,7 +132,8 @@ export const Navbar: React.FC = () => {
           <div className="right2">
             {currentUser ? (
               <button className="navbar__logout-button" onClick={logoutHandler}>
-                Wyloguj {currentUser2 ? `${currentUser2}` : ""}
+                Wyloguj{" "}
+                {currentUserFromContext ? `${currentUserFromContext}` : ""}
               </button>
             ) : location.pathname === "/" ? (
               <Link to="/login">
