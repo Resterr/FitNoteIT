@@ -57,7 +57,7 @@ export const AdminPanel: React.FC = () => {
     let config2: { headers: { Authorization: string } } = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    console.log(config2);
+
     try {
       await axiosInstance
         .get("/api/users/current", config2)
