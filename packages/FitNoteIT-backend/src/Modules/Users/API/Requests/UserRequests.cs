@@ -56,7 +56,7 @@ internal static class UsersRequests
 		{
 			var token = await dispatcher.QueryAsync(request);
 			return Results.Ok(token);
-		}).RequireAuthorization("user")
+		}).AllowAnonymous()
 			.Produces<TokensDto>()
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status401Unauthorized)
