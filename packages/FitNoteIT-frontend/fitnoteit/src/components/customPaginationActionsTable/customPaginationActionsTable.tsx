@@ -271,10 +271,10 @@ export default function CustomPaginationActionsTable() {
           await axiosInstance
             .delete(`/api/admin/users/${data.id}`, config2)
             .then((response: AxiosResponse<any, any>): void => {
-              if (response.status == 200) {
+              if (response.status == 204) {
                 alert("usunieto uzytkownika");
               } else {
-                console.log(response);
+                alert("Blad usuwania uzytkownika");
               }
             });
         } catch (error) {
