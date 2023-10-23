@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import "./loginForm.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { UsersContext, UsersContextType } from "../../../contexts/user.context";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
@@ -12,9 +12,10 @@ type FormData = {
 };
 
 export const LoginForm: React.FC = () => {
-  const currentUser = localStorage.getItem("currentUser");
-  const { currentUser2, setCurrentUser2 } = useContext(
-    UsersContext
+  const currentUser: string | null | undefined =
+    localStorage.getItem("currentUser");
+  const { currentUserFromContext, setCurrentUserFromContext } = useContext(
+    UsersContext,
   ) as UsersContextType;
   const {
     register,
@@ -31,7 +32,7 @@ export const LoginForm: React.FC = () => {
   }, [currentUser, navigate]);
 
   axios.interceptors.response.use(
-    (response) => response,
+    (response: AxiosResponse<any, any>) => response,
     (error) => {
       if (error.response) {
         switch (error.response.status) {
@@ -55,12 +56,15 @@ export const LoginForm: React.FC = () => {
         setStatus("Nie udało się zalogować");
       }
       return Promise.reject(error);
-    }
+    },
   );
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     try {
-      const response = await axiosInstance.post("/api/users/login", data);
+      const response: AxiosResponse<any> = await axiosInstance.post(
+        "/api/users/login",
+        data,
+      );
 
       if (response.status === 200) {
         localStorage.setItem("currentUser", data.userName);
@@ -68,7 +72,7 @@ export const LoginForm: React.FC = () => {
         localStorage.setItem("refreshToken", response.data.refreshToken);
         let myDate = Date.now();
         localStorage.setItem("tokenDate", myDate.toString());
-        setCurrentUser2(data.userName);
+        setCurrentUserFromContext(data.userName);
         setStatus(`Witaj ${data.userName}!`);
         console.log(response);
         navigate("/");

@@ -1,5 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+.AdminPanel__img {
+  width: 22px;
+  z-index: 10000;
+  right: 2px;
+  top: 1px;
+  position: absolute;
+  height: auto;
+  cursor: pointer;
+}
+
 .navbar {
   padding: 0;
   margin: 0;
@@ -21,6 +31,14 @@
 .navbar__bottom .right2 {
   position: relative;
   top: -5px;
+}
+@media only screen and (max-width: 951px) {
+  .navbar__bottom .left,
+  .navbar__bottom .left2,
+  .navbar__bottom .right,
+  .navbar__bottom .right2 {
+    display: none !important;
+  }
 }
 .navbar__bottom .left,
 .navbar__bottom .center,
@@ -109,4 +127,6 @@
 .navbar__bottom .right2 .navbar__logout-button:hover,
 .navbar__bottom .left2 .navbar__logout-button:hover {
   background-color: #f1ad64;
-}/*# sourceMappingURL=navbar.css.map */
+}
+
+/*# sourceMappingURL=navbar.css.map */

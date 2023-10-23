@@ -7,10 +7,10 @@ import React, {
 } from "react";
 
 export type UsersContextType = {
-  currentUser2: string | undefined;
+  currentUserFromContext: string | undefined;
   accessToken: string | undefined;
   refreshToken: string | undefined;
-  setCurrentUser2: Dispatch<SetStateAction<string | undefined>>;
+  setCurrentUserFromContext: Dispatch<SetStateAction<string | undefined>>;
   setAccessToken: Dispatch<SetStateAction<string | undefined>>;
   setRefreshToken: Dispatch<SetStateAction<string | undefined>>;
 };
@@ -18,17 +18,19 @@ export type UsersContextType = {
 const UsersContext = createContext<UsersContextType | undefined>(undefined);
 
 function UsersProvider({ children }: { children: ReactNode }) {
-  const [currentUser2, setCurrentUser2] = useState<string | undefined>();
+  const [currentUserFromContext, setCurrentUserFromContext] = useState<
+    string | undefined
+  >();
   const [accessToken, setAccessToken] = useState<string | undefined>();
   const [refreshToken, setRefreshToken] = useState<string | undefined>();
 
   return (
     <UsersContext.Provider
       value={{
-        currentUser2,
+        currentUserFromContext,
         accessToken,
         refreshToken,
-        setCurrentUser2,
+        setCurrentUserFromContext,
         setAccessToken,
         setRefreshToken,
       }}

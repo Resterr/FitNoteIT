@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+.adminPanel .MuiTableContainer-root {
+  border-bottom: none;
+}
+.adminPanel .MuiTable-root,
+.adminPanel .MuiTable-root tr,
+.adminPanel .MuiTable-root th,
+.adminPanel .MuiTable-root td,
+.adminPanel .MuiTable-root p,
+.adminPanel .MuiTable-root select,
+.adminPanel .MuiTableContainer-root,
+.adminPanel .MuiTableContainer-root button,
+.adminPanel .MuiTableContainer-root select {
+  color: white;
+}
+.adminPanel .MuiTableContainer-root select option {
+  color: black;
+}
+.adminPanel .MuiTableContainer-root,
+.adminPanel .MuiTable-root {
+  width: 100vw;
+  background-color: #151512 !important;
+}
+.adminPanel .MuiTable-root {
+  margin: 40px 25%;
+  max-width: 50vw;
+}
+@media only screen and (min-width: 500px) and (max-width: 999px) {
+  .adminPanel .MuiTable-root {
+    margin: 40px 0 40px calc(50vw - 250px) !important;
+  }
+}
+@media only screen and (max-width: 499px) {
+  .adminPanel .MuiTable-root {
+    margin: 40px 0 0 !important;
+  }
+}
+.adminPanel .MuiTable-root tr,
+.adminPanel .MuiTable-root th,
+.adminPanel .MuiTable-root td,
+.adminPanel .MuiTable-root p,
+.adminPanel .MuiTable-root select {
+  border-color: #b17a41;
+}
+.adminPanel .MuiTable-root .MuiTablePagination-selectLabel,
+.adminPanel .MuiTable-root .MuiTablePagination-displayedRows {
+  margin: 0 !important;
+}
+.adminPanel .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiNativeSelect-icon.MuiTablePagination-selectIcon {
+  color: white !important;
+}
+
+/*# sourceMappingURL=adminPanel.css.map */

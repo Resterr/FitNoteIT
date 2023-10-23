@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+.table-h4 {
+  color: #b17a41 !important;
+}
+.table-user-row {
+  cursor: pointer;
+}
+.table-user-row:hover {
+  background-color: #1e1d1d;
+}
+
+.custom-select {
+  background-color: white !important;
+  color: black !important;
+  font-size: 16px !important;
+  padding: 10px !important;
+  border-radius: 5px !important;
+  margin-top: 20px !important;
+}
+
+.button-role-confirm:hover {
+  background-color: #f1ad64 !important;
+}
+
+.custom-modal, .custom-modal:focus, .custom-box, .custom-box:focus, .custom-select {
+  outline: none !important;
+}
+
+.custom-modal:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+.custom-box .Mui-disabled {
+  background-color: rgba(149, 149, 149, 0.6117647059) !important;
+  color: #ddb4b4 !important;
+}
+
+/*# sourceMappingURL=customPaginationActionsTable.css.map */

@@ -8,12 +8,25 @@
   background-color: #151512;
   height: calc(100vh - 140px);
 }
+.login__form::-webkit-scrollbar {
+  width: 8px !important;
+}
+.login__form::-webkit-scrollbar-thumb {
+  background-color: #b17a41 !important;
+  border-radius: 9999px !important;
+}
 @media only screen and (max-width: 950px) {
   .login__form {
     position: static;
     text-align: center;
     height: 100%;
     width: 100%;
+  }
+}
+@media only screen and (min-width: 951px) {
+  .login__form {
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
   }
 }
 .login__form-status h1 {

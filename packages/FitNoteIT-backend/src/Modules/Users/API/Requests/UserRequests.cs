@@ -23,25 +23,13 @@ internal static class UsersRequests
 
 	private static RouteGroupBuilder MapUsersEndpoints(this RouteGroupBuilder group)
 	{
-		group.MapGet("{id}", async (IDispatcher dispatcher, Guid id) =>
-		{
-			var request = new GetUserById(id);
-			var result = await dispatcher.QueryAsync(request);
-			return result != null ? Results.Ok(result) : Results.NotFound();
-		}).RequireAuthorization("admin")
-			.Produces<UserDto>(StatusCodes.Status200OK)
-			.Produces(StatusCodes.Status401Unauthorized)
-			.Produces(StatusCodes.Status403Forbidden)
-			.Produces(StatusCodes.Status404NotFound)
-			.WithMetadata(new SwaggerOperationAttribute("Get user by id"));
-
 		group.MapGet("current", async (IDispatcher dispatcher) =>
 		{
 			var request = new SelfGetUser();
 			var result = await dispatcher.QueryAsync(request);
-			return result != null ? Results.Ok(result) : Results.Unauthorized();
+			return Results.Ok(result);
 		}).RequireAuthorization("user")
-			.Produces<UserDto>(StatusCodes.Status200OK)
+			.Produces<UserDto>()
 			.Produces(StatusCodes.Status401Unauthorized)
 			.WithMetadata(new SwaggerOperationAttribute("Get current user"));
 
@@ -59,7 +47,7 @@ internal static class UsersRequests
 			var result = await dispatcher.QueryAsync(request);
 			return Results.Ok(result);
 		}).AllowAnonymous()
-			.Produces<TokensDto>(StatusCodes.Status200OK)
+			.Produces<TokensDto>()
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status404NotFound)
 			.WithMetadata(new SwaggerOperationAttribute("Sign in user"));
@@ -68,8 +56,8 @@ internal static class UsersRequests
 		{
 			var token = await dispatcher.QueryAsync(request);
 			return Results.Ok(token);
-		}).RequireAuthorization("user")
-			.Produces<TokensDto>(StatusCodes.Status200OK)
+		}).AllowAnonymous()
+			.Produces<TokensDto>()
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status404NotFound)
@@ -85,7 +73,7 @@ internal static class UsersRequests
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status404NotFound)
 			.WithMetadata(new SwaggerOperationAttribute("Remove refresh token"));
-
+		
 		return group;
 	}
 }
