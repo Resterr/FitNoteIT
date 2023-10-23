@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./registerForm.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 
@@ -29,7 +29,7 @@ export const RegisterForm: React.FC = () => {
   }, [currentUser, navigate]);
 
   axios.interceptors.response.use(
-    (response) => response,
+    (response: AxiosResponse<any, any>) => response,
     (error) => {
       if (error.response) {
         switch (error.response.status) {
@@ -49,23 +49,26 @@ export const RegisterForm: React.FC = () => {
         setStatus("Nie udało się zarejestrować");
       }
       return Promise.reject(error);
-    }
+    },
   );
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      const response = await axiosInstance.post("/api/users/register", data);
+      const response: AxiosResponse<any> = await axiosInstance.post(
+        "/api/users/register",
+        data,
+      );
       if (response.status === 200) {
         setStatus("Udało się zarejestrować");
         const formId = document.getElementById("form-id") as HTMLInputElement;
         const formLogin = document.getElementById(
-          "form-login"
+          "form-login",
         ) as HTMLInputElement;
         const formPassword = document.getElementById(
-          "form-password"
+          "form-password",
         ) as HTMLInputElement;
         const formPassword2 = document.getElementById(
-          "form-password2"
+          "form-password2",
         ) as HTMLInputElement;
 
         formId.value = "";
