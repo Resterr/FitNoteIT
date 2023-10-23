@@ -80,7 +80,7 @@ export const AdminPanel: React.FC = () => {
     <div className="adminPanel">
       {roles &&
       (roles.some((role) => role.name === "Admin") ||
-        roles.some((role) => role.name === "SuperAdmin")  ? (
+        roles.some((role) => role.name === "SuperAdmin")) ? (
         <CustomPaginationActionsTable />
       ) : null}
     </div>
