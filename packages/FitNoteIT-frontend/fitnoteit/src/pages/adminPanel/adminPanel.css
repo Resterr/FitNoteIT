@@ -47,5 +47,8 @@
 .adminPanel .MuiTable-root .MuiTablePagination-displayedRows {
   margin: 0 !important;
 }
+.adminPanel .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiNativeSelect-icon.MuiTablePagination-selectIcon {
+  color: white !important;
+}
 
 /*# sourceMappingURL=adminPanel.css.map */

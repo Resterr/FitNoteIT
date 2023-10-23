@@ -4,7 +4,7 @@
   .MuiTableContainer-root {
     border-bottom: none;
   }
-  
+
   .MuiTable-root,
   .MuiTable-root tr,
   .MuiTable-root th,
@@ -51,5 +51,8 @@
     .MuiTablePagination-displayedRows {
       margin: 0 !important;
     }
+  }
+  .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiNativeSelect-icon.MuiTablePagination-selectIcon {
+    color: white !important;
   }
 }
