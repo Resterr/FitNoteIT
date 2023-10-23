@@ -14,7 +14,7 @@ type FormData = {
 export const LoginForm: React.FC = () => {
   const currentUser: string | null | undefined =
     localStorage.getItem("currentUser");
-  const { currentUser2, setCurrentUser2 } = useContext(
+  const { currentUserFromContext, setCurrentUserFromContext } = useContext(
     UsersContext,
   ) as UsersContextType;
   const {
@@ -72,7 +72,7 @@ export const LoginForm: React.FC = () => {
         localStorage.setItem("refreshToken", response.data.refreshToken);
         let myDate = Date.now();
         localStorage.setItem("tokenDate", myDate.toString());
-        setCurrentUser2(data.userName);
+        setCurrentUserFromContext(data.userName);
         setStatus(`Witaj ${data.userName}!`);
         console.log(response);
         navigate("/");

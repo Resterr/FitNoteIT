@@ -1,5 +1,17 @@
 @import "../../utils/variables.scss";
 
+.AdminPanel {
+  &__img {
+    width: 22px;
+    z-index: 10000;
+    right: 2px;
+    top: 1px;
+    position: absolute;
+    height: auto;
+    cursor: pointer;
+  }
+}
+
 .navbar {
   padding: 0;
   margin: 0;
