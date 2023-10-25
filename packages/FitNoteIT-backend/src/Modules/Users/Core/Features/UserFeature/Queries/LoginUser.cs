@@ -2,6 +2,7 @@
 using FitNoteIT.Modules.Users.Core.Exceptions;
 using FitNoteIT.Modules.Users.Shared.DTO;
 using FitNoteIT.Shared.Queries;
+using FluentValidation;
 
 namespace FitNoteIT.Modules.Users.Core.Features.UserFeature.Queries;
 
@@ -11,14 +12,12 @@ internal sealed class LoginUserHandler : IQueryHandler<LoginUser, TokensDto>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
-	private readonly IAuthorizationService _authorizationService;
 	private readonly ITokenService _tokenService;
 
-    public LoginUserHandler(IUserRepository userRepository, IPasswordManager passwordManager, IAuthorizationService authorizationService, ITokenService tokenService)
+    public LoginUserHandler(IUserRepository userRepository, IPasswordManager passwordManager, ITokenService tokenService)
     {
         _userRepository = userRepository;
         _passwordManager = passwordManager;
-		_authorizationService = authorizationService;
 		_tokenService = tokenService;
     }
 
@@ -26,9 +25,8 @@ internal sealed class LoginUserHandler : IQueryHandler<LoginUser, TokensDto>
     {
         var user = await _userRepository.GetByUserNameAsync(request.UserName);
         if (!_passwordManager.Validate(request.Password, user.PasswordHash)) throw new InvalidUserPassword();
-
-        var roles = await _authorizationService.GetRolesForUserAsync(user.Id);
-        var accessToken = _tokenService.GenerateAccessToken(user.Id, user.Email, user.UserName, roles);
+		
+        var accessToken = _tokenService.GenerateAccessToken(user.Id, user.Email, user.UserName, user.Roles.Select(x => x.Name));
         var refreshToken = _tokenService.GenerateRefreshToken();
         var refreshTokenExpiryDate = _tokenService.GetRefreshExpiryDate();
 
@@ -43,4 +41,13 @@ internal sealed class LoginUserHandler : IQueryHandler<LoginUser, TokensDto>
             RefreshToken = refreshToken
         };
     }
+}
+
+public class LoginUserValidator : AbstractValidator<LoginUser>
+{
+	public LoginUserValidator()
+	{
+        RuleFor(x => x.UserName).NotNull();
+        RuleFor(x => x.Password).NotNull();
+	}
 }

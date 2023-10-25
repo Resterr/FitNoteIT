@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-datepicker": "^4.19.1"
+    "@types/react-datepicker": "^4.19.1",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

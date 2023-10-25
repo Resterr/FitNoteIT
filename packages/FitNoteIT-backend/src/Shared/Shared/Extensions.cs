@@ -3,15 +3,12 @@ using FitNoteIT.Shared.Database;
 using FitNoteIT.Shared.Dispatchers;
 using FitNoteIT.Shared.Events;
 using FitNoteIT.Shared.Exceptions;
-using FitNoteIT.Shared.Filters;
 using FitNoteIT.Shared.Messaging;
 using FitNoteIT.Shared.Queries;
 using FitNoteIT.Shared.Services;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -37,9 +34,6 @@ public static class Extensions
 		services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 		services.AddRouting(options => options.LowercaseUrls = true);
 		ValidatorOptions.Global.LanguageManager.Enabled = false;
-		services.AddFluentValidationAutoValidation();
-		services.AddControllers(options => options.Filters.Add<ValidationFilter>());
-		services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen(swagger =>
 		{
