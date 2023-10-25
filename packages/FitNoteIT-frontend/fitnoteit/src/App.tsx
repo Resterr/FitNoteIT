@@ -9,6 +9,7 @@ import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import axiosInstance from "./utils/axiosInstance";
 import { AdminPanel } from "./pages/adminPanel/adminPanel";
+import { Records } from "./pages/records";
 
 function App() {
   const { setCurrentUserFromContext } = useContext(
@@ -124,7 +125,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="admin" element={<AdminPanel />} />
-            {/* <Route path="records" element={<Records />} /> */}
+            <Route path="records" element={<Records />} />
           </Route>
         </Routes>
       </BrowserRouter>

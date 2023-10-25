@@ -87,7 +87,7 @@ export const Navbar: React.FC = () => {
         <div className="navbar__bottom">
           <div className="left">
             {currentUser ? (
-              <Link to="/">
+              <Link to="/records">
                 <p>Rekordy</p>
               </Link>
             ) : (
