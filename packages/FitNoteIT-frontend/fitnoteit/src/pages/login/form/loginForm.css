@@ -76,13 +76,6 @@
   outline: none !important;
   padding-left: 10px;
 }
-.login__form form .login__form-login input:-webkit-autofill,
-.login__form form .login__form-password input:-webkit-autofill {
-  background-color: #1e1d1d !important;
-  appearance: none !important;
-  color: red !important;
-  background-image: none !important;
-}
 .login__form form .login__form-login input:focus,
 .login__form form .login__form-password input:focus {
   border: none !important;
