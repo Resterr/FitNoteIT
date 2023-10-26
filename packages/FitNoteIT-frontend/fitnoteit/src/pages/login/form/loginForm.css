@@ -5,7 +5,7 @@
   left: 0;
   top: 0;
   width: 30vw;
-  background-color: #151512;
+  background-color: #151512 !important;
   height: calc(100vh - 140px);
 }
 .login__form::-webkit-scrollbar {
@@ -67,10 +67,26 @@
 .login__form form .login__form-login input,
 .login__form form .login__form-password input {
   font-family: "Oswald", sans-serif;
-  background-color: #1e1d1d;
+  background-color: #1e1d1d !important;
   border: none;
   color: #b17a41;
   width: 100%;
   margin-bottom: 90px;
   height: 45px;
-}/*# sourceMappingURL=loginForm.css.map */
+  outline: none !important;
+  padding-left: 10px;
+}
+.login__form form .login__form-login input:-webkit-autofill,
+.login__form form .login__form-password input:-webkit-autofill {
+  background-color: #1e1d1d !important;
+  appearance: none !important;
+  color: red !important;
+  background-image: none !important;
+}
+.login__form form .login__form-login input:focus,
+.login__form form .login__form-password input:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+/*# sourceMappingURL=loginForm.css.map */
