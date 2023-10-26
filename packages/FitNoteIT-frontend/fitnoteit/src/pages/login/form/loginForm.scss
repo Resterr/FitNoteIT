@@ -82,13 +82,6 @@
         outline: none !important;
         padding-left: 10px;
 
-        &:-webkit-autofill {
-          background-color: $background-color !important;
-          appearance: none !important;
-          color: red !important;
-          background-image: none !important;
-        }
-
         &:focus {
           border: none !important;
           outline: none !important;
