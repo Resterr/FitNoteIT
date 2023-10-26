@@ -79,12 +79,19 @@
 
       input {
         font-family: "Oswald", sans-serif;
-        background-color: $background-color;
+        background-color: $background-color !important;
         border: none;
         color: $gold;
         width: 100%;
         margin-bottom: 30px;
         height: 45px;
+        outline: none !important;
+        padding-left: 10px;
+
+        &:focus {
+          border: none !important;
+          outline: none !important;
+        }
       }
     }
   }
