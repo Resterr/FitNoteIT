@@ -3,6 +3,7 @@ using FitNoteIT.Shared.Commands;
 using FluentValidation;
 
 namespace FitNoteIT.Modules.Users.Core.Features.UserFeature.Commands;
+
 public record TokenRemove(Guid UserId) : ICommand;
 
 internal sealed class TokenRemoveHandler : ICommandHandler<TokenRemove>
@@ -27,7 +28,7 @@ public class TokenRemoveValidator : AbstractValidator<TokenRemove>
 {
 	public TokenRemoveValidator()
 	{
-		RuleFor(x => x.UserId).NotEmpty();
+		RuleFor(x => x.UserId)
+			.NotEmpty();
 	}
 }
-

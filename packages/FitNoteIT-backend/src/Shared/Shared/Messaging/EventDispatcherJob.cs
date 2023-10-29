@@ -10,7 +10,9 @@ internal sealed class EventDispatcherJob : BackgroundService
 	private readonly IEventDispatcher _eventDispatcher;
 	private readonly ILogger<EventDispatcherJob> _logger;
 
-	public EventDispatcherJob(IEventChannel eventChannel, IEventDispatcher eventDispatcher,
+	public EventDispatcherJob(
+		IEventChannel eventChannel,
+		IEventDispatcher eventDispatcher,
 		ILogger<EventDispatcherJob> logger)
 	{
 		_eventChannel = eventChannel;
@@ -21,7 +23,6 @@ internal sealed class EventDispatcherJob : BackgroundService
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
 		await foreach (var @event in _eventChannel.Reader.ReadAllAsync(stoppingToken))
-		{
 			try
 			{
 				await _eventDispatcher.PublishAsync(@event, stoppingToken);
@@ -30,6 +31,5 @@ internal sealed class EventDispatcherJob : BackgroundService
 			{
 				_logger.LogError(exception, exception.Message);
 			}
-		}
 	}
 }

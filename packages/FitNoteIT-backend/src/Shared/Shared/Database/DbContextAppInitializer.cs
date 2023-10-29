@@ -7,8 +7,8 @@ namespace FitNoteIT.Shared.Database;
 
 internal sealed class DbContextAppInitializer : IHostedService
 {
-	private readonly IServiceProvider _serviceProvider;
 	private readonly ILogger<DbContextAppInitializer> _logger;
+	private readonly IServiceProvider _serviceProvider;
 
 	public DbContextAppInitializer(IServiceProvider serviceProvider, ILogger<DbContextAppInitializer> logger)
 	{
@@ -26,15 +26,15 @@ internal sealed class DbContextAppInitializer : IHostedService
 		foreach (var dbContextType in dbContextTypes)
 		{
 			var dbContext = scope.ServiceProvider.GetService(dbContextType) as DbContext;
-			if (dbContext is null)
-			{
-				continue;
-			}
+			if (dbContext is null) continue;
 
 			_logger.LogInformation($"Running DB context: {dbContext.GetType().Name}...");
 			await dbContext.Database.MigrateAsync(cancellationToken);
 		}
 	}
 
-	public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+	public Task StopAsync(CancellationToken cancellationToken)
+	{
+		return Task.CompletedTask;
+	}
 }

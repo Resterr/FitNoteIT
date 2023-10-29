@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FitNoteIT.Modules.Users.Core.Persistence;
+
 internal static class Extensions
 {
 	public static IServiceCollection AddPersistence(this IServiceCollection services)
@@ -20,7 +21,8 @@ internal static class Extensions
 
 	public static IApplicationBuilder SeedUsersData(this IApplicationBuilder app)
 	{
-		using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+		using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+			.CreateScope();
 		using var context = scope.ServiceProvider.GetRequiredService<UsersDbContext>();
 		if (context.Database.GetPendingMigrations()
 			.Any())
@@ -42,11 +44,11 @@ internal static class Extensions
 			var superAdminRole = context.Roles.Single(x => x.Name == "SuperAdmin");
 			var adminRole = context.Roles.Single(x => x.Name == "Admin");
 			var user = context.Roles.Single(x => x.Name == "User");
-					
+
 			superAdmin.AddRole(superAdminRole);
 			superAdmin.AddRole(adminRole);
 			superAdmin.AddRole(user);
-					
+
 			context.Users.Add(superAdmin);
 			context.SaveChanges();
 		}

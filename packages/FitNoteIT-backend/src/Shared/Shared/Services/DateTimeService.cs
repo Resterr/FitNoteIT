@@ -7,5 +7,8 @@ public interface IDateTimeService
 
 internal sealed class DateTimeService : IDateTimeService
 {
-	public DateTime CurrentDate() => DateTime.UtcNow;
+	public DateTime CurrentDate()
+	{
+		return DateTime.UtcNow;
+	}
 }

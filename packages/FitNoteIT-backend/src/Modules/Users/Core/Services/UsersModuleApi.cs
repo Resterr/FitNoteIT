@@ -7,8 +7,8 @@ namespace FitNoteIT.Modules.Users.Core.Services;
 
 internal sealed class UsersModuleApi : IUsersModuleApi
 {
-	private readonly IUserRepository _userRepository;
 	private readonly IMapper _mapper;
+	private readonly IUserRepository _userRepository;
 
 	public UsersModuleApi(IUserRepository userRepository, IMapper mapper)
 	{
@@ -16,7 +16,13 @@ internal sealed class UsersModuleApi : IUsersModuleApi
 		_mapper = mapper;
 	}
 
-	public async Task<UserDto> GetUserAsync(Guid userId) => _mapper.Map<UserDto>(await _userRepository.GetByIdAsync(userId));
+	public async Task<UserDto> GetUserAsync(Guid userId)
+	{
+		return _mapper.Map<UserDto>(await _userRepository.GetByIdAsync(userId));
+	}
 
-	public async Task<UserDto> GetUserAsync(string email) => _mapper.Map<UserDto>(await _userRepository.GetByEmailAsync(email));
+	public async Task<UserDto> GetUserAsync(string email)
+	{
+		return _mapper.Map<UserDto>(await _userRepository.GetByEmailAsync(email));
+	}
 }

@@ -1,4 +1,5 @@
 ﻿namespace FitNoteIT.Modules.Users.Core.Abstractions;
+
 public interface IAuthorizationService
 {
 	Task<bool> AuthorizeAsync(Guid userId, string roleName);

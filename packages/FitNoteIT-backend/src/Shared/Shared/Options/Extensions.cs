@@ -8,7 +8,8 @@ public static class Extensions
 		where TOptions : new()
 	{
 		var options = new TOptions();
-		configuration.GetSection(sectionName).Bind(options);
+		configuration.GetSection(sectionName)
+			.Bind(options);
 
 		return options;
 	}

@@ -10,44 +10,50 @@ public record LoginUser(string UserName, string Password) : IQuery<TokensDto>;
 
 internal sealed class LoginUserHandler : IQueryHandler<LoginUser, TokensDto>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IPasswordManager _passwordManager;
+	private readonly IPasswordManager _passwordManager;
 	private readonly ITokenService _tokenService;
+	private readonly IUserRepository _userRepository;
 
-    public LoginUserHandler(IUserRepository userRepository, IPasswordManager passwordManager, ITokenService tokenService)
-    {
-        _userRepository = userRepository;
-        _passwordManager = passwordManager;
+	public LoginUserHandler(
+		IUserRepository userRepository,
+		IPasswordManager passwordManager,
+		ITokenService tokenService)
+	{
+		_userRepository = userRepository;
+		_passwordManager = passwordManager;
 		_tokenService = tokenService;
-    }
+	}
 
-    public async Task<TokensDto> HandleAsync(LoginUser request, CancellationToken cancellationToken)
-    {
-        var user = await _userRepository.GetByUserNameAsync(request.UserName);
-        if (!_passwordManager.Validate(request.Password, user.PasswordHash)) throw new InvalidUserPassword();
-		
-        var accessToken = _tokenService.GenerateAccessToken(user.Id, user.Email, user.UserName, user.Roles.Select(x => x.Name));
-        var refreshToken = _tokenService.GenerateRefreshToken();
-        var refreshTokenExpiryDate = _tokenService.GetRefreshExpiryDate();
+	public async Task<TokensDto> HandleAsync(LoginUser request, CancellationToken cancellationToken)
+	{
+		var user = await _userRepository.GetByUserNameAsync(request.UserName);
+		if (!_passwordManager.Validate(request.Password, user.PasswordHash)) throw new InvalidUserPassword();
 
-        user.SetRefreshToken(refreshToken);
-        user.SetRefreshTokenExpiryTime(refreshTokenExpiryDate);
+		var accessToken =
+			_tokenService.GenerateAccessToken(user.Id, user.Email, user.UserName, user.Roles.Select(x => x.Name));
+		var refreshToken = _tokenService.GenerateRefreshToken();
+		var refreshTokenExpiryDate = _tokenService.GetRefreshExpiryDate();
 
-        await _userRepository.UpdateAsync(user);
+		user.SetRefreshToken(refreshToken);
+		user.SetRefreshTokenExpiryTime(refreshTokenExpiryDate);
 
-        return new TokensDto
-        {
-            AccessToken = accessToken,
-            RefreshToken = refreshToken
-        };
-    }
+		await _userRepository.UpdateAsync(user);
+
+		return new TokensDto
+		{
+			AccessToken = accessToken,
+			RefreshToken = refreshToken
+		};
+	}
 }
 
 public class LoginUserValidator : AbstractValidator<LoginUser>
 {
 	public LoginUserValidator()
 	{
-        RuleFor(x => x.UserName).NotNull();
-        RuleFor(x => x.Password).NotNull();
+		RuleFor(x => x.UserName)
+			.NotNull();
+		RuleFor(x => x.Password)
+			.NotNull();
 	}
 }

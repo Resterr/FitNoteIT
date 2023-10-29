@@ -2,6 +2,7 @@
 using FitNoteIT.Shared.Common;
 
 namespace FitNoteIT.Modules.Users.Core.Entities;
+
 public class User : AuditableEntity
 {
 	public Guid Id { get; set; }
@@ -11,9 +12,10 @@ public class User : AuditableEntity
 	public DateTime? VerifiedAt { get; private set; }
 	public string? RefreshToken { get; private set; }
 	public DateTime? RefreshTokenExpiryTime { get; private set; }
-	public List<Role> Roles { get; private set; } = new();
+	public List<Role> Roles { get; } = new();
 
 	private User() { }
+
 	public User(Guid id, string email, string passwordHash, string userName)
 	{
 		Id = id;
@@ -40,7 +42,7 @@ public class User : AuditableEntity
 	public bool IsTokenValid(string token, DateTime currentDate)
 	{
 		if (RefreshToken == token && RefreshTokenExpiryTime >= currentDate) return true;
-		else return false;
+		return false;
 	}
 
 	public void RemoveRefreshToken()
@@ -63,10 +65,7 @@ public class User : AuditableEntity
 
 	public void Verify(DateTime verifiedAt)
 	{
-		if (VerifiedAt.HasValue)
-		{
-			throw new UserAlreadyVerifiedException(Id);
-		}
+		if (VerifiedAt.HasValue) throw new UserAlreadyVerifiedException(Id);
 
 		VerifiedAt = verifiedAt;
 	}

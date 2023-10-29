@@ -1,30 +1,32 @@
 ﻿namespace FitNoteIT.Bootstrapper.Policies;
+
 internal static class CorsPolicy
 {
-    public static IServiceCollection AddCorsPolicy(this IServiceCollection services)
-    {
-        var config = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json", optional: false)
-        .Build();
+	public static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+	{
+		var config = new ConfigurationBuilder().AddJsonFile("appsettings.json", false)
+			.Build();
 
-        services.AddCors(options =>
-        {
-            options.AddPolicy("CorsPolicy",
-                builder =>
-                {
-                    builder.WithOrigins(config["Cors:AllowedOrigins"].Split(","))
-                           .WithMethods(config["Cors:AllowedMethods"].Split(","))
-                           .WithHeaders(config["Cors:AllowedHeaders"].Split(","));
-                });
-        });
+		services.AddCors(options =>
+		{
+			options.AddPolicy("CorsPolicy", builder =>
+			{
+				builder.WithOrigins(config["Cors:AllowedOrigins"]
+						.Split(","))
+					.WithMethods(config["Cors:AllowedMethods"]
+						.Split(","))
+					.WithHeaders(config["Cors:AllowedHeaders"]
+						.Split(","));
+			});
+		});
 
-        return services;
-    }
+		return services;
+	}
 
-    public static IApplicationBuilder UseCorsPolicy(this IApplicationBuilder app)
-    {
-        app.UseCors("CorsPolicy");
+	public static IApplicationBuilder UseCorsPolicy(this IApplicationBuilder app)
+	{
+		app.UseCors("CorsPolicy");
 
-        return app;
-    }
+		return app;
+	}
 }

@@ -1,4 +1,5 @@
 ﻿namespace FitNoteIT.Modules.Users.Core.Options;
+
 internal sealed class SuperAdminOptions
 {
 	public string Email { get; set; }

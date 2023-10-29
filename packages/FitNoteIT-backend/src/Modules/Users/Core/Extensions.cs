@@ -1,4 +1,5 @@
-﻿using FitNoteIT.Modules.Users.Core.Persistence;
+﻿using System.Reflection;
+using FitNoteIT.Modules.Users.Core.Persistence;
 using FitNoteIT.Modules.Users.Core.Security;
 using FitNoteIT.Modules.Users.Core.Services;
 using FitNoteIT.Modules.Users.Shared;
@@ -6,7 +7,6 @@ using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace FitNoteIT.Modules.Users.Core;
 

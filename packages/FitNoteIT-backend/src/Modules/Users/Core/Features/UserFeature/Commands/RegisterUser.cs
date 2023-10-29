@@ -5,6 +5,7 @@ using FitNoteIT.Shared.Commands;
 using FluentValidation;
 
 namespace FitNoteIT.Modules.Users.Core.Features.UserFeature.Commands;
+
 public record RegisterUser(string Email, string UserName, string Password, string ConfirmPassword) : ICommand
 {
 	public Guid Id { get; init; } = Guid.NewGuid();
@@ -13,10 +14,13 @@ public record RegisterUser(string Email, string UserName, string Password, strin
 internal sealed class RegisterUserHandler : ICommandHandler<RegisterUser>
 {
 	private readonly IAuthorizationService _authorizationService;
-	private readonly IUserRepository _userRepository;
 	private readonly IPasswordManager _passwordManager;
+	private readonly IUserRepository _userRepository;
 
-	public RegisterUserHandler(IAuthorizationService authorizationService, IUserRepository userRepository, IPasswordManager passwordManager)
+	public RegisterUserHandler(
+		IAuthorizationService authorizationService,
+		IUserRepository userRepository,
+		IPasswordManager passwordManager)
 	{
 		_authorizationService = authorizationService;
 		_userRepository = userRepository;
@@ -45,9 +49,23 @@ public class RegisterUserValidator : AbstractValidator<RegisterUser>
 {
 	public RegisterUserValidator()
 	{
-		RuleFor(x => x.Email).NotNull().MinimumLength(6).MaximumLength(128).EmailAddress();
-		RuleFor(x => x.UserName).NotNull().MinimumLength(3).MaximumLength(128);
-		RuleFor(x => x.Password).NotNull().MinimumLength(6).MaximumLength(128);
-		RuleFor(x => x.ConfirmPassword).NotNull().MinimumLength(6).MaximumLength(128).Equal(x => x.Password);
+		RuleFor(x => x.Email)
+			.NotNull()
+			.MinimumLength(6)
+			.MaximumLength(128)
+			.EmailAddress();
+		RuleFor(x => x.UserName)
+			.NotNull()
+			.MinimumLength(3)
+			.MaximumLength(128);
+		RuleFor(x => x.Password)
+			.NotNull()
+			.MinimumLength(6)
+			.MaximumLength(128);
+		RuleFor(x => x.ConfirmPassword)
+			.NotNull()
+			.MinimumLength(6)
+			.MaximumLength(128)
+			.Equal(x => x.Password);
 	}
 }

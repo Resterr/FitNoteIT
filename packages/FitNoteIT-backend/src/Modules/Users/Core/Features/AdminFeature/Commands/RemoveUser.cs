@@ -10,11 +10,14 @@ public record RemoveUser(Guid Id) : ICommand;
 
 internal sealed class RemoveUserHandler : ICommandHandler<RemoveUser>
 {
-	private readonly IUserRepository _userRepository;
-	private readonly ICurrentUserService _currentUserService;
 	private readonly IAuthorizationService _authorizationService;
+	private readonly ICurrentUserService _currentUserService;
+	private readonly IUserRepository _userRepository;
 
-	public RemoveUserHandler(IUserRepository userRepository, ICurrentUserService currentUserService, IAuthorizationService authorizationService)
+	public RemoveUserHandler(
+		IUserRepository userRepository,
+		ICurrentUserService currentUserService,
+		IAuthorizationService authorizationService)
 	{
 		_userRepository = userRepository;
 		_currentUserService = currentUserService;
@@ -24,15 +27,16 @@ internal sealed class RemoveUserHandler : ICommandHandler<RemoveUser>
 	public async Task HandleAsync(RemoveUser request, CancellationToken cancellationToken)
 	{
 		var user = await _userRepository.GetByIdAsync(request.Id);
-		var roles = user.Roles.Select(x => x.Name.ToLower()).ToList();
-		
+		var roles = user.Roles.Select(x => x.Name.ToLower())
+			.ToList();
+
 		if (roles.Contains("superadmin")) throw new AccessForbiddenException();
 		if (roles.Contains("admin"))
 		{
 			var userId = _currentUserService.UserId ?? throw new AccessForbiddenException();
 			await _authorizationService.AuthorizeAsync(userId, "superadmin");
 		}
-		
+
 		await _userRepository.DeleteAsync(user);
 	}
 }
@@ -41,6 +45,7 @@ public class RemoveUserValidator : AbstractValidator<RemoveUser>
 {
 	public RemoveUserValidator()
 	{
-		RuleFor(x => x.Id).NotNull();
+		RuleFor(x => x.Id)
+			.NotNull();
 	}
 }

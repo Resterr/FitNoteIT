@@ -55,7 +55,7 @@ public static class Extensions
 		app.UseRouting();
 		app.UseAuthorization();
 		app.UseErrorHandling();
-		app.UseHttpsRedirection();	
+		app.UseHttpsRedirection();
 		app.UseSwagger();
 		app.UseSwaggerUI(swagger =>
 		{
@@ -67,7 +67,7 @@ public static class Extensions
 			reDoc.SpecUrl($"/swagger/{_apiVersion}/swagger.json");
 			reDoc.DocumentTitle = _apiTitle;
 		});
-		
+
 		return app;
 	}
 }

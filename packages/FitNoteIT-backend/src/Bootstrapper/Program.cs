@@ -3,17 +3,15 @@ using FitNoteIT.Modules.Users.API;
 using FitNoteIT.Shared;
 using Serilog;
 
-var builder = WebApplication
-	.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((context, services, configuration) => configuration
-	.ReadFrom.Configuration(context.Configuration)
+builder.Host.UseSerilog((context, services, configuration) => configuration.ReadFrom
+	.Configuration(context.Configuration)
 	.ReadFrom.Services(services)
 	.Enrich.FromLogContext());
 
 builder.Services.AddCorsPolicy();
-builder.Services
-	.AddUsersModule(builder.Configuration)
+builder.Services.AddUsersModule(builder.Configuration)
 	.AddSharedFramework(builder.Configuration);
 
 var app = builder.Build();

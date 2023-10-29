@@ -6,6 +6,7 @@ using FitNoteIT.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Security;
+
 internal sealed class AuthorizationService : IAuthorizationService
 {
 	private readonly UsersDbContext _dbContext;
@@ -21,35 +22,24 @@ internal sealed class AuthorizationService : IAuthorizationService
 	{
 		var user = await _dbContext.Users.Include(x => x.Roles)
 			.SingleOrDefaultAsync(x => x.Id == userId);
-		
-		if (user == null)
-		{
-			throw new AccessForbiddenException();
-		}
+
+		if (user == null) throw new AccessForbiddenException();
 
 		if (user.Roles.Select(x => x.Name)
 			.Contains(roleName))
-		{
 			return true;
-		}
-		else
-		{
-			throw new AccessForbiddenException();
-		}
-		
+		throw new AccessForbiddenException();
 	}
-	
+
 	public async Task AddUserToRoleAsync(Guid userId, string roleName)
 	{
 		var role = await _dbContext.Roles.SingleOrDefaultAsync(x => x.Name == roleName);
 		if (role != null)
 		{
 			var user = await _userRepository.GetByIdAsync(userId);
-			var isRole = user.Roles.Select(x => x.Name.ToLower()).Contains(roleName.ToLower());
-			if (isRole)
-			{
-				throw new UserHasRoleException(user.Id, roleName);
-			}
+			var isRole = user.Roles.Select(x => x.Name.ToLower())
+				.Contains(roleName.ToLower());
+			if (isRole) throw new UserHasRoleException(user.Id, roleName);
 
 			user.AddRole(role);
 			await _userRepository.UpdateAsync(user);
@@ -66,11 +56,9 @@ internal sealed class AuthorizationService : IAuthorizationService
 		if (role != null)
 		{
 			var user = await _userRepository.GetByIdAsync(userId);
-			var isRole = user.Roles.Select(x => x.Name.ToLower()).Contains(roleName.ToLower());
-			if (!isRole)
-			{
-				throw new UserHasNoRoleException(user.Id, roleName);
-			}
+			var isRole = user.Roles.Select(x => x.Name.ToLower())
+				.Contains(roleName.ToLower());
+			if (!isRole) throw new UserHasNoRoleException(user.Id, roleName);
 			user.RemoveRole(role);
 			await _userRepository.UpdateAsync(user);
 		}
