@@ -17,10 +17,7 @@ internal sealed class TokenRefreshHandler : IQueryHandler<TokenRefresh, TokensDt
 	private readonly IUsersDbContext _dbContext;
 	private readonly ITokenService _tokenService;
 
-	public TokenRefreshHandler(
-		IUsersDbContext dbContext,
-		ITokenService tokenService,
-		IDateTimeService dateTimeService)
+	public TokenRefreshHandler(IUsersDbContext dbContext, ITokenService tokenService, IDateTimeService dateTimeService)
 	{
 		_dbContext = dbContext;
 		_tokenService = tokenService;
@@ -34,11 +31,14 @@ internal sealed class TokenRefreshHandler : IQueryHandler<TokenRefresh, TokensDt
 
 		var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
 
-		if (Guid.TryParse(principal.FindFirstValue(ClaimTypes.NameIdentifier), out var userId));
-		else throw new InvalidTokenException();
-			
+		if (Guid.TryParse(principal.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
+			;
+		else
+			throw new InvalidTokenException();
+
 		var user = await _dbContext.Users.Include(x => x.Roles)
-			.SingleOrDefaultAsync(x => x.Id == userId, cancellationToken: cancellationToken) ?? throw new UserNotFoundException(userId);
+				.SingleOrDefaultAsync(x => x.Id == userId, cancellationToken) ??
+			throw new UserNotFoundException(userId);
 
 		if (!user.IsTokenValid(refreshToken, _dateTimeService.CurrentDate())) throw new InvalidTokenException();
 
@@ -48,7 +48,7 @@ internal sealed class TokenRefreshHandler : IQueryHandler<TokenRefresh, TokensDt
 		user.SetRefreshToken(newRefreshToken);
 
 		_dbContext.Users.Update(user);
-		await _dbContext.SaveChangesAsync(cancellationToken: cancellationToken);
+		await _dbContext.SaveChangesAsync(cancellationToken);
 
 		return new TokensDto
 		{

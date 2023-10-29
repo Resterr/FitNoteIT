@@ -12,12 +12,10 @@ public record RemoveUser(Guid Id) : ICommand;
 
 internal sealed class RemoveUserHandler : ICommandHandler<RemoveUser>
 {
-	private readonly IUsersDbContext _dbContext;
 	private readonly ICurrentUserService _currentUserService;
+	private readonly IUsersDbContext _dbContext;
 
-	public RemoveUserHandler(
-		IUsersDbContext dbContext,
-		ICurrentUserService currentUserService)
+	public RemoveUserHandler(IUsersDbContext dbContext, ICurrentUserService currentUserService)
 	{
 		_dbContext = dbContext;
 		_currentUserService = currentUserService;
@@ -26,7 +24,8 @@ internal sealed class RemoveUserHandler : ICommandHandler<RemoveUser>
 	public async Task HandleAsync(RemoveUser request, CancellationToken cancellationToken)
 	{
 		var user = await _dbContext.Users.Include(x => x.Roles)
-			.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken) ?? throw new UserNotFoundException(request.Id);
+				.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken) ??
+			throw new UserNotFoundException(request.Id);
 		var roles = user.Roles.Select(x => x.Name.ToLower())
 			.ToList();
 
@@ -35,16 +34,17 @@ internal sealed class RemoveUserHandler : ICommandHandler<RemoveUser>
 		{
 			var userId = _currentUserService.UserId ?? throw new AccessForbiddenException();
 			var currentUser = await _dbContext.Users.Include(x => x.Roles)
-				.SingleOrDefaultAsync(x => x.Id == userId, cancellationToken: cancellationToken);
+				.SingleOrDefaultAsync(x => x.Id == userId, cancellationToken);
 
 			if (currentUser == null) throw new AccessForbiddenException();
 
 			if (!currentUser.Roles.Select(x => x.Name)
-				.Contains("SuperAdmin")) throw new AccessForbiddenException();
+				.Contains("SuperAdmin"))
+				throw new AccessForbiddenException();
 		}
 
 		_dbContext.Users.Remove(user);
-		await _dbContext.SaveChangesAsync(cancellationToken: cancellationToken);
+		await _dbContext.SaveChangesAsync(cancellationToken);
 	}
 }
 
