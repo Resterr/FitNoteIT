@@ -1,11 +1,12 @@
 ﻿using System.Reflection;
+using FitNoteIT.Modules.Users.Core.Abstractions;
 using FitNoteIT.Modules.Users.Core.Entities;
 using FitNoteIT.Shared.Database.Interceptors;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Persistence;
 
-public class UsersDbContext : DbContext
+public class UsersDbContext : DbContext, IUsersDbContext
 {
 	private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 

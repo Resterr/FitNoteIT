@@ -1,28 +1,34 @@
 ﻿using AutoMapper;
 using FitNoteIT.Modules.Users.Core.Abstractions;
+using FitNoteIT.Modules.Users.Core.Exceptions;
 using FitNoteIT.Modules.Users.Shared;
 using FitNoteIT.Modules.Users.Shared.DTO;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Services;
 
 internal sealed class UsersModuleApi : IUsersModuleApi
 {
+	private readonly IUsersDbContext _dbContext;
 	private readonly IMapper _mapper;
-	private readonly IUserRepository _userRepository;
 
-	public UsersModuleApi(IUserRepository userRepository, IMapper mapper)
+	public UsersModuleApi(IUsersDbContext dbContext, IMapper mapper)
 	{
-		_userRepository = userRepository;
+		_dbContext = dbContext;
 		_mapper = mapper;
 	}
 
 	public async Task<UserDto> GetUserAsync(Guid userId)
 	{
-		return _mapper.Map<UserDto>(await _userRepository.GetByIdAsync(userId));
+		var user = await _dbContext.Users.SingleOrDefaultAsync(x => x.Id == userId) ?? throw new UserNotFoundException(userId);
+		
+		return _mapper.Map<UserDto>(user);
 	}
 
 	public async Task<UserDto> GetUserAsync(string email)
 	{
-		return _mapper.Map<UserDto>(await _userRepository.GetByEmailAsync(email));
+		var user = await _dbContext.Users.SingleOrDefaultAsync(x => x.Email == email) ?? throw new UserNotFoundException(email,"email");
+		
+		return _mapper.Map<UserDto>(user);
 	}
 }

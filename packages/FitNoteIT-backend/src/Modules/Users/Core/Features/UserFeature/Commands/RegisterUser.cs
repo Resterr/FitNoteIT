@@ -3,6 +3,7 @@ using FitNoteIT.Modules.Users.Core.Entities;
 using FitNoteIT.Modules.Users.Core.Exceptions;
 using FitNoteIT.Shared.Commands;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Features.UserFeature.Commands;
 
@@ -13,17 +14,14 @@ public record RegisterUser(string Email, string UserName, string Password, strin
 
 internal sealed class RegisterUserHandler : ICommandHandler<RegisterUser>
 {
-	private readonly IAuthorizationService _authorizationService;
+	private readonly IUsersDbContext _dbContext;
 	private readonly IPasswordManager _passwordManager;
-	private readonly IUserRepository _userRepository;
 
 	public RegisterUserHandler(
-		IAuthorizationService authorizationService,
-		IUserRepository userRepository,
+		IUsersDbContext dbContext,
 		IPasswordManager passwordManager)
 	{
-		_authorizationService = authorizationService;
-		_userRepository = userRepository;
+		_dbContext = dbContext;
 		_passwordManager = passwordManager;
 	}
 
@@ -33,15 +31,26 @@ internal sealed class RegisterUserHandler : ICommandHandler<RegisterUser>
 		var userName = request.UserName;
 		var password = request.Password;
 
-		var available = await _userRepository.CredentialsAvailableForUser(email, userName);
+		var credentialsNotAvailable = await _dbContext.Users.AnyAsync(x => x.Email == email || x.UserName == userName, cancellationToken: cancellationToken);
 
-		if (available) throw new InvalidUserCredentials();
+		if (credentialsNotAvailable) throw new InvalidUserCredentials();
 
 		var hashedPassword = _passwordManager.Secure(password);
 		var user = new User(request.Id, email, hashedPassword, userName);
 
-		await _userRepository.AddAsync(user);
-		await _authorizationService.AddUserToRoleAsync(user.Id, "User");
+		var role = await _dbContext.Roles.SingleOrDefaultAsync(x => x.Name == "User", cancellationToken: cancellationToken);
+		if (role != null)
+		{
+			user.AddRole(role);
+		}
+		else
+		{
+			throw new RoleNotFoundException("User");
+		}
+		
+		await _dbContext.Users.AddAsync(user, cancellationToken: cancellationToken);
+		await _dbContext.SaveChangesAsync(cancellationToken: cancellationToken);
+		
 	}
 }
 

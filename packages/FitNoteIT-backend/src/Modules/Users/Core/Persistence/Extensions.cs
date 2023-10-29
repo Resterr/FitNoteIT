@@ -1,5 +1,4 @@
 ﻿using FitNoteIT.Modules.Users.Core.Abstractions;
-using FitNoteIT.Modules.Users.Core.Persistence.Repositories;
 using FitNoteIT.Modules.Users.Core.Persistence.Seeders;
 using FitNoteIT.Shared.Database;
 using Microsoft.AspNetCore.Builder;
@@ -13,8 +12,8 @@ internal static class Extensions
 	public static IServiceCollection AddPersistence(this IServiceCollection services)
 	{
 		services.AddSqlServer<UsersDbContext>();
+		services.AddScoped<IUsersDbContext>(provider => provider.GetRequiredService<UsersDbContext>());
 		services.AddScoped<IUsersSeeder, UsersSeeder>();
-		services.AddScoped<IUserRepository, UserRepository>();
 
 		return services;
 	}

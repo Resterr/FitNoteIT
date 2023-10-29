@@ -1,9 +1,11 @@
-﻿using FitNoteIT.Modules.Users.Core.Abstractions;
+﻿using System.Security.Claims;
+using FitNoteIT.Modules.Users.Core.Abstractions;
 using FitNoteIT.Modules.Users.Core.Exceptions;
 using FitNoteIT.Modules.Users.Shared.DTO;
 using FitNoteIT.Shared.Queries;
 using FitNoteIT.Shared.Services;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Features.UserFeature.Queries;
 
@@ -11,20 +13,17 @@ public record TokenRefresh(string AccessToken, string RefreshToken) : IQuery<Tok
 
 internal sealed class TokenRefreshHandler : IQueryHandler<TokenRefresh, TokensDto>
 {
-	private readonly ICurrentUserService _currentUserService;
 	private readonly IDateTimeService _dateTimeService;
+	private readonly IUsersDbContext _dbContext;
 	private readonly ITokenService _tokenService;
-	private readonly IUserRepository _userRepository;
 
 	public TokenRefreshHandler(
-		IUserRepository userRepository,
+		IUsersDbContext dbContext,
 		ITokenService tokenService,
-		ICurrentUserService currentUserService,
 		IDateTimeService dateTimeService)
 	{
-		_userRepository = userRepository;
+		_dbContext = dbContext;
 		_tokenService = tokenService;
-		_currentUserService = currentUserService;
 		_dateTimeService = dateTimeService;
 	}
 
@@ -35,8 +34,11 @@ internal sealed class TokenRefreshHandler : IQueryHandler<TokenRefresh, TokensDt
 
 		var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
 
-		var userId = _currentUserService.UserId;
-		var user = await _userRepository.GetByIdAsync((Guid)userId);
+		if (Guid.TryParse(principal.FindFirstValue(ClaimTypes.NameIdentifier), out var userId));
+		else throw new InvalidTokenException();
+			
+		var user = await _dbContext.Users.Include(x => x.Roles)
+			.SingleOrDefaultAsync(x => x.Id == userId, cancellationToken: cancellationToken) ?? throw new UserNotFoundException(userId);
 
 		if (!user.IsTokenValid(refreshToken, _dateTimeService.CurrentDate())) throw new InvalidTokenException();
 
@@ -45,7 +47,8 @@ internal sealed class TokenRefreshHandler : IQueryHandler<TokenRefresh, TokensDt
 
 		user.SetRefreshToken(newRefreshToken);
 
-		await _userRepository.UpdateAsync(user);
+		_dbContext.Users.Update(user);
+		await _dbContext.SaveChangesAsync(cancellationToken: cancellationToken);
 
 		return new TokensDto
 		{
