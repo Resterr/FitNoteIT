@@ -9,6 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Modules\Exercises\API\API.csproj" />
 		<ProjectReference Include="..\Modules\Users\API\API.csproj" />
 	</ItemGroup>
 

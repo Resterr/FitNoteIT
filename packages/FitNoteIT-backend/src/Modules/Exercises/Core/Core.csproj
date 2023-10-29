@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>FitNoteIT.Modules.Exercises.Core</RootNamespace>
+        <AssemblyName>FitNoteIT.Modules.Exercises.Core</AssemblyName>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Users\Shared\Shared.csproj" />
+    </ItemGroup>
+
+</Project>
