@@ -15,10 +15,7 @@ internal sealed class LoginUserHandler : IQueryHandler<LoginUser, TokensDto>
 	private readonly IPasswordManager _passwordManager;
 	private readonly ITokenService _tokenService;
 
-	public LoginUserHandler(
-		IUsersDbContext dbContext,
-		IPasswordManager passwordManager,
-		ITokenService tokenService)
+	public LoginUserHandler(IUsersDbContext dbContext, IPasswordManager passwordManager, ITokenService tokenService)
 	{
 		_dbContext = dbContext;
 		_passwordManager = passwordManager;
@@ -28,13 +25,12 @@ internal sealed class LoginUserHandler : IQueryHandler<LoginUser, TokensDto>
 	public async Task<TokensDto> HandleAsync(LoginUser request, CancellationToken cancellationToken)
 	{
 		var user = await _dbContext.Users.Include(x => x.Roles)
-				.SingleOrDefaultAsync(x => x.UserName == request.UserName, cancellationToken: cancellationToken) ??
+				.SingleOrDefaultAsync(x => x.UserName == request.UserName, cancellationToken) ??
 			throw new UserNotFoundException(request.UserName, "username");
-		
+
 		if (!_passwordManager.Validate(request.Password, user.PasswordHash)) throw new InvalidUserPassword();
 
-		var accessToken =
-			_tokenService.GenerateAccessToken(user.Id, user.Email, user.UserName, user.Roles.Select(x => x.Name));
+		var accessToken = _tokenService.GenerateAccessToken(user.Id, user.Email, user.UserName, user.Roles.Select(x => x.Name));
 		var refreshToken = _tokenService.GenerateRefreshToken();
 		var refreshTokenExpiryDate = _tokenService.GetRefreshExpiryDate();
 
@@ -42,7 +38,7 @@ internal sealed class LoginUserHandler : IQueryHandler<LoginUser, TokensDto>
 		user.SetRefreshTokenExpiryTime(refreshTokenExpiryDate);
 
 		_dbContext.Users.Update(user);
-		await _dbContext.SaveChangesAsync(cancellationToken: cancellationToken);
+		await _dbContext.SaveChangesAsync(cancellationToken);
 
 		return new TokensDto
 		{

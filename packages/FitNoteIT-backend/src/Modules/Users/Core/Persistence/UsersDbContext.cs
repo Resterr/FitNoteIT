@@ -10,15 +10,13 @@ public class UsersDbContext : DbContext, IUsersDbContext
 {
 	private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
-	public DbSet<User> Users => Set<User>();
-	public DbSet<Role> Roles => Set<Role>();
-
-	public UsersDbContext(
-		DbContextOptions<UsersDbContext> options,
-		AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
+	public UsersDbContext(DbContextOptions<UsersDbContext> options, AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
 	{
 		_auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
 	}
+
+	public DbSet<User> Users => Set<User>();
+	public DbSet<Role> Roles => Set<Role>();
 
 	protected override void OnModelCreating(ModelBuilder builder)
 	{

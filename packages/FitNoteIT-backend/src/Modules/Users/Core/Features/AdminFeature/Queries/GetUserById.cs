@@ -23,7 +23,8 @@ internal sealed class GetUserByIdHandler : IQueryHandler<GetUserById, UserDto>
 	public async Task<UserDto> HandleAsync(GetUserById request, CancellationToken cancellationToken)
 	{
 		var user = await _dbContext.Users.Include(x => x.Roles)
-			.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken) ?? throw new UserNotFoundException(request.Id);
+				.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken) ??
+			throw new UserNotFoundException(request.Id);
 		var result = _mapper.Map<UserDto>(user);
 
 		return result;

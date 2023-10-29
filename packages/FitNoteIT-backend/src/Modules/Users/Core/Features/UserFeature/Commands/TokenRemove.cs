@@ -20,12 +20,13 @@ internal sealed class TokenRemoveHandler : ICommandHandler<TokenRemove>
 	public async Task HandleAsync(TokenRemove request, CancellationToken cancellationToken)
 	{
 		var user = await _dbContext.Users.Include(x => x.Roles)
-			.SingleOrDefaultAsync(x => x.Id == request.UserId, cancellationToken: cancellationToken) ?? throw new UserNotFoundException(request.UserId);
-		
+				.SingleOrDefaultAsync(x => x.Id == request.UserId, cancellationToken) ??
+			throw new UserNotFoundException(request.UserId);
+
 		user.RemoveRefreshToken();
 
 		_dbContext.Users.Update(user);
-		await _dbContext.SaveChangesAsync(cancellationToken: cancellationToken);
+		await _dbContext.SaveChangesAsync(cancellationToken);
 	}
 }
 

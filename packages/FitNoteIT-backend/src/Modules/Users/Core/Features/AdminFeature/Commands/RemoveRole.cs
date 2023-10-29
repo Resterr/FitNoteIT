@@ -23,14 +23,15 @@ internal sealed class RemoveRoleHandler : ICommandHandler<RemoveRole>
 		if (request.RoleName.ToLower() == "superadmin") throw new AccessForbiddenException();
 
 		var user = await _dbContext.Users.Include(x => x.Roles)
-			.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken) ?? throw new UserNotFoundException(request.Id);
-		
+				.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken) ??
+			throw new UserNotFoundException(request.Id);
+
 		var roles = user.Roles.Select(x => x.Name)
 			.ToList();
 
 		if (roles.Contains("SuperAdmin")) throw new AccessForbiddenException();
 
-		var role = await _dbContext.Roles.SingleOrDefaultAsync(x => x.Name == request.RoleName, cancellationToken: cancellationToken);
+		var role = await _dbContext.Roles.SingleOrDefaultAsync(x => x.Name == request.RoleName, cancellationToken);
 		if (role != null)
 		{
 			var isRole = user.Roles.Select(x => x.Name.ToLower())
@@ -42,8 +43,8 @@ internal sealed class RemoveRoleHandler : ICommandHandler<RemoveRole>
 		{
 			throw new RoleNotFoundException(request.RoleName);
 		}
-		
-		await _dbContext.SaveChangesAsync(cancellationToken: cancellationToken);
+
+		await _dbContext.SaveChangesAsync(cancellationToken);
 	}
 }
 

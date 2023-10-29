@@ -21,14 +21,14 @@ internal sealed class UsersModuleApi : IUsersModuleApi
 	public async Task<UserDto> GetUserAsync(Guid userId)
 	{
 		var user = await _dbContext.Users.SingleOrDefaultAsync(x => x.Id == userId) ?? throw new UserNotFoundException(userId);
-		
+
 		return _mapper.Map<UserDto>(user);
 	}
 
 	public async Task<UserDto> GetUserAsync(string email)
 	{
-		var user = await _dbContext.Users.SingleOrDefaultAsync(x => x.Email == email) ?? throw new UserNotFoundException(email,"email");
-		
+		var user = await _dbContext.Users.SingleOrDefaultAsync(x => x.Email == email) ?? throw new UserNotFoundException(email, "email");
+
 		return _mapper.Map<UserDto>(user);
 	}
 }

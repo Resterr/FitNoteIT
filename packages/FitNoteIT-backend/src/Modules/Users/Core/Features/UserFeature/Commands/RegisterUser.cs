@@ -17,9 +17,7 @@ internal sealed class RegisterUserHandler : ICommandHandler<RegisterUser>
 	private readonly IUsersDbContext _dbContext;
 	private readonly IPasswordManager _passwordManager;
 
-	public RegisterUserHandler(
-		IUsersDbContext dbContext,
-		IPasswordManager passwordManager)
+	public RegisterUserHandler(IUsersDbContext dbContext, IPasswordManager passwordManager)
 	{
 		_dbContext = dbContext;
 		_passwordManager = passwordManager;
@@ -31,26 +29,21 @@ internal sealed class RegisterUserHandler : ICommandHandler<RegisterUser>
 		var userName = request.UserName;
 		var password = request.Password;
 
-		var credentialsNotAvailable = await _dbContext.Users.AnyAsync(x => x.Email == email || x.UserName == userName, cancellationToken: cancellationToken);
+		var credentialsNotAvailable = await _dbContext.Users.AnyAsync(x => x.Email == email || x.UserName == userName, cancellationToken);
 
 		if (credentialsNotAvailable) throw new InvalidUserCredentials();
 
 		var hashedPassword = _passwordManager.Secure(password);
 		var user = new User(request.Id, email, hashedPassword, userName);
 
-		var role = await _dbContext.Roles.SingleOrDefaultAsync(x => x.Name == "User", cancellationToken: cancellationToken);
+		var role = await _dbContext.Roles.SingleOrDefaultAsync(x => x.Name == "User", cancellationToken);
 		if (role != null)
-		{
 			user.AddRole(role);
-		}
 		else
-		{
 			throw new RoleNotFoundException("User");
-		}
-		
-		await _dbContext.Users.AddAsync(user, cancellationToken: cancellationToken);
-		await _dbContext.SaveChangesAsync(cancellationToken: cancellationToken);
-		
+
+		await _dbContext.Users.AddAsync(user, cancellationToken);
+		await _dbContext.SaveChangesAsync(cancellationToken);
 	}
 }
 

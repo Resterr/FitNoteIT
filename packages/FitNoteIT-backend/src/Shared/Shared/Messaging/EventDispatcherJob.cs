@@ -10,10 +10,7 @@ internal sealed class EventDispatcherJob : BackgroundService
 	private readonly IEventDispatcher _eventDispatcher;
 	private readonly ILogger<EventDispatcherJob> _logger;
 
-	public EventDispatcherJob(
-		IEventChannel eventChannel,
-		IEventDispatcher eventDispatcher,
-		ILogger<EventDispatcherJob> logger)
+	public EventDispatcherJob(IEventChannel eventChannel, IEventDispatcher eventDispatcher, ILogger<EventDispatcherJob> logger)
 	{
 		_eventChannel = eventChannel;
 		_eventDispatcher = eventDispatcher;

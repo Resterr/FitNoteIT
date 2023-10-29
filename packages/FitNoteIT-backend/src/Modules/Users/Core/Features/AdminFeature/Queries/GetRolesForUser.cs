@@ -23,8 +23,9 @@ internal sealed class GetRolesForHandler : IQueryHandler<GetRolesForUser, List<R
 	public async Task<List<RoleDto>> HandleAsync(GetRolesForUser request, CancellationToken cancellationToken)
 	{
 		var user = await _dbContext.Users.Include(x => x.Roles)
-			.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken) ?? throw new UserNotFoundException(request.Id);
-		
+				.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken) ??
+			throw new UserNotFoundException(request.Id);
+
 		var result = _mapper.Map<List<RoleDto>>(user.Roles);
 
 		return result;

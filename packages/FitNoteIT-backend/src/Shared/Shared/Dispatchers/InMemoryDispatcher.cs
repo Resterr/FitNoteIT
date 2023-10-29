@@ -10,10 +10,7 @@ internal sealed class InMemoryDispatcher : IDispatcher
 	private readonly IEventDispatcher _eventDispatcher;
 	private readonly IQueryDispatcher _queryDispatcher;
 
-	public InMemoryDispatcher(
-		ICommandDispatcher commandDispatcher,
-		IEventDispatcher eventDispatcher,
-		IQueryDispatcher queryDispatcher)
+	public InMemoryDispatcher(ICommandDispatcher commandDispatcher, IEventDispatcher eventDispatcher, IQueryDispatcher queryDispatcher)
 	{
 		_commandDispatcher = commandDispatcher;
 		_eventDispatcher = eventDispatcher;

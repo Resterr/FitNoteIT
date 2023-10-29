@@ -21,7 +21,6 @@ internal sealed class PasswordManager : IPasswordManager
 
 	public bool Validate(string password, string securedPassword)
 	{
-		return _passwordHasher.VerifyHashedPassword(_user, securedPassword, password) ==
-			PasswordVerificationResult.Success;
+		return _passwordHasher.VerifyHashedPassword(_user, securedPassword, password) == PasswordVerificationResult.Success;
 	}
 }

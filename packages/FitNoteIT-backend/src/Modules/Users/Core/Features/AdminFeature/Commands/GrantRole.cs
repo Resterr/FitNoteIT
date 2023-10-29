@@ -23,9 +23,10 @@ internal sealed class GrantRoleHandler : ICommandHandler<GrantRole>
 		if (request.RoleName.ToLower() == "superadmin") throw new AccessForbiddenException();
 
 		var user = await _dbContext.Users.Include(x => x.Roles)
-			.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken) ?? throw new UserNotFoundException(request.Id);
-		
-		var role = await _dbContext.Roles.SingleOrDefaultAsync(x => x.Name == request.RoleName, cancellationToken: cancellationToken);
+				.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken) ??
+			throw new UserNotFoundException(request.Id);
+
+		var role = await _dbContext.Roles.SingleOrDefaultAsync(x => x.Name == request.RoleName, cancellationToken);
 		if (role != null)
 		{
 			var isRole = user.Roles.Select(x => x.Name.ToLower())
@@ -34,14 +35,14 @@ internal sealed class GrantRoleHandler : ICommandHandler<GrantRole>
 
 			user.AddRole(role);
 			_dbContext.Users.Update(user);
-			await _dbContext.SaveChangesAsync(cancellationToken: cancellationToken);
+			await _dbContext.SaveChangesAsync(cancellationToken);
 		}
 		else
 		{
 			throw new RoleNotFoundException(request.RoleName);
 		}
-		
-		await _dbContext.SaveChangesAsync(cancellationToken: cancellationToken);
+
+		await _dbContext.SaveChangesAsync(cancellationToken);
 	}
 }
 

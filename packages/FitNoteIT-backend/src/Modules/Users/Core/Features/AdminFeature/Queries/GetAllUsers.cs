@@ -22,12 +22,12 @@ internal sealed class GetAllUsersHandler : IQueryHandler<GetAllUsers, List<UserD
 	public async Task<List<UserDto>> HandleAsync(GetAllUsers request, CancellationToken cancellationToken)
 	{
 		var users = await _dbContext.Users.Include(x => x.Roles)
-			.ToListAsync(cancellationToken: cancellationToken);
+			.ToListAsync(cancellationToken);
 		var superAdmin = users.Where(user => user.Roles.Any(role => role.Name == "SuperAdmin"))
 			.ToList();
 
 		users.Remove(superAdmin[0]);
-		
+
 		var result = _mapper.Map<List<UserDto>>(users);
 
 		return result;
