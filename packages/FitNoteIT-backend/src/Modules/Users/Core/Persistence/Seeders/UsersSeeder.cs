@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace FitNoteIT.Modules.Users.Core.Persistence.Seeders;
 
-public interface IUsersSeeder
+internal interface IUsersSeeder
 {
 	User SeedSuperAdmin();
 	List<Role> SeedDefaultRoles();

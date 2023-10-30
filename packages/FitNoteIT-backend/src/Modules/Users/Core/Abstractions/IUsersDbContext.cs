@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Abstractions;
 
-public interface IUsersDbContext
+internal interface IUsersDbContext
 {
 	DbSet<User> Users { get; }
 	DbSet<Role> Roles { get; }

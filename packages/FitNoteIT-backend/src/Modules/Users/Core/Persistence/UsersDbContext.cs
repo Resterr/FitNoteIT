@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Persistence;
 
-public class UsersDbContext : DbContext, IUsersDbContext
+internal sealed class UsersDbContext : DbContext, IUsersDbContext
 {
 	private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
