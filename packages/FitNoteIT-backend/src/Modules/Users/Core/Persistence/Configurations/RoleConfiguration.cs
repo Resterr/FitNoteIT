@@ -9,8 +9,11 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
 	public void Configure(EntityTypeBuilder<Role> builder)
 	{
 		builder.Property(x => x.Name)
-			.HasMaxLength(25)
+			.HasMaxLength(50)
 			.IsRequired();
+
+		builder.HasIndex(x => x.Name)
+			.IsUnique();
 
 		builder.ToTable("Role");
 	}
