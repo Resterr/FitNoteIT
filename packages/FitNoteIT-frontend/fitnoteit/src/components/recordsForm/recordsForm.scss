@@ -68,6 +68,12 @@
     }
   }
 
+  &-loading {
+    text-align: center;
+    font-size: 33px;
+    color: antiquewhite;
+  }
+
   &-all {
     @media only screen and (max-height: 650px) {
       height: calc(100vh - 140px) !important;
