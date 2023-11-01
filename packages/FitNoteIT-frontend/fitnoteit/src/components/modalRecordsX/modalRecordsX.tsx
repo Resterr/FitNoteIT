@@ -41,19 +41,23 @@ export const ModalRecordsX: React.FC<ModalRecordsXProps> = (props) => {
     console.log(data);
     let removeData: { exerciseName: string } = { exerciseName: data };
 
-    axios
-      .put(
-        "https://fitnoteit.azurewebsites.net/api/records/clear",
-        removeData,
-        config,
-      )
-      .then((response: AxiosResponse<any, any>): void => {
-        if (response.status == 200) {
-          alert("Usunięto");
-        } else {
-          alert("Błąd");
-        }
-      });
+    try {
+      axios
+        .put(
+          "https://fitnoteit.azurewebsites.net/api/records/clear",
+          removeData,
+          config,
+        )
+        .then((response: AxiosResponse<any, any>): void => {
+          if (response.status == 200) {
+            alert("Usunięto");
+          } else {
+            alert("Błąd");
+          }
+        });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

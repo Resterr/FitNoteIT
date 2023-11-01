@@ -73,6 +73,11 @@
     font-size: 36px;
   }
 }
+.records__form-loading {
+  text-align: center;
+  font-size: 33px;
+  color: antiquewhite;
+}
 @media only screen and (max-height: 650px) {
   .records__form-all {
     height: calc(100vh - 140px) !important;
