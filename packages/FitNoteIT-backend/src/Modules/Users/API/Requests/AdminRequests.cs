@@ -9,6 +9,7 @@ using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace FitNoteIT.Modules.Users.API.Requests;
+
 internal static class AdminRequests
 {
 	public static WebApplication RegisterAdminRequests(this WebApplication app)
@@ -27,30 +28,33 @@ internal static class AdminRequests
 			{
 				var result = await dispatcher.QueryAsync(request);
 				return Results.Ok(result);
-			}).RequireAuthorization("admin")
+			})
+			.RequireAuthorization("admin")
 			.Produces<UserDto>()
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status403Forbidden)
 			.WithMetadata(new SwaggerOperationAttribute("Get all users"));
-		
+
 		group.MapGet("users/{id:guid}", async (IDispatcher dispatcher, Guid id) =>
 			{
 				var request = new GetUserById(id);
 				var result = await dispatcher.QueryAsync(request);
 				return Results.Ok(result);
-			}).RequireAuthorization("admin")
+			})
+			.RequireAuthorization("admin")
 			.Produces<UserDto>()
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status403Forbidden)
 			.Produces(StatusCodes.Status404NotFound)
 			.WithMetadata(new SwaggerOperationAttribute("Get user by id"));
-		
+
 		group.MapGet("role/user/{id:guid}", async (IDispatcher dispatcher, Guid id) =>
-		{
-			var request = new GetRolesForUser(id);
-			var result = await dispatcher.QueryAsync(request);
-			return Results.Ok(result);
-		}).RequireAuthorization("admin")
+			{
+				var request = new GetRolesForUser(id);
+				var result = await dispatcher.QueryAsync(request);
+				return Results.Ok(result);
+			})
+			.RequireAuthorization("admin")
 			.Produces<List<RoleDto>>()
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status403Forbidden)
@@ -58,10 +62,11 @@ internal static class AdminRequests
 			.WithMetadata(new SwaggerOperationAttribute("Get roles for user"));
 
 		group.MapPatch("role/grant", async (IDispatcher dispatcher, GrantRole request) =>
-		{
-			await dispatcher.SendAsync(request);
-			return Results.Ok();
-		}).RequireAuthorization("admin")
+			{
+				await dispatcher.SendAsync(request);
+				return Results.Ok();
+			})
+			.RequireAuthorization("admin")
 			.Produces(StatusCodes.Status200OK)
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status401Unauthorized)
@@ -70,10 +75,11 @@ internal static class AdminRequests
 			.WithMetadata(new SwaggerOperationAttribute("Grant role"));
 
 		group.MapPatch("role/remove", async (IDispatcher dispatcher, RemoveRole request) =>
-		{
-			await dispatcher.SendAsync(request);
-			return Results.Ok();
-		}).RequireAuthorization("admin")
+			{
+				await dispatcher.SendAsync(request);
+				return Results.Ok();
+			})
+			.RequireAuthorization("admin")
 			.Produces(StatusCodes.Status200OK)
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status401Unauthorized)
@@ -86,13 +92,14 @@ internal static class AdminRequests
 				var request = new RemoveUser(id);
 				await dispatcher.SendAsync(request);
 				return Results.NoContent();
-			}).RequireAuthorization("admin")
+			})
+			.RequireAuthorization("admin")
 			.Produces(StatusCodes.Status204NoContent)
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status403Forbidden)
 			.Produces(StatusCodes.Status404NotFound)
 			.WithMetadata(new SwaggerOperationAttribute("Remove user"));
-		
+
 		return group;
 	}
 }

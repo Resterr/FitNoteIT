@@ -2,19 +2,21 @@
 using FitNoteIT.Shared.Common;
 
 namespace FitNoteIT.Modules.Users.Core.Entities;
+
 public class User : AuditableEntity
 {
-	public Guid Id { get; set; }
+	public Guid Id { get; init; }
 	public string Email { get; private set; }
 	public string PasswordHash { get; private set; }
 	public string UserName { get; private set; }
 	public DateTime? VerifiedAt { get; private set; }
 	public string? RefreshToken { get; private set; }
 	public DateTime? RefreshTokenExpiryTime { get; private set; }
-	public List<Role> Roles { get; private set; } = new();
+	public List<Role> Roles { get; } = new();
 
 	private User() { }
-	public User(Guid id, string email, string passwordHash, string userName)
+
+	internal User(Guid id, string email, string passwordHash, string userName)
 	{
 		Id = id;
 		Email = email;
@@ -22,51 +24,48 @@ public class User : AuditableEntity
 		UserName = userName;
 	}
 
-	public void ChangePassword(string passwordHash)
+	internal void ChangePassword(string passwordHash)
 	{
 		PasswordHash = passwordHash;
 	}
 
-	public void SetRefreshToken(string token)
+	internal void SetRefreshToken(string token)
 	{
 		RefreshToken = token;
 	}
 
-	public void SetRefreshTokenExpiryTime(DateTime tokenExpireTime)
+	internal void SetRefreshTokenExpiryTime(DateTime tokenExpireTime)
 	{
 		RefreshTokenExpiryTime = tokenExpireTime;
 	}
 
-	public bool IsTokenValid(string token, DateTime currentDate)
+	internal bool IsTokenValid(string token, DateTime currentDate)
 	{
 		if (RefreshToken == token && RefreshTokenExpiryTime >= currentDate) return true;
-		else return false;
+		return false;
 	}
 
-	public void RemoveRefreshToken()
+	internal void RemoveRefreshToken()
 	{
 		RefreshToken = null;
 		RefreshTokenExpiryTime = null;
 	}
 
-	public void AddRole(Role role)
+	internal void AddRole(Role role)
 	{
 		if (Roles.Contains(role)) return;
 		Roles.Add(role);
 	}
 
-	public void RemoveRole(Role role)
+	internal void RemoveRole(Role role)
 	{
 		if (!Roles.Contains(role)) return;
 		Roles.Remove(role);
 	}
 
-	public void Verify(DateTime verifiedAt)
+	internal void Verify(DateTime verifiedAt)
 	{
-		if (VerifiedAt.HasValue)
-		{
-			throw new UserAlreadyVerifiedException(Id);
-		}
+		if (VerifiedAt.HasValue) throw new UserAlreadyVerifiedException(Id);
 
 		VerifiedAt = verifiedAt;
 	}

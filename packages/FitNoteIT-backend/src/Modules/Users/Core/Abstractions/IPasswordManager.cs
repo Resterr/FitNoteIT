@@ -1,4 +1,5 @@
 ﻿namespace FitNoteIT.Modules.Users.Core.Abstractions;
+
 public interface IPasswordManager
 {
 	string Secure(string password);

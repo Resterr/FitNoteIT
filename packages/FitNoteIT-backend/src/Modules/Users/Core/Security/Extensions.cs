@@ -1,4 +1,5 @@
-﻿using FitNoteIT.Modules.Users.Core.Abstractions;
+﻿using System.Text;
+using FitNoteIT.Modules.Users.Core.Abstractions;
 using FitNoteIT.Modules.Users.Core.Entities;
 using FitNoteIT.Modules.Users.Core.Options;
 using FitNoteIT.Shared.Options;
@@ -7,18 +8,18 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace FitNoteIT.Modules.Users.Core.Security;
+
 internal static class Extensions
 {
 	private const string _optionsSectionName = "Auth";
+
 	public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration)
 	{
 		var options = configuration.GetOptions<AuthOptions>(_optionsSectionName);
 
-		services
-			.Configure<AuthOptions>(configuration.GetRequiredSection(_optionsSectionName))
+		services.Configure<AuthOptions>(configuration.GetRequiredSection(_optionsSectionName))
 			.AddSingleton<ITokenService, TokenService>()
 			.AddAuthentication(o =>
 			{
@@ -41,13 +42,12 @@ internal static class Extensions
 
 		services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 		services.AddSingleton<IPasswordManager, PasswordManager>();
-		services.AddScoped<IAuthorizationService, AuthorizationService>();
 
 		services.AddAuthorization(authorization =>
 		{
 			authorization.AddPolicy("super-admin", policy =>
 			{
-				policy.RequireRole("SuperAdmin") ;
+				policy.RequireRole("SuperAdmin");
 			});
 
 			authorization.AddPolicy("admin", policy =>

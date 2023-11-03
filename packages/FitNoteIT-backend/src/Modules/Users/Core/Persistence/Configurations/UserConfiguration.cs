@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FitNoteIT.Modules.Users.Core.Persistence.Configurations;
-public class UserConfiguration : IEntityTypeConfiguration<User>
+
+internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
 	public void Configure(EntityTypeBuilder<User> builder)
 	{
@@ -15,6 +16,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 			.HasMaxLength(100)
 			.IsRequired();
 
+		builder.HasIndex(x => x.UserName)
+			.IsUnique();
+		
 		builder.ToTable("User");
 	}
 }
