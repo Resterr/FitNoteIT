@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <RootNamespace>FitNoteIT.Modules.Exercises.API</RootNamespace>
-        <AssemblyName>FitNoteIT.Modules.Users.API</AssemblyName>
+        <AssemblyName>FitNoteIT.Modules.Exercises.API</AssemblyName>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
