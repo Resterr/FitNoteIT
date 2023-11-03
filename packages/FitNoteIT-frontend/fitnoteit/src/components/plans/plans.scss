@@ -1,0 +1,79 @@
+@import "../../utils/variables.scss";
+
+.plans-page__plans {
+  width: 600px;
+  height: calc(100vh - 140px);
+  background: linear-gradient(160deg, #a36218 3.85%, #000 74.44%);
+  position: absolute;
+  left: calc(50vw - 300px);
+  border-left: solid 1px #a36218;
+  border-right: solid 1px #a36218;
+
+  @media only screen and (max-width: 700px) {
+    width: 400px;
+    left: calc(50vw - 200px);
+  }
+
+  @media only screen and (max-width: 500px) {
+    width: 300px;
+    left: calc(50vw - 150px);
+  }
+
+  @media only screen and (max-width: 400px) {
+    width: 250px;
+    left: calc(50vw - 125px);
+  }
+
+  &-title {
+    text-align: center;
+    padding-top: 30px;
+
+    h1 {
+      font-size: 42px;
+      color: #111;
+    }
+  }
+
+  ul {
+    backdrop-filter: blur(55px);
+    -webkit-backdrop-filter: blur(55px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding-bottom: 0px !important;
+
+    &::-webkit-scrollbar {
+      width: 8px !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $gold !important;
+      border-radius: 9999px !important;
+    }
+
+    .MuiListItem-gutters {
+      border-bottom: #975414 solid 1px;
+      cursor: pointer;
+    }
+  }
+
+  &-add-plan-button {
+    button {
+      position: absolute;
+      bottom: 42px;
+      right: calc(50% - 75px);
+      width: 150px;
+      height: 30px;
+      font-size: 16px;
+      background-color: #b17a41;
+      color: black;
+      border: none;
+
+      @media only screen and (max-width: 500px) {
+        bottom: 15px;
+      }
+
+      &:hover {
+        background: #f1ad64;
+      }
+    }
+  }
+}
