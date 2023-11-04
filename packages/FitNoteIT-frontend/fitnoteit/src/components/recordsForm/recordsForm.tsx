@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ModalRecordsX } from "../modalRecordsX/modalRecordsX";
 import { CustomDatePicker } from "../modalRecordsX";
 import axiosInstance from "../../utils/axiosInstance";
+import { forEach } from "react-bootstrap/ElementChildren";
 
 type Exercise = {
   name: string;
@@ -65,7 +66,12 @@ export const RecordsForm: React.FC = () => {
         .get<Record[]>("/api/records", config2)
         .then((response: AxiosResponse<Record[]>) => {
           if (response.data.length !== 0) {
-            // setExercisesRecords(response.data);
+            const recordsWithDateTransformed = response.data.map((element) => ({
+              ...element,
+              recordDate: new Date(element.recordDate),
+            }));
+
+            setExercisesRecords(recordsWithDateTransformed);
           }
           setRecordsGet(true);
         });
@@ -164,12 +170,11 @@ export const RecordsForm: React.FC = () => {
     let dataToSave = {
       exerciseId: selectedValueId,
       result: startWeight,
-      recordDate: startDate,
+      recordDate: startDate.toString(),
     };
-    console.log(dataToSave);
 
     try {
-      // await axiosInstance.put("/api/records", dataToSave, config);
+      await axiosInstance.put("/api/records", dataToSave, config);
       alert("Zapisano");
     } catch (error) {
       console.error("Błąd zapytania Axios:", error);
