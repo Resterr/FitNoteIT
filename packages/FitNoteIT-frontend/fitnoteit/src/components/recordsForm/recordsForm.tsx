@@ -38,20 +38,19 @@ export const RecordsForm: React.FC = () => {
     if (!currentUser) {
       navigate("/");
     }
-  }, []);
+  }, [currentUser, navigate]);
 
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [exercisesRecords, setExercisesRecords] = useState<Record[]>([]);
   const [selectedValue, setSelectedValue] = useState<string>("");
   const [selectedValueId, setSelectedValueId] = useState<string>("");
+  const [recordsGet, setRecordsGet] = useState<boolean>(false);
 
   useEffect(() => {
     if (selectedValue !== "" && exercises.length !== 0) {
-      let tmpId = exercisesRecords.find(
-        (element) => element.exerciseName === selectedValue,
-      );
+      let tmpId = exercises.find((element) => element.name === selectedValue);
       if (tmpId !== undefined) {
-        setSelectedValueId(tmpId.exerciseId.toString());
+        setSelectedValueId(tmpId.id.toString());
       }
     }
   }, [selectedValue]);
@@ -66,56 +65,12 @@ export const RecordsForm: React.FC = () => {
         .get<Record[]>("/api/records", config2)
         .then((response: AxiosResponse<Record[]>) => {
           if (response.data.length !== 0) {
-            setExercisesRecords(response.data);
+            // setExercisesRecords(response.data);
           }
+          setRecordsGet(true);
         });
     } catch (e) {
       console.error(e);
-    }
-
-    try {
-      axiosInstance
-        .get<Exercise[]>("/api/exercises", config2)
-        .then((response: AxiosResponse<Exercise[]>) => {
-          if (response.status === 200) {
-            const newExercises = response.data;
-            setExercises(newExercises);
-
-            const uniqueExercises = new Set(
-              newExercises.map((exercise) => exercise.name),
-            );
-            const updatedRecords = [...exercisesRecords];
-
-            uniqueExercises.forEach((exerciseName) => {
-              if (
-                !updatedRecords.some(
-                  (record) => record.exerciseName === exerciseName,
-                )
-              ) {
-                updatedRecords.push({
-                  exerciseId: "",
-                  exerciseName: exerciseName,
-                  result: 0,
-                  recordDate: new Date(),
-                });
-              }
-            });
-
-            setExercisesRecords(updatedRecords);
-
-            if (exercisesRecords[0]) {
-              setStartDate(exercisesRecords[0].recordDate);
-              setStartWeight(exercisesRecords[0].result.toString());
-            } else {
-              setStartDate(new Date());
-              setStartWeight("0");
-            }
-          } else {
-            alert("Nie pobrano twoich danych");
-          }
-        });
-    } catch (error) {
-      console.error(error);
     }
   }, []);
 
@@ -124,8 +79,69 @@ export const RecordsForm: React.FC = () => {
       let input = document.getElementById("weight") as HTMLInputElement;
       input.value = exercisesRecords[0].result.toString();
       setStartWeight(exercisesRecords[0].result.toString());
+      let tmpExercise = exercises.find(
+        (x) => x.name === exercisesRecords[0].exerciseName,
+      );
+      if (tmpExercise) {
+        setSelectedValueId(tmpExercise.id.toString());
+      }
     }
   }, [exercisesRecords]);
+
+  useEffect(() => {
+    if (recordsGet === true) {
+      let token = localStorage.getItem("accessToken");
+      let config2 = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      try {
+        axiosInstance
+          .get<Exercise[]>("/api/exercises", config2)
+          .then((response: AxiosResponse<Exercise[]>) => {
+            if (response.status === 200) {
+              const newExercises = response.data;
+              setExercises(newExercises);
+
+              const uniqueExercises = new Set(
+                newExercises.map((exercise) => exercise.name),
+              );
+
+              const updatedRecords = [...exercisesRecords];
+
+              uniqueExercises.forEach((exerciseName) => {
+                if (
+                  !updatedRecords.some(
+                    (record) => record.exerciseName === exerciseName,
+                  )
+                ) {
+                  updatedRecords.push({
+                    exerciseId: "",
+                    exerciseName: exerciseName,
+                    result: 0,
+                    recordDate: new Date(),
+                  });
+
+                  setExercisesRecords(updatedRecords);
+                }
+              });
+
+              if (exercisesRecords[0]) {
+                setStartDate(exercisesRecords[0].recordDate);
+                setStartWeight(exercisesRecords[0].result.toString());
+                setSelectedValue(exercisesRecords[0].exerciseName);
+              } else {
+                setStartDate(new Date());
+                setStartWeight("0");
+              }
+            } else {
+              alert("Nie pobrano twoich danych");
+            }
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, [recordsGet]);
 
   useEffect(() => {
     if (exercisesRecords.length !== 0) {
@@ -148,11 +164,12 @@ export const RecordsForm: React.FC = () => {
     let dataToSave = {
       exerciseId: selectedValueId,
       result: startWeight,
-      id: selectedValueId,
+      recordDate: startDate,
     };
+    console.log(dataToSave);
 
     try {
-      await axiosInstance.put("/api/records", dataToSave, config);
+      // await axiosInstance.put("/api/records", dataToSave, config);
       alert("Zapisano");
     } catch (error) {
       console.error("Błąd zapytania Axios:", error);
@@ -166,7 +183,7 @@ export const RecordsForm: React.FC = () => {
         <div className="records__form-title">
           <h1>Twoje rekordy</h1>
         </div>
-        {exercises.length == 0 ? (
+        {exercisesRecords.length == 0 ? (
           <div className="records__form-loading">Ładowanie...</div>
         ) : (
           <form onSubmit={handleSubmit(onSubmit)} id="my-form">
