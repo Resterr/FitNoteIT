@@ -4,7 +4,7 @@ namespace FitNoteIT.Modules.Users.Core.Entities;
 
 public class Role : AuditableEntity
 {
-	public Guid Id { get; init;}
+	public Guid Id { get; init; }
 	public string Name { get; private set; }
 	public List<User> Users { get; private set; } = new();
 

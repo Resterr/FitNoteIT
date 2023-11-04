@@ -27,6 +27,7 @@ internal static class RecordRequests
 		group.MapGet("", async (IDispatcher dispatcher, [AsParameters] GetAllRecordsForCurrentUser request) =>
 			{
 				var result = await dispatcher.QueryAsync(request);
+				
 				return Results.Ok(result);
 			})
 			.RequireAuthorization("user")

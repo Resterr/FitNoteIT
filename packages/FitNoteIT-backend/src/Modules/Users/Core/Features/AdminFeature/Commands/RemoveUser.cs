@@ -53,6 +53,7 @@ public class RemoveUserValidator : AbstractValidator<RemoveUser>
 	public RemoveUserValidator()
 	{
 		RuleFor(x => x.Id)
-			.NotNull();
+			.NotNull()
+			.NotEmpty();
 	}
 }
