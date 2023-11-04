@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import "../recordsForm/recordsForm.scss";
 import "./modalRecorsX.scss";
 import axios, { AxiosResponse } from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
 const style = {
   position: "absolute",
@@ -39,15 +40,10 @@ export const ModalRecordsX: React.FC<ModalRecordsXProps> = (props) => {
       headers: { Authorization: `Bearer ${token}` },
     };
     console.log(data);
-    let removeData: { exerciseName: string } = { exerciseName: data };
 
     try {
-      axios
-        .put(
-          "https://fitnoteit.azurewebsites.net/api/records/clear",
-          removeData,
-          config,
-        )
+      axiosInstance
+        .put(`/api/records/clear/${data}`, config)
         .then((response: AxiosResponse<any, any>): void => {
           if (response.status == 200) {
             alert("Usunięto");
