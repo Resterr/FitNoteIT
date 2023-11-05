@@ -60,29 +60,27 @@ export const LoginForm: React.FC = () => {
   );
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
-    try {
-      const response: AxiosResponse<any> = await axiosInstance.post(
-        "/api/users/login",
-        data,
-      );
-
-      if (response.status === 200) {
-        localStorage.setItem("currentUser", data.userName);
-        localStorage.setItem("accessToken", response.data.accessToken);
-        localStorage.setItem("refreshToken", response.data.refreshToken);
-        let myDate = Date.now();
-        localStorage.setItem("tokenDate", myDate.toString());
-        setCurrentUserFromContext(data.userName);
-        setStatus(`Witaj ${data.userName}!`);
-        console.log(response);
-        navigate("/");
-      } else {
-        setStatus("Nie udało się zalogować");
-      }
-    } catch (error) {
-      console.error(error);
-      setStatus("Wystąpił błąd podczas logowania");
-    }
+    await axiosInstance
+      .post("/api/users/login", data)
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.setItem("currentUser", data.userName);
+          localStorage.setItem("accessToken", response.data.accessToken);
+          localStorage.setItem("refreshToken", response.data.refreshToken);
+          let myDate = Date.now();
+          localStorage.setItem("tokenDate", myDate.toString());
+          setCurrentUserFromContext(data.userName);
+          setStatus(`Witaj ${data.userName}!`);
+          console.log(response);
+          navigate("/");
+        } else {
+          setStatus("Nie udało się zalogować");
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+        setStatus("Wystąpił błąd podczas logowania");
+      });
   };
 
   return (

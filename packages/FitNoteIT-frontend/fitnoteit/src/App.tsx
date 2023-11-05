@@ -97,24 +97,23 @@ function App() {
       currentUser !== null &&
       currentUser !== ""
     ) {
-      try {
-        console.log(data);
-        await axiosInstance
-          .post("/api/users/token/refresh", data, config2)
-          .then((response: AxiosResponse<any, any>) => {
-            if (response.status == 200) {
-              localStorage.setItem("accessToken", response.data.accessToken);
-              localStorage.setItem("refreshToken", response.data.refreshToken);
-              let myDate = Date.now();
-              localStorage.setItem("tokenDate", myDate.toString());
-              console.log(response);
-            } else {
-              console.log("złe dane do odswieźenia tokenów");
-            }
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      console.log(data);
+      await axiosInstance
+        .post("/api/users/token/refresh", data, config2)
+        .then((response: AxiosResponse<any, any>) => {
+          if (response.status == 200) {
+            localStorage.setItem("accessToken", response.data.accessToken);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
+            let myDate = Date.now();
+            localStorage.setItem("tokenDate", myDate.toString());
+            console.log(response);
+          } else {
+            console.log("złe dane do odswieźenia tokenów");
+          }
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
     }
   };
   return (

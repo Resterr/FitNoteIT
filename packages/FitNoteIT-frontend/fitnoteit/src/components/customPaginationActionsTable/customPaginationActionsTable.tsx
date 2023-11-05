@@ -155,19 +155,18 @@ export default function CustomPaginationActionsTable() {
             roleName: selectedRole,
           };
 
-          try {
-            await axiosInstance
-              .patch("/api/admin/role/grant", data, config2)
-              .then((response: AxiosResponse<any, any>): void => {
-                if (response.status == 200) {
-                  alert("Dodano role");
-                } else {
-                  alert("Blad dodawania roli");
-                }
-              });
-          } catch (error) {
-            console.log(error);
-          }
+          await axiosInstance
+            .patch("/api/admin/role/grant", data, config2)
+            .then((response: AxiosResponse<any, any>): void => {
+              if (response.status == 200) {
+                alert("Dodano role");
+              } else {
+                alert("Blad dodawania roli");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         } else {
           console.log("selectedUser.id nie istnieje");
         }
@@ -191,19 +190,16 @@ export default function CustomPaginationActionsTable() {
           roleName: selectedRole2,
         };
 
-        try {
-          await axiosInstance
-            .patch("/api/admin/role/remove", data, config2)
-            .then((response: AxiosResponse<any, any>): void => {
-              if (response.status == 200) {
-                alert("Usunieto role");
-              } else {
-                alert("Blad usuwania roli");
-              }
-            });
-        } catch (error) {
-          console.log(error);
-        }
+        await axiosInstance
+          .patch("/api/admin/role/remove", data, config2)
+          .then((response: AxiosResponse<any, any>): void => {
+            if (response.status == 200) {
+              alert("Usunieto role");
+            } else {
+              alert("Blad usuwania roli");
+            }
+          })
+          .catch((error) => console.log(error));
       } else {
         console.log("selectedUser.id nie istnieje");
       }
@@ -233,19 +229,18 @@ export default function CustomPaginationActionsTable() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        let token: string | null = localStorage.getItem("accessToken");
-        let config2: { headers: { Authorization: string } } = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response: AxiosResponse<any, any> = await axiosInstance.get(
-          "/api/admin/users",
-          config2,
-        );
-        setData(response.data);
-      } catch (error) {
-        console.error("Błąd podczas pobierania danych:", error);
-      }
+      let token: string | null = localStorage.getItem("accessToken");
+      let config2: { headers: { Authorization: string } } = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      await axiosInstance
+        .get("/api/admin/users", config2)
+        .then((response: AxiosResponse<any, any>) => {
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.error("Błąd podczas pobierania danych:", error);
+        });
     };
 
     fetchData();
@@ -267,19 +262,18 @@ export default function CustomPaginationActionsTable() {
           id: selectedUser.id,
         };
 
-        try {
-          await axiosInstance
-            .delete(`/api/admin/users/${data.id}`, config2)
-            .then((response: AxiosResponse<any, any>): void => {
-              if (response.status == 204) {
-                alert("usunieto uzytkownika");
-              } else {
-                alert("Blad usuwania uzytkownika");
-              }
-            });
-        } catch (error) {
-          console.log(error);
-        }
+        await axiosInstance
+          .delete(`/api/admin/users/${data.id}`, config2)
+          .then((response: AxiosResponse<any, any>): void => {
+            if (response.status == 204) {
+              alert("usunieto uzytkownika");
+            } else {
+              alert("Blad usuwania uzytkownika");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       } else {
         console.log("selectedUser.id nie istnieje lub jest SuperAdminem");
       }

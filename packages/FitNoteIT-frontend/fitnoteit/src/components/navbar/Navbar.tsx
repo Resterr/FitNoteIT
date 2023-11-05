@@ -35,26 +35,25 @@ export const Navbar: React.FC = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
 
-    try {
-      await axiosInstance
-        .get("/api/users/current", config2)
-        .then((response: AxiosResponse<any, any>): void => {
-          if (response.status == 200) {
-            let roles: RoleType = response.data.roles;
-            if (
-              roles.some(
-                (role: { name: string }): boolean => role.name === "Admin",
-              )
-            ) {
-              SetAdminPanelVisible(true);
-            }
-          } else {
-            console.log("blad sprawdzania usera");
+    await axiosInstance
+      .get("/api/users/current", config2)
+      .then((response: AxiosResponse<any, any>): void => {
+        if (response.status == 200) {
+          let roles: RoleType = response.data.roles;
+          if (
+            roles.some(
+              (role: { name: string }): boolean => role.name === "Admin",
+            )
+          ) {
+            SetAdminPanelVisible(true);
           }
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        } else {
+          console.log("blad sprawdzania usera");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const location = useLocation();
