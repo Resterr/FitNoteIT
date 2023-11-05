@@ -176,6 +176,7 @@ export const RecordsForm: React.FC = () => {
     try {
       await axiosInstance.put("/api/records", dataToSave, config);
       alert("Zapisano");
+      window.location.reload();
     } catch (error) {
       console.error("Błąd zapytania Axios:", error);
       alert("Błąd");
