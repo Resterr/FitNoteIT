@@ -41,7 +41,7 @@ export const ModalRecordsX: React.FC<ModalRecordsXProps> = (props) => {
     let config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    console.log(data);
+
     if (data == "") {
       alert("Rekord nie istnieje");
     } else {
