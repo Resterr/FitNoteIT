@@ -20,8 +20,10 @@ public static class Extensions
 
 	public static IServiceCollection AddSqlServer<T>(this IServiceCollection services) where T : DbContext
 	{
-		var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
-		var connectionString = configuration.GetOptions<ConnectionStringsOptions>(_sectionName).SqlServer;
+		var configuration = services.BuildServiceProvider()
+			.GetRequiredService<IConfiguration>();
+		var connectionString = configuration.GetOptions<ConnectionStringsOptions>(_sectionName)
+			.SqlServer;
 		services.AddDbContext<T>(x => x.UseSqlServer(connectionString));
 
 		services.AddScoped<AuditableEntitySaveChangesInterceptor>();

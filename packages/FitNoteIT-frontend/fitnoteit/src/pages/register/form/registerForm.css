@@ -77,10 +77,21 @@
 .register__form form .register__form-password-again input,
 .register__form form .register__form-email input {
   font-family: "Oswald", sans-serif;
-  background-color: #1e1d1d;
+  background-color: #1e1d1d !important;
   border: none;
   color: #b17a41;
   width: 100%;
   margin-bottom: 30px;
   height: 45px;
-}/*# sourceMappingURL=registerForm.css.map */
+  outline: none !important;
+  padding-left: 10px;
+}
+.register__form form .register__form-login input:focus,
+.register__form form .register__form-password input:focus,
+.register__form form .register__form-password-again input:focus,
+.register__form form .register__form-email input:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+/*# sourceMappingURL=registerForm.css.map */

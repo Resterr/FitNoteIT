@@ -1,13 +1,11 @@
-﻿using FitNoteIT.Shared.Exceptions;
-using System.Net;
+﻿using System.Net;
+using FitNoteIT.Shared.Exceptions;
 
 namespace FitNoteIT.Modules.Users.Core.Exceptions;
 
 public class InvalidTokenException : FitNoteITException
 {
-	public InvalidTokenException() : base($"Invalid token")
-	{
-	}
-
 	public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
+
+	public InvalidTokenException() : base("Invalid token") { }
 }

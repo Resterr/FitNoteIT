@@ -11,8 +11,7 @@ internal sealed class AsyncEventDispatcher : IAsyncEventDispatcher
 		_channel = channel;
 	}
 
-	public async Task PublishAsync<TEvent>(TEvent @event, CancellationToken cancellationToken = default)
-		where TEvent : class, IEvent
+	public async Task PublishAsync<TEvent>(TEvent @event, CancellationToken cancellationToken = default) where TEvent : class, IEvent
 	{
 		await _channel.Writer.WriteAsync(@event, cancellationToken);
 	}

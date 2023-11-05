@@ -1,25 +1,32 @@
 ﻿using FitNoteIT.Modules.Users.Core.Abstractions;
+using FitNoteIT.Modules.Users.Core.Exceptions;
 using FitNoteIT.Shared.Commands;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Features.UserFeature.Commands;
+
 public record TokenRemove(Guid UserId) : ICommand;
 
 internal sealed class TokenRemoveHandler : ICommandHandler<TokenRemove>
 {
-	private readonly IUserRepository _userRepository;
+	private readonly IUsersDbContext _dbContext;
 
-	public TokenRemoveHandler(IUserRepository userRepository)
+	public TokenRemoveHandler(IUsersDbContext dbContext)
 	{
-		_userRepository = userRepository;
+		_dbContext = dbContext;
 	}
 
 	public async Task HandleAsync(TokenRemove request, CancellationToken cancellationToken)
 	{
-		var user = await _userRepository.GetByIdAsync(request.UserId);
+		var user = await _dbContext.Users.Include(x => x.Roles)
+				.SingleOrDefaultAsync(x => x.Id == request.UserId, cancellationToken) ??
+			throw new UserNotFoundException(request.UserId);
+
 		user.RemoveRefreshToken();
 
-		await _userRepository.UpdateAsync(user);
+		_dbContext.Users.Update(user);
+		await _dbContext.SaveChangesAsync(cancellationToken);
 	}
 }
 
@@ -27,7 +34,7 @@ public class TokenRemoveValidator : AbstractValidator<TokenRemove>
 {
 	public TokenRemoveValidator()
 	{
-		RuleFor(x => x.UserId).NotEmpty();
+		RuleFor(x => x.UserId)
+			.NotEmpty();
 	}
 }
-

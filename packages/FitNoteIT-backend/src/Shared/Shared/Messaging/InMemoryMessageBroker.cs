@@ -17,7 +17,8 @@ internal sealed class InMemoryMessageBroker : IMessageBroker
 
 	public async Task PublishAsync(IEvent @event, CancellationToken cancellationToken = default)
 	{
-		var name = @event.GetType().Name.Underscore();
+		var name = @event.GetType()
+			.Name.Underscore();
 		_logger.LogInformation("Publishing an event: {Name}...", name);
 		await _asyncEventDispatcher.PublishAsync(@event, cancellationToken);
 	}
