@@ -7,6 +7,7 @@ import "../recordsForm/recordsForm.scss";
 import "./modalRecorsX.scss";
 import axios, { AxiosResponse } from "axios";
 import axiosInstance from "../../utils/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -33,6 +34,7 @@ export const ModalRecordsX: React.FC<ModalRecordsXProps> = (props) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
 
   const removeHandler = (data: string) => {
     let token: string | null = localStorage.getItem("accessToken");
@@ -40,19 +42,25 @@ export const ModalRecordsX: React.FC<ModalRecordsXProps> = (props) => {
       headers: { Authorization: `Bearer ${token}` },
     };
     console.log(data);
-
-    try {
+    if (data == "") {
+      alert("Rekord nie istnieje");
+    } else {
       axiosInstance
-        .put(`/api/records/clear/${data}`, config)
+        .delete(`/api/records/${data}`, config)
         .then((response: AxiosResponse<any, any>): void => {
-          if (response.status == 200) {
+          if (response.status == 204) {
             alert("Usunięto");
+            window.location.reload();
           } else {
             alert("Błąd");
+            handleClose();
           }
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Nie udalo sie usunac");
+          handleClose();
         });
-    } catch (e) {
-      console.log(e);
     }
   };
 
