@@ -61,23 +61,23 @@ export const RecordsForm: React.FC = () => {
     let config2 = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    try {
-      axiosInstance
-        .get<Record[]>("/api/records", config2)
-        .then((response: AxiosResponse<Record[]>) => {
-          if (response.data.length !== 0) {
-            const recordsWithDateTransformed = response.data.map((element) => ({
-              ...element,
-              recordDate: new Date(element.recordDate),
-            }));
 
-            setExercisesRecords(recordsWithDateTransformed);
-          }
-          setRecordsGet(true);
-        });
-    } catch (e) {
-      console.error(e);
-    }
+    axiosInstance
+      .get<Record[]>("/api/records", config2)
+      .then((response: AxiosResponse<Record[]>) => {
+        if (response.data.length !== 0) {
+          const recordsWithDateTransformed = response.data.map((element) => ({
+            ...element,
+            recordDate: new Date(element.recordDate),
+          }));
+
+          setExercisesRecords(recordsWithDateTransformed);
+        }
+        setRecordsGet(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   useEffect(() => {
@@ -100,52 +100,52 @@ export const RecordsForm: React.FC = () => {
       let config2 = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      try {
-        axiosInstance
-          .get<Exercise[]>("/api/exercises", config2)
-          .then((response: AxiosResponse<Exercise[]>) => {
-            if (response.status === 200) {
-              const newExercises = response.data;
-              setExercises(newExercises);
 
-              const uniqueExercises = new Set(
-                newExercises.map((exercise) => exercise.name),
-              );
+      axiosInstance
+        .get<Exercise[]>("/api/exercises", config2)
+        .then((response: AxiosResponse<Exercise[]>) => {
+          if (response.status === 200) {
+            const newExercises = response.data;
+            setExercises(newExercises);
 
-              const updatedRecords = [...exercisesRecords];
+            const uniqueExercises = new Set(
+              newExercises.map((exercise) => exercise.name),
+            );
 
-              uniqueExercises.forEach((exerciseName) => {
-                if (
-                  !updatedRecords.some(
-                    (record) => record.exerciseName === exerciseName,
-                  )
-                ) {
-                  updatedRecords.push({
-                    exerciseId: "",
-                    exerciseName: exerciseName,
-                    result: 0,
-                    recordDate: new Date(),
-                  });
+            const updatedRecords = [...exercisesRecords];
 
-                  setExercisesRecords(updatedRecords);
-                }
-              });
+            uniqueExercises.forEach((exerciseName) => {
+              if (
+                !updatedRecords.some(
+                  (record) => record.exerciseName === exerciseName,
+                )
+              ) {
+                updatedRecords.push({
+                  exerciseId: "",
+                  exerciseName: exerciseName,
+                  result: 0,
+                  recordDate: new Date(),
+                });
 
-              if (exercisesRecords[0]) {
-                setStartDate(exercisesRecords[0].recordDate);
-                setStartWeight(exercisesRecords[0].result.toString());
-                setSelectedValue(exercisesRecords[0].exerciseName);
-              } else {
-                setStartDate(new Date());
-                setStartWeight("0");
+                setExercisesRecords(updatedRecords);
               }
+            });
+
+            if (exercisesRecords[0]) {
+              setStartDate(exercisesRecords[0].recordDate);
+              setStartWeight(exercisesRecords[0].result.toString());
+              setSelectedValue(exercisesRecords[0].exerciseName);
             } else {
-              alert("Nie pobrano twoich danych");
+              setStartDate(new Date());
+              setStartWeight("0");
             }
-          });
-      } catch (error) {
-        console.error(error);
-      }
+          } else {
+            alert("Nie pobrano twoich danych");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }, [recordsGet]);
 

@@ -61,20 +61,17 @@ export const AdminPanel: React.FC = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
 
-    try {
-      await axiosInstance
-        .get("/api/users/current", config2)
-        .then((response: AxiosResponse<any, any>): void => {
-          if (response.status == 200) {
-            console.log(response);
-            setRoles(response.data.roles);
-          } else {
-            console.log("blad sprawdzania usera");
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    await axiosInstance
+      .get("/api/users/current", config2)
+      .then((response: AxiosResponse<any, any>): void => {
+        if (response.status == 200) {
+          console.log(response);
+          setRoles(response.data.roles);
+        } else {
+          console.log("blad sprawdzania usera");
+        }
+      })
+      .catch((e) => console.log(e));
   };
   useEffect(() => {
     UserCheck();

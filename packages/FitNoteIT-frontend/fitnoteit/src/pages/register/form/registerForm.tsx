@@ -53,35 +53,34 @@ export const RegisterForm: React.FC = () => {
   );
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    try {
-      const response: AxiosResponse<any> = await axiosInstance.post(
-        "/api/users/register",
-        data,
-      );
-      if (response.status === 200) {
-        setStatus("Udało się zarejestrować");
-        const formId = document.getElementById("form-id") as HTMLInputElement;
-        const formLogin = document.getElementById(
-          "form-login",
-        ) as HTMLInputElement;
-        const formPassword = document.getElementById(
-          "form-password",
-        ) as HTMLInputElement;
-        const formPassword2 = document.getElementById(
-          "form-password2",
-        ) as HTMLInputElement;
+    await axiosInstance
+      .post("/api/users/register", data)
+      .then((response) => {
+        if (response.status === 200) {
+          setStatus("Udało się zarejestrować");
+          const formId = document.getElementById("form-id") as HTMLInputElement;
+          const formLogin = document.getElementById(
+            "form-login",
+          ) as HTMLInputElement;
+          const formPassword = document.getElementById(
+            "form-password",
+          ) as HTMLInputElement;
+          const formPassword2 = document.getElementById(
+            "form-password2",
+          ) as HTMLInputElement;
 
-        formId.value = "";
-        formLogin.value = "";
-        formPassword.value = "";
-        formPassword2.value = "";
-      } else {
+          formId.value = "";
+          formLogin.value = "";
+          formPassword.value = "";
+          formPassword2.value = "";
+        } else {
+          setStatus("Nie udało się zarejestrować");
+        }
+      })
+      .catch((error: any) => {
+        console.log(error);
         setStatus("Nie udało się zarejestrować");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setStatus("Nie udało się zarejestrować");
-    }
+      });
   };
 
   return (
