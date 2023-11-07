@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+.add-plan-page-content__available-exercises {
+  width: 600px;
+  background: linear-gradient(34deg, #0b0b0b 27.42%, #1f2a2c 96.55%);
+  height: auto;
+  color: #b17a41;
+  min-height: 800px;
+  z-index: 2;
+}
+@media only screen and (max-width: 1500px) and (min-width: 801px) {
+  .add-plan-page-content__available-exercises {
+    width: 50vw;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .add-plan-page-content__available-exercises {
+    width: 100vw;
+  }
+}
+.add-plan-page-content__available-exercises-title {
+  font-size: 32px;
+  padding-top: 50px;
+  margin-bottom: 50px;
+  width: 100%;
+}
+.add-plan-page-content__available-exercises-title h1 {
+  font-size: 48px;
+}
+.add-plan-page-content__available-exercises-category {
+  font-size: 32px;
+  padding: 15px;
+  border-bottom: #b17a41 2px solid;
+  border-top: #b17a41 2px solid;
+  position: relative;
+  width: calc(100% - 140px);
+  margin-left: 70px;
+}
+.add-plan-page-content__available-exercises-category-before svg {
+  position: absolute;
+  left: -8px;
+  top: 32%;
+  cursor: pointer;
+}
+.add-plan-page-content__available-exercises-category-next svg {
+  position: absolute;
+  right: -8px;
+  top: 32%;
+  cursor: pointer;
+}
+.add-plan-page-content__available-exercises-category,
+.add-plan-page-content__available-exercises .add-plan-page-content__available-exercises-title {
+  text-align: center;
+}
+.add-plan-page-content__available-exercises-list {
+  width: calc(100% - 140px);
+  margin: 50px 70px;
+  padding: 0;
+}
+.add-plan-page-content__available-exercises-list ul {
+  padding: 0;
+  list-style: none;
+  max-height: 400px;
+  overflow: auto;
+}
+.add-plan-page-content__available-exercises-list ul::-webkit-scrollbar {
+  width: 8px !important;
+}
+.add-plan-page-content__available-exercises-list ul::-webkit-scrollbar-thumb {
+  background-color: #b17a41 !important;
+  border-radius: 9999px !important;
+}
+.add-plan-page-content__available-exercises-list ul .MuiListItem-gutters {
+  border-bottom: #975414 solid 1px;
+  cursor: pointer;
+}
+.add-plan-page-content__available-exercises-list ul .add-plan-page-content__available-exercises-list-element {
+  margin: 20px 0;
+  font-size: 28px;
+  position: relative;
+}
+.add-plan-page-content__available-exercises-list ul .add-plan-page-content__available-exercises-list-element-plus {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=availableExercises.css.map */

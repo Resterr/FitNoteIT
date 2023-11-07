@@ -12,6 +12,7 @@ import { AdminPanel } from "./pages/adminPanel/adminPanel";
 import { Records } from "./pages/records";
 import { PlansPage } from "./pages/plansPage";
 import { HistoryPage } from "./pages/historyPage";
+import { AddPlanPage } from "./pages/addPlanPage";
 
 function App() {
   const { setCurrentUserFromContext } = useContext(
@@ -127,6 +128,7 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="admin" element={<AdminPanel />} />
             <Route path="records" element={<Records />} />
+            <Route path="addplan" element={<AddPlanPage />} />
             <Route path="history" element={<HistoryPage />} />
             <Route path="plans" element={<PlansPage />} />
           </Route>
