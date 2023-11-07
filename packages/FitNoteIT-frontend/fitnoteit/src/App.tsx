@@ -11,6 +11,7 @@ import axiosInstance from "./utils/axiosInstance";
 import { AdminPanel } from "./pages/adminPanel/adminPanel";
 import { Records } from "./pages/records";
 import { PlansPage } from "./pages/plansPage";
+import { HistoryPage } from "./pages/historyPage";
 
 function App() {
   const { setCurrentUserFromContext } = useContext(
@@ -126,6 +127,7 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="admin" element={<AdminPanel />} />
             <Route path="records" element={<Records />} />
+            <Route path="history" element={<HistoryPage />} />
             <Route path="plans" element={<PlansPage />} />
           </Route>
         </Routes>
