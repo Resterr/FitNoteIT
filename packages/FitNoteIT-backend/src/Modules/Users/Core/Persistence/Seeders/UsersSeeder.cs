@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace FitNoteIT.Modules.Users.Core.Persistence.Seeders;
 
-public interface IUsersSeeder
+internal interface IUsersSeeder
 {
 	User SeedSuperAdmin();
 	List<Role> SeedDefaultRoles();
@@ -35,11 +35,11 @@ internal sealed class UsersSeeder : IUsersSeeder
 
 	public List<Role> SeedDefaultRoles()
 	{
-		var roles = new List<Role>()
+		var roles = new List<Role>
 		{
-			new Role(Guid.NewGuid(), "SuperAdmin"),
-			new Role(Guid.NewGuid(), "Admin"),
-			new Role(Guid.NewGuid(), "User"),
+			new(Guid.NewGuid(), "SuperAdmin"),
+			new(Guid.NewGuid(), "Admin"),
+			new(Guid.NewGuid(), "User")
 		};
 
 		return roles;

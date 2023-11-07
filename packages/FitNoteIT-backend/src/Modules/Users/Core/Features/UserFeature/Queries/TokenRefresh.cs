@@ -1,60 +1,70 @@
-﻿using FitNoteIT.Modules.Users.Core.Abstractions;
+﻿using System.Security.Claims;
+using FitNoteIT.Modules.Users.Core.Abstractions;
 using FitNoteIT.Modules.Users.Core.Exceptions;
 using FitNoteIT.Modules.Users.Shared.DTO;
 using FitNoteIT.Shared.Queries;
 using FitNoteIT.Shared.Services;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Features.UserFeature.Queries;
+
 public record TokenRefresh(string AccessToken, string RefreshToken) : IQuery<TokensDto>;
 
 internal sealed class TokenRefreshHandler : IQueryHandler<TokenRefresh, TokensDto>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly ITokenService _tokenService;
-	private readonly ICurrentUserService _currentUserService;
 	private readonly IDateTimeService _dateTimeService;
+	private readonly IUsersDbContext _dbContext;
+	private readonly ITokenService _tokenService;
 
-    public TokenRefreshHandler(IUserRepository userRepository, ITokenService tokenService, ICurrentUserService currentUserService, IDateTimeService dateTimeService)
-    {
-        _userRepository = userRepository;
-        _tokenService = tokenService;
-		_currentUserService = currentUserService;
+	public TokenRefreshHandler(IUsersDbContext dbContext, ITokenService tokenService, IDateTimeService dateTimeService)
+	{
+		_dbContext = dbContext;
+		_tokenService = tokenService;
 		_dateTimeService = dateTimeService;
-    }
+	}
 
-    public async Task<TokensDto> HandleAsync(TokenRefresh request, CancellationToken cancellationToken)
-    {
-        string accessToken = request.AccessToken;
-        string refreshToken = request.RefreshToken;
+	public async Task<TokensDto> HandleAsync(TokenRefresh request, CancellationToken cancellationToken)
+	{
+		var accessToken = request.AccessToken;
+		var refreshToken = request.RefreshToken;
 
-        var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
+		var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
 
-        var userId = _currentUserService.UserId;
-        var user = await _userRepository.GetByIdAsync((Guid)userId);
+		if (Guid.TryParse(principal.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
+			;
+		else
+			throw new InvalidTokenException();
 
-        if (!user.IsTokenValid(refreshToken, _dateTimeService.CurrentDate())) throw new InvalidTokenException();
+		var user = await _dbContext.Users.Include(x => x.Roles)
+				.SingleOrDefaultAsync(x => x.Id == userId, cancellationToken) ??
+			throw new UserNotFoundException(userId);
 
-        var newAccessToken = _tokenService.GenerateAccessTokenFromClaims(principal.Claims);
-        var newRefreshToken = _tokenService.GenerateRefreshToken();
+		if (!user.IsTokenValid(refreshToken, _dateTimeService.CurrentDate())) throw new InvalidTokenException();
 
-        user.SetRefreshToken(newRefreshToken);
+		var newAccessToken = _tokenService.GenerateAccessTokenFromClaims(principal.Claims);
+		var newRefreshToken = _tokenService.GenerateRefreshToken();
 
-        await _userRepository.UpdateAsync(user);
+		user.SetRefreshToken(newRefreshToken);
 
-        return new TokensDto
-        {
-            AccessToken = newAccessToken,
-            RefreshToken = newRefreshToken
-        };
-    }
+		_dbContext.Users.Update(user);
+		await _dbContext.SaveChangesAsync(cancellationToken);
+
+		return new TokensDto
+		{
+			AccessToken = newAccessToken,
+			RefreshToken = newRefreshToken
+		};
+	}
 }
 
 public class TokenRefreshValidator : AbstractValidator<TokenRefresh>
 {
 	public TokenRefreshValidator()
 	{
-		RuleFor(x => x.AccessToken).NotNull();
-		RuleFor(x => x.RefreshToken).NotNull();
+		RuleFor(x => x.AccessToken)
+			.NotNull();
+		RuleFor(x => x.RefreshToken)
+			.NotNull();
 	}
 }

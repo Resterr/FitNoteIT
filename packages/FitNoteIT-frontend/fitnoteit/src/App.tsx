@@ -9,6 +9,8 @@ import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import axiosInstance from "./utils/axiosInstance";
 import { AdminPanel } from "./pages/adminPanel/adminPanel";
+import { Records } from "./pages/records";
+import { PlansPage } from "./pages/plansPage";
 
 function App() {
   const { setCurrentUserFromContext } = useContext(
@@ -95,24 +97,23 @@ function App() {
       currentUser !== null &&
       currentUser !== ""
     ) {
-      try {
-        console.log(data);
-        await axiosInstance
-          .post("/api/users/token/refresh", data, config2)
-          .then((response: AxiosResponse<any, any>) => {
-            if (response.status == 200) {
-              localStorage.setItem("accessToken", response.data.accessToken);
-              localStorage.setItem("refreshToken", response.data.refreshToken);
-              let myDate = Date.now();
-              localStorage.setItem("tokenDate", myDate.toString());
-              console.log(response);
-            } else {
-              console.log("złe dane do odswieźenia tokenów");
-            }
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      console.log(data);
+      await axiosInstance
+        .post("/api/users/token/refresh", data, config2)
+        .then((response: AxiosResponse<any, any>) => {
+          if (response.status == 200) {
+            localStorage.setItem("accessToken", response.data.accessToken);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
+            let myDate = Date.now();
+            localStorage.setItem("tokenDate", myDate.toString());
+            console.log(response);
+          } else {
+            console.log("złe dane do odswieźenia tokenów");
+          }
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
     }
   };
   return (
@@ -124,7 +125,8 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="admin" element={<AdminPanel />} />
-            {/* <Route path="records" element={<Records />} /> */}
+            <Route path="records" element={<Records />} />
+            <Route path="plans" element={<PlansPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

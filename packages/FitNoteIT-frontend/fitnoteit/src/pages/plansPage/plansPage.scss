@@ -1,0 +1,13 @@
+.plans-page {
+  background-image: url("../../utils/backgroundgold.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: calc(100vh - 100px);
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+  }
+}

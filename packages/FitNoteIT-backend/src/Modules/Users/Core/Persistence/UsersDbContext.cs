@@ -1,10 +1,12 @@
 ﻿using System.Reflection;
+using FitNoteIT.Modules.Users.Core.Abstractions;
 using FitNoteIT.Modules.Users.Core.Entities;
 using FitNoteIT.Shared.Database.Interceptors;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Users.Core.Persistence;
-public class UsersDbContext : DbContext
+
+internal sealed class UsersDbContext : DbContext, IUsersDbContext
 {
 	private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
@@ -21,11 +23,9 @@ public class UsersDbContext : DbContext
 		builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
 		builder.Entity<User>()
-		   .HasMany(x => x.Roles)
-		   .WithMany(x => x.Users)
-		   .UsingEntity(x =>
-				x.ToTable("UserRole")
-		);
+			.HasMany(x => x.Roles)
+			.WithMany(x => x.Users)
+			.UsingEntity(x => x.ToTable("UserRole"));
 
 		builder.HasDefaultSchema("users");
 

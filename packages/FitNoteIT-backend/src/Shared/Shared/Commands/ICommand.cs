@@ -1,6 +1,4 @@
 ﻿namespace FitNoteIT.Shared.Commands;
 
 //Marker
-public interface ICommand
-{
-}
+public interface ICommand { }

@@ -9,6 +9,7 @@ using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace FitNoteIT.Modules.Users.API.Requests;
+
 internal static class UsersRequests
 {
 	public static WebApplication RegisterUsersRequests(this WebApplication app)
@@ -24,39 +25,43 @@ internal static class UsersRequests
 	private static RouteGroupBuilder MapUsersEndpoints(this RouteGroupBuilder group)
 	{
 		group.MapGet("current", async (IDispatcher dispatcher) =>
-		{
-			var request = new SelfGetUser();
-			var result = await dispatcher.QueryAsync(request);
-			return Results.Ok(result);
-		}).RequireAuthorization("user")
+			{
+				var request = new SelfGetUser();
+				var result = await dispatcher.QueryAsync(request);
+				return Results.Ok(result);
+			})
+			.RequireAuthorization("user")
 			.Produces<UserDto>()
 			.Produces(StatusCodes.Status401Unauthorized)
 			.WithMetadata(new SwaggerOperationAttribute("Get current user"));
 
 		group.MapPost("register", async (IDispatcher dispatcher, RegisterUser request) =>
-		{
-			await dispatcher.SendAsync(request);
-			return Results.Ok();
-		}).AllowAnonymous()
+			{
+				await dispatcher.SendAsync(request);
+				return Results.Ok();
+			})
+			.AllowAnonymous()
 			.Produces(StatusCodes.Status200OK)
 			.Produces(StatusCodes.Status400BadRequest)
 			.WithMetadata(new SwaggerOperationAttribute("Sign up user"));
 
 		group.MapPost("login", async (IDispatcher dispatcher, LoginUser request) =>
-		{
-			var result = await dispatcher.QueryAsync(request);
-			return Results.Ok(result);
-		}).AllowAnonymous()
+			{
+				var result = await dispatcher.QueryAsync(request);
+				return Results.Ok(result);
+			})
+			.AllowAnonymous()
 			.Produces<TokensDto>()
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status404NotFound)
 			.WithMetadata(new SwaggerOperationAttribute("Sign in user"));
 
 		group.MapPost("token/refresh", async (IDispatcher dispatcher, TokenRefresh request) =>
-		{
-			var token = await dispatcher.QueryAsync(request);
-			return Results.Ok(token);
-		}).AllowAnonymous()
+			{
+				var token = await dispatcher.QueryAsync(request);
+				return Results.Ok(token);
+			})
+			.AllowAnonymous()
 			.Produces<TokensDto>()
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status401Unauthorized)
@@ -64,17 +69,17 @@ internal static class UsersRequests
 			.WithMetadata(new SwaggerOperationAttribute("Refresh token"));
 
 		group.MapPatch("token/remove", async (IDispatcher dispatcher, TokenRemove request) =>
-		{
-			await dispatcher.SendAsync(request);
-			return Results.NoContent();
-		}).RequireAuthorization("user")
+			{
+				await dispatcher.SendAsync(request);
+				return Results.NoContent();
+			})
+			.RequireAuthorization("user")
 			.Produces(StatusCodes.Status204NoContent)
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status404NotFound)
 			.WithMetadata(new SwaggerOperationAttribute("Remove refresh token"));
-		
+
 		return group;
 	}
 }
-

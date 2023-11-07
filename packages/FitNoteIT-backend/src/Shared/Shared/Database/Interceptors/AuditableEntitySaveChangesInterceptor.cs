@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace FitNoteIT.Shared.Database.Interceptors;
+
 public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
 {
 	private readonly ICurrentUserService _currentUserService;
@@ -53,9 +54,8 @@ public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
 
 public static class Extensions
 {
-	public static bool HasChangedOwnedEntities(this EntityEntry entry) =>
-		entry.References.Any(r =>
-			r.TargetEntry != null &&
-			r.TargetEntry.Metadata.IsOwned() &&
-			(r.TargetEntry.State == EntityState.Added || r.TargetEntry.State == EntityState.Modified));
+	public static bool HasChangedOwnedEntities(this EntityEntry entry)
+	{
+		return entry.References.Any(r => r.TargetEntry != null && r.TargetEntry.Metadata.IsOwned() && (r.TargetEntry.State == EntityState.Added || r.TargetEntry.State == EntityState.Modified));
+	}
 }

@@ -1,23 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<RootNamespace>FitNoteIT.Modules.Users.Core</RootNamespace>
-		<AssemblyName>FitNoteIT.Modules.Users.Core</AssemblyName>
-		<TargetFramework>net7.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
+    <PropertyGroup>
+        <RootNamespace>FitNoteIT.Modules.Users.Core</RootNamespace>
+        <AssemblyName>FitNoteIT.Modules.Users.Core</AssemblyName>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Shared\Shared.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Shared\Shared.csproj"/>
+    </ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Persistence\Migrations\" />
-	</ItemGroup>
-	
-	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12" />
-	</ItemGroup>
+    <ItemGroup>
+        <Folder Include="Persistence\Migrations\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12"/>
+    </ItemGroup>
 
 </Project>

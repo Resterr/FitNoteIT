@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<RootNamespace>FitNoteIT.Modules.Users.Shared</RootNamespace>
-		<AssemblyName>FitNoteIT.Modules.Users.Shared</AssemblyName>
-		<TargetFramework>net7.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
+    <PropertyGroup>
+        <RootNamespace>FitNoteIT.Modules.Users.Shared</RootNamespace>
+        <AssemblyName>FitNoteIT.Modules.Users.Shared</AssemblyName>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\..\..\Shared\Shared\Shared.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\Shared\Shared.csproj"/>
+    </ItemGroup>
 
 </Project>

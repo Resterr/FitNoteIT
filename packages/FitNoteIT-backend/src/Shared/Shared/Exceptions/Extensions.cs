@@ -6,9 +6,12 @@ namespace FitNoteIT.Shared.Exceptions;
 internal static class Extensions
 {
 	public static IServiceCollection AddErrorHandling(this IServiceCollection services)
-		=> services
-			.AddScoped<ErrorHandlerMiddleware>();
+	{
+		return services.AddScoped<ErrorHandlerMiddleware>();
+	}
 
 	public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder app)
-		=> app.UseMiddleware<ErrorHandlerMiddleware>();
+	{
+		return app.UseMiddleware<ErrorHandlerMiddleware>();
+	}
 }

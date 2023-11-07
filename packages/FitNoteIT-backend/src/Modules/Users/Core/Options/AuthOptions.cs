@@ -1,4 +1,5 @@
 ﻿namespace FitNoteIT.Modules.Users.Core.Options;
+
 internal sealed class AuthOptions
 {
 	public string Issuer { get; set; }

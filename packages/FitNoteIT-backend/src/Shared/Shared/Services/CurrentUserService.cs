@@ -19,7 +19,9 @@ internal sealed class CurrentUserService : ICurrentUserService
 	}
 
 	public ClaimsPrincipal? Principal => _httpContextAccessor.HttpContext?.User;
-	public Guid? UserId => Principal?.FindFirstValue(ClaimTypes.NameIdentifier).ToGuid();
+
+	public Guid? UserId => Principal?.FindFirstValue(ClaimTypes.NameIdentifier)
+		.ToGuid();
 }
 
 internal static class Extensions
