@@ -6,5 +6,5 @@ public class RecordDto
 	public Guid ExerciseId { get; set; }
 	public string? ExerciseName { get; set; }
 	public int Result { get; set; }
-	public DateTime RecordDate { get; set; }
+	public DateOnly RecordDate { get; set; }
 }

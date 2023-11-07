@@ -18,7 +18,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
 		builder.HasIndex(x => x.UserName)
 			.IsUnique();
-		
+
 		builder.ToTable("User");
 	}
 }

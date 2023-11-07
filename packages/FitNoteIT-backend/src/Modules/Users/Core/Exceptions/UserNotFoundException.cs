@@ -6,8 +6,8 @@ namespace FitNoteIT.Modules.Users.Core.Exceptions;
 public class UserNotFoundException : FitNoteITException
 {
 	public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
-	
-	public UserNotFoundException() : base($"Current user not found") { }
+
+	public UserNotFoundException() : base("Current user not found") { }
 
 	public UserNotFoundException(Guid id) : base($"User with id: {id} not found") { }
 

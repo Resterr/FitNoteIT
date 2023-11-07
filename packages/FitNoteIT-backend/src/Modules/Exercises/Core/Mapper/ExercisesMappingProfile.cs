@@ -11,6 +11,8 @@ internal class ExercisesMappingProfile : Profile
 		CreateMap<Exercise, ExerciseDto>()
 			.ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category!.Name));
 		CreateMap<Record, RecordDto>()
-			.ForMember(dest => dest.ExerciseName, opt => opt.MapFrom(src => src.Exercise.Name));
+			.ForMember(dest => dest.ExerciseName, opt => opt.MapFrom(src => src.Exercise.Name))
+			.ForMember(dest => dest.RecordDate,
+				opt => opt.MapFrom(src => new DateOnly(src.RecordDate.Year, src.RecordDate.Month, src.RecordDate.Day)));
 	}
 }
