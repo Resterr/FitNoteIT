@@ -1,0 +1,101 @@
+@import "../../utils/variables.scss";
+
+.add-plan-page-content__available-exercises {
+  width: 600px;
+  background: linear-gradient(34deg, #0b0b0b 27.42%, #1f2a2c 96.55%);
+  height: auto;
+  color: $gold;
+  min-height: 800px;
+  z-index: 2;
+
+  @media only screen and (max-width: 1500px) and (min-width: 801px) {
+    width: 50vw;
+  }
+
+  @media only screen and (max-width: 800px) {
+    width: 100vw;
+  }
+
+  &-title {
+    font-size: 32px;
+    padding-top: 50px;
+    margin-bottom: 50px;
+    width: 100%;
+
+    h1 {
+      font-size: 48px;
+    }
+  }
+
+  &-category {
+    font-size: 32px;
+    padding: 15px;
+    border-bottom: $gold 2px solid;
+    border-top: $gold 2px solid;
+    position: relative;
+    width: calc(100% - 140px);
+    margin-left: 70px;
+
+    &-before {
+      svg {
+        position: absolute;
+        left: -8px;
+        top: calc(32%);
+        cursor: pointer;
+      }
+    }
+
+    &-next {
+      svg {
+        position: absolute;
+        right: -8px;
+        top: calc(32%);
+        cursor: pointer;
+      }
+    }
+  }
+
+  &-category,
+  .add-plan-page-content__available-exercises-title {
+    text-align: center;
+  }
+
+  &-list {
+    width: calc(100% - 140px);
+    margin: 50px 70px;
+    padding: 0;
+
+    ul {
+      padding: 0;
+      list-style: none;
+      max-height: 400px;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        width: 8px !important;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $gold !important;
+        border-radius: 9999px !important;
+      }
+
+      .MuiListItem-gutters {
+        border-bottom: #975414 solid 1px;
+        cursor: pointer;
+      }
+
+      .add-plan-page-content__available-exercises-list-element {
+        margin: 20px 0;
+        font-size: 28px;
+        position: relative;
+
+        &-plus {
+          position: absolute;
+          right: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

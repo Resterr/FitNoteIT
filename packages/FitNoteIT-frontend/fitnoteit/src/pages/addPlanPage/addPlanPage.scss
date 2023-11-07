@@ -1,0 +1,22 @@
+@import "../../utils/variables.scss";
+
+.add-plan-page {
+  &-content {
+    display: flex;
+    flex-direction: row;
+
+    @media only screen and (max-width: 800px) {
+      flex-direction: column;
+    }
+
+    img {
+      max-height: calc(100vh - 140px);
+      min-height: 800px;
+      width: calc(100vw - 1200px);
+
+      @media only screen and (max-width: 1500px) {
+        display: none;
+      }
+    }
+  }
+}
