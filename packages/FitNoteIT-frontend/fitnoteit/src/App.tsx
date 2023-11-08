@@ -13,6 +13,7 @@ import { Records } from "./pages/records";
 import { PlansPage } from "./pages/plansPage";
 import { HistoryPage } from "./pages/historyPage";
 import { AddPlanPage } from "./pages/addPlanPage";
+import { WorkoutHistory } from "./pages/workoutHistory";
 
 function App() {
   const { setCurrentUserFromContext } = useContext(
@@ -130,6 +131,7 @@ function App() {
             <Route path="records" element={<Records />} />
             <Route path="addplan" element={<AddPlanPage />} />
             <Route path="history" element={<HistoryPage />} />
+            <Route path="workout" element={<WorkoutHistory />} />
             <Route path="plans" element={<PlansPage />} />
           </Route>
         </Routes>
