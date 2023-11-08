@@ -63,8 +63,8 @@ public class TokenRefreshValidator : AbstractValidator<TokenRefresh>
 	public TokenRefreshValidator()
 	{
 		RuleFor(x => x.AccessToken)
-			.NotNull();
+			.NotEmpty();
 		RuleFor(x => x.RefreshToken)
-			.NotNull();
+			.NotEmpty();
 	}
 }

@@ -50,7 +50,6 @@
 }
 .plans-page__plans ul .MuiListItem-gutters {
   border-bottom: #975414 solid 1px;
-  cursor: pointer;
 }
 .plans-page__plans-add-plan-button button {
   position: absolute;

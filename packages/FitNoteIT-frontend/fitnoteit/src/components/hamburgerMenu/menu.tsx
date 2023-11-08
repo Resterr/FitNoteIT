@@ -63,7 +63,7 @@ export const Menu: React.FC<MenuProps> = ({ className }) => {
         </li>
         <li className={styles.navigation__item}>
           {currentUser ? (
-            <Link to="/">
+            <Link to="/history">
               <p>Historia</p>
             </Link>
           ) : (
@@ -72,8 +72,8 @@ export const Menu: React.FC<MenuProps> = ({ className }) => {
         </li>
         <li className={styles.navigation__item}>
           {currentUser ? (
-            <Link to="/">
-              <p>stwórz plan</p>
+            <Link to="/plans">
+              <p>twoje plany</p>
             </Link>
           ) : (
             <p></p>

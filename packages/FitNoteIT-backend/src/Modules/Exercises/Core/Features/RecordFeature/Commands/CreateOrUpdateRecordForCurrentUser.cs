@@ -1,4 +1,6 @@
-﻿using FitNoteIT.Modules.Exercises.Core.Abstractions;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
+using FitNoteIT.Modules.Exercises.Core.Abstractions;
 using FitNoteIT.Modules.Exercises.Core.Entities;
 using FitNoteIT.Modules.Exercises.Core.Exceptions;
 using FitNoteIT.Modules.Users.Shared;
@@ -9,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Exercises.Core.Features.RecordFeature.Commands;
 
-public record CreateOrUpdateRecordForCurrentUser(Guid ExerciseId, int Result) : ICommand
+public record CreateOrUpdateRecordForCurrentUser(Guid ExerciseId, string RecordDate, int Result) : ICommand
 {
 	public Guid Id { get; init; } = Guid.NewGuid();
 }
@@ -17,15 +19,13 @@ public record CreateOrUpdateRecordForCurrentUser(Guid ExerciseId, int Result) : 
 internal sealed class CreateOrUpdateRecordHandler : ICommandHandler<CreateOrUpdateRecordForCurrentUser>
 {
 	private readonly ICurrentUserService _currentUserService;
-	private readonly IDateTimeService _dateTimeService;
 	private readonly IExercisesDbContext _dbContext;
 	private readonly IUsersModuleApi _usersModuleApi;
 
-	public CreateOrUpdateRecordHandler(IExercisesDbContext dbContext, ICurrentUserService currentUserService, IDateTimeService dateTimeService, IUsersModuleApi usersModuleApi)
+	public CreateOrUpdateRecordHandler(IExercisesDbContext dbContext, ICurrentUserService currentUserService, IUsersModuleApi usersModuleApi)
 	{
 		_dbContext = dbContext;
 		_currentUserService = currentUserService;
-		_dateTimeService = dateTimeService;
 		_usersModuleApi = usersModuleApi;
 	}
 
@@ -36,15 +36,19 @@ internal sealed class CreateOrUpdateRecordHandler : ICommandHandler<CreateOrUpda
 		var exercise = await _dbContext.Exercises.SingleOrDefaultAsync(x => x.Id == request.ExerciseId) ?? throw new ExerciseNotFoundException(request.ExerciseId);
 		var record = await _dbContext.Records.Where(x => x.UserId == user.Id)
 			.SingleOrDefaultAsync(x => x.ExerciseId == request.ExerciseId);
-		var currentDate = _dateTimeService.CurrentDate();
 
+		var pattern = @"\([^()]*\)";
+		var dateFormatted = Regex.Replace(request.RecordDate, pattern, string.Empty).Trim();
+		var format = "ddd MMM dd yyyy HH:mm:ss 'GMT'zzz";
+		var recordDate = DateTime.ParseExact(dateFormatted, format, CultureInfo.InvariantCulture).Date;
+		
 		if (record != null)
 		{
-			record.Update(request.Result, currentDate);
+			record.Update(request.Result, recordDate);
 		}
 		else
 		{
-			var newRecord = new Record(request.Id, userId, request.Result, currentDate, exercise);
+			var newRecord = new Record(request.Id, userId, request.Result, recordDate, exercise);
 
 			await _dbContext.Records.AddAsync(newRecord);
 		}
@@ -57,10 +61,8 @@ public class CreateOrUpdateRecordForCurrentUserValidator : AbstractValidator<Cre
 {
 	public CreateOrUpdateRecordForCurrentUserValidator()
 	{
-		RuleFor(x => x.ExerciseId)
-			.NotNull();
+		RuleFor(x => x.ExerciseId).NotEmpty();
 
-		RuleFor(x => x.Result)
-			.NotNull();
+		RuleFor(x => x.Result).NotEmpty();
 	}
 }

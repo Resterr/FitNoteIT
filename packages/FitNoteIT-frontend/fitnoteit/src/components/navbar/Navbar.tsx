@@ -95,7 +95,7 @@ export const Navbar: React.FC = () => {
           </div>
           <div className="left2">
             {currentUser ? (
-              <Link to="/">
+              <Link to="/history">
                 <p>Historia</p>
               </Link>
             ) : (
@@ -121,8 +121,8 @@ export const Navbar: React.FC = () => {
           </div>
           <div className="right">
             {currentUser ? (
-              <Link to="/">
-                <p>stwórz plan</p>
+              <Link to="/plans">
+                <p>twoje plany</p>
               </Link>
             ) : (
               <p></p>

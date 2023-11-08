@@ -11,6 +11,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Modules\Exercises\API\API.csproj"/>
         <ProjectReference Include="..\Modules\Users\API\API.csproj"/>
+        <ProjectReference Include="..\Modules\Workouts\API\API.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+.workout-page__workout-card {
+  width: 600px;
+  height: calc(100vh - 140px);
+  background: linear-gradient(160deg, #aa7f47 3.85%, #000 74.44%);
+  position: absolute;
+  left: calc(50vw - 300px);
+  border-left: solid 1px #aa7f47;
+  border-right: solid 1px #aa7f47;
+}
+@media only screen and (max-width: 700px) {
+  .workout-page__workout-card {
+    width: 100%;
+    left: 0;
+    border: none;
+  }
+}
+.workout-page__workout-card-title {
+  text-align: center;
+  padding-top: 30px;
+}
+.workout-page__workout-card-title h1 {
+  font-size: 42px;
+  color: #111;
+}
+.workout-page__workout-card ul {
+  backdrop-filter: blur(55px);
+  -webkit-backdrop-filter: blur(55px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  padding-bottom: 0px !important;
+}
+.workout-page__workout-card ul::-webkit-scrollbar {
+  width: 8px !important;
+}
+.workout-page__workout-card ul::-webkit-scrollbar-thumb {
+  background-color: #b17a41 !important;
+  border-radius: 9999px !important;
+}
+.workout-page__workout-card ul .MuiListItem-gutters {
+  border-bottom: #aa7f47 solid 1px;
+}
+.workout-page__workout-card-add {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+.workout-page__workout-card-add button {
+  margin-top: 20px;
+  position: relative;
+  width: 150px;
+  height: 30px;
+  font-size: 16px;
+  background-color: #b17a41;
+  color: black;
+  border: none;
+}
+@media only screen and (max-width: 500px) {
+  .workout-page__workout-card-add button {
+    bottom: 15px;
+  }
+}
+.workout-page__workout-card-add button:hover {
+  background: #f1ad64;
+}
+.workout-page__workout-card-add-inputs input {
+  width: 40%;
+  margin: 10px 10px 0;
+  background-color: #0b0b0b !important;
+  border: none;
+  color: #b17a41;
+  outline: none !important;
+  padding-left: 10px;
+  margin-bottom: 15px;
+}
+.workout-page__workout-card-add-inputs input:focus {
+  border: none !important;
+  outline: none !important;
+}
+.workout-page__workout-card-next-button button {
+  position: absolute;
+  bottom: 42px;
+  right: calc(50% - 75px);
+  width: 150px;
+  height: 30px;
+  font-size: 16px;
+  background-color: #b17a41;
+  color: black;
+  border: none;
+}
+@media only screen and (max-width: 500px) {
+  .workout-page__workout-card-next-button button {
+    bottom: 15px;
+  }
+}
+.workout-page__workout-card-next-button button:hover {
+  background: #f1ad64;
+}
+
+/*# sourceMappingURL=workoutCard.css.map */

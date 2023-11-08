@@ -1,0 +1,14 @@
+.history-page {
+  background-image: url("../../utils/backgroundgoldcubes.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: calc(100vh - 100px);
+}
+.history-page .footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+}
+
+/*# sourceMappingURL=historyPage.css.map */

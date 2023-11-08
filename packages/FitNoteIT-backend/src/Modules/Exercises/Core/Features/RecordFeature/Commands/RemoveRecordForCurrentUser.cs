@@ -41,7 +41,6 @@ public class RemoveRecordForCurrentUserValidator : AbstractValidator<RemoveRecor
 {
 	public RemoveRecordForCurrentUserValidator()
 	{
-		RuleFor(x => x.ExerciseId)
-			.NotNull();
+		RuleFor(x => x.ExerciseId).NotEmpty();
 	}
 }

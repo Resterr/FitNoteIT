@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+.workout-page {
+  background-image: url("../../utils/workoutbg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: calc(100vh - 100px);
+}
+.workout-page .footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+}
+
+/*# sourceMappingURL=workoutPage.css.map */

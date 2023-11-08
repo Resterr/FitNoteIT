@@ -69,6 +69,21 @@ internal sealed class ErrorHandlerMiddleware : IMiddleware
 			var json = JsonSerializer.Serialize(response);
 			await context.Response.WriteAsync(json);
 		}
+		catch (BadHttpRequestException exception)
+		{
+			_logger.LogError("{ErrorCode} : {Message}", 400, exception.Message);
+			context.Response.StatusCode = 400;
+			context.Response.Headers.Add("content-type", "application/json");
+
+			var response = new
+			{
+				Code = GetErrorCode(exception),
+				Detail = "Invalid JSON format"
+			};
+
+			var json = JsonSerializer.Serialize(response);
+			await context.Response.WriteAsync(json);
+		}
 		catch (Exception exception)
 		{
 			_logger.LogError("{ErrorCode} : {Message}", 500, exception.Message);

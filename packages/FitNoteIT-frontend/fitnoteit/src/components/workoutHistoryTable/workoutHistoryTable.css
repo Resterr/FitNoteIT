@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+.workout-history-page-content__panel-table {
+  margin: 20px 30px;
+  text-align: center;
+  width: 40%;
+  position: relative;
+}
+@media only screen and (max-width: 800px) {
+  .workout-history-page-content__panel-table {
+    width: 80%;
+  }
+}
+.workout-history-page-content__panel-table-name {
+  font-size: 48px;
+}
+@media only screen and (max-width: 400px) {
+  .workout-history-page-content__panel-table-name {
+    font-size: 32px;
+  }
+}
+.workout-history-page-content__panel-table-legend {
+  font-size: 32px;
+  border-top: 2px solid #b17a41;
+  border-bottom: 2px solid #b17a41;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 3px;
+  margin-bottom: 4px;
+}
+@media only screen and (max-width: 400px) {
+  .workout-history-page-content__panel-table-legend {
+    font-size: 24px;
+  }
+}
+.workout-history-page-content__panel-table-legend span {
+  margin: 0 10px;
+  width: 136px;
+}
+.workout-history-page-content__panel-table-list ul {
+  list-style: none;
+  padding: 20px;
+  font-size: 40px;
+  max-height: 320px;
+  overflow: auto;
+}
+@media only screen and (max-width: 400px) {
+  .workout-history-page-content__panel-table-list ul {
+    font-size: 32px;
+  }
+}
+.workout-history-page-content__panel-table-list ul::-webkit-scrollbar {
+  width: 8px !important;
+}
+.workout-history-page-content__panel-table-list ul::-webkit-scrollbar-thumb {
+  background-color: #b17a41 !important;
+  border-radius: 9999px !important;
+}
+.workout-history-page-content__panel-table-list ul .MuiListItem-gutters {
+  border-bottom: #975414 solid 1px;
+  cursor: pointer;
+}
+.workout-history-page-content__panel-table-list-element {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.workout-history-page-content__panel-table-list-element span {
+  width: 100px;
+}
+.workout-history-page-content__panel-table-button button {
+  margin-top: 40px;
+  right: calc(50% - 75px);
+  width: 150px;
+  height: 30px;
+  font-size: 16px;
+  background-color: #b17a41;
+  color: black;
+  border: none;
+}
+@media only screen and (max-width: 500px) {
+  .workout-history-page-content__panel-table-button button {
+    bottom: 15px;
+  }
+}
+.workout-history-page-content__panel-table-button button:hover {
+  background: #f1ad64;
+}
+
+/*# sourceMappingURL=workoutHistoryTable.css.map */

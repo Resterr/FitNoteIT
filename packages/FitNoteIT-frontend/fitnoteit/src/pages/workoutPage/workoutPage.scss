@@ -1,0 +1,15 @@
+@import "../../utils/variables.scss";
+
+.workout-page {
+  background-image: url("../../utils/workoutbg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: calc(100vh - 100px);
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+  }
+}
