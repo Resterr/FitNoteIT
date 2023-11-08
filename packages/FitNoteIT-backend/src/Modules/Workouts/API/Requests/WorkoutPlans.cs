@@ -60,7 +60,7 @@ internal static class WorkoutPlanRequests
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status404NotFound)
-			.WithMetadata(new SwaggerOperationAttribute("Delete record for current user"));
+			.WithMetadata(new SwaggerOperationAttribute("Delete workout plan for current user"));
 
 		return group;
 	}
