@@ -61,12 +61,8 @@ public class CreateOrUpdateRecordForCurrentUserValidator : AbstractValidator<Cre
 {
 	public CreateOrUpdateRecordForCurrentUserValidator()
 	{
-		RuleFor(x => x.ExerciseId)
-			.NotNull()
-			.NotEmpty();
+		RuleFor(x => x.ExerciseId).NotEmpty();
 
-		RuleFor(x => x.Result)
-			.NotNull()
-			.NotEmpty();
+		RuleFor(x => x.Result).NotEmpty();
 	}
 }

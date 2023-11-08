@@ -53,8 +53,8 @@ public class LoginUserValidator : AbstractValidator<LoginUser>
 	public LoginUserValidator()
 	{
 		RuleFor(x => x.UserName)
-			.NotNull();
+			.NotEmpty();
 		RuleFor(x => x.Password)
-			.NotNull();
+			.NotEmpty();
 	}
 }

@@ -53,10 +53,9 @@ public class RemoveRoleValidator : AbstractValidator<GrantRole>
 	public RemoveRoleValidator()
 	{
 		RuleFor(x => x.Id)
-			.NotNull()
 			.NotEmpty();
+		
 		RuleFor(x => x.RoleName)
-			.NotNull()
 			.NotEmpty();
 	}
 }

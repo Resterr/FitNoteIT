@@ -35,7 +35,6 @@ public class TokenRemoveValidator : AbstractValidator<TokenRemove>
 	public TokenRemoveValidator()
 	{
 		RuleFor(x => x.UserId)
-			.NotNull()
 			.NotEmpty();
 	}
 }

@@ -51,11 +51,9 @@ public class GrantRoleValidator : AbstractValidator<GrantRole>
 	public GrantRoleValidator()
 	{
 		RuleFor(x => x.Id)
-			.NotNull()
 			.NotEmpty();
-
+		
 		RuleFor(x => x.RoleName)
-			.NotNull()
 			.NotEmpty();
 	}
 }
