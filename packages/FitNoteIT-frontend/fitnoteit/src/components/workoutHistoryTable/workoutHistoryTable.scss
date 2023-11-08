@@ -1,0 +1,100 @@
+@import "../../utils/variables.scss";
+
+.workout-history-page-content__panel-table {
+  margin: 20px 30px;
+  text-align: center;
+  width: 40%;
+  position: relative;
+
+  @media only screen and (max-width: 800px) {
+    width: 80%;
+  }
+
+  &-name {
+    font-size: 48px;
+
+    @media only screen and (max-width: 400px) {
+      font-size: 32px;
+    }
+  }
+
+  &-legend {
+    font-size: 32px;
+    border-top: 2px solid $gold;
+    border-bottom: 2px solid $gold;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 3px;
+    margin-bottom: 4px;
+
+    @media only screen and (max-width: 400px) {
+      font-size: 24px;
+    }
+
+    span {
+      margin: 0 10px;
+      width: 136px;
+    }
+  }
+
+  &-list {
+    ul {
+      list-style: none;
+      padding: 20px;
+      font-size: 40px;
+      max-height: 320px;
+      overflow: auto;
+
+      @media only screen and (max-width: 400px) {
+        font-size: 32px;
+      }
+
+      &::-webkit-scrollbar {
+        width: 8px !important;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $gold !important;
+        border-radius: 9999px !important;
+      }
+
+      .MuiListItem-gutters {
+        border-bottom: #975414 solid 1px;
+        cursor: pointer;
+      }
+    }
+
+    &-element {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      span {
+        width: 100px;
+      }
+    }
+  }
+
+  &-button {
+    button {
+      margin-top: 40px;
+      right: calc(50% - 75px);
+      width: 150px;
+      height: 30px;
+      font-size: 16px;
+      background-color: #b17a41;
+      color: black;
+      border: none;
+
+      @media only screen and (max-width: 500px) {
+        bottom: 15px;
+      }
+
+      &:hover {
+        background: #f1ad64;
+      }
+    }
+  }
+}

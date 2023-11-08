@@ -27,6 +27,11 @@
 .add-plan-page-content__available-exercises-title h1 {
   font-size: 48px;
 }
+@media only screen and (max-width: 500px) {
+  .add-plan-page-content__available-exercises-title h1 {
+    padding: 0 20px;
+  }
+}
 .add-plan-page-content__available-exercises-category {
   font-size: 32px;
   padding: 15px;

@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+.workout-history-page-content {
+  display: flex;
+  flex-direction: row;
+}
+.workout-history-page-content__photo {
+  height: calc(100vh - 140px);
+  width: 35%;
+  object-fit: cover;
+}
+@media only screen and (max-width: 1200px) {
+  .workout-history-page-content__photo {
+    width: calc(100vw - 850px);
+  }
+}
+@media only screen and (max-width: 950px) {
+  .workout-history-page-content__photo {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=workoutHistory.css.map */
