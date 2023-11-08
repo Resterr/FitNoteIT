@@ -17,7 +17,7 @@ export type UsersContextType = {
 
 const UsersContext = createContext<UsersContextType | undefined>(undefined);
 
-function UsersProvider({ children }: { children: ReactNode }) {
+const UsersProvider = ({ children }: { children: ReactNode }) => {
   const [currentUserFromContext, setCurrentUserFromContext] = useState<
     string | undefined
   >();
@@ -38,6 +38,6 @@ function UsersProvider({ children }: { children: ReactNode }) {
       {children}
     </UsersContext.Provider>
   );
-}
+};
 
 export { UsersContext, UsersProvider };

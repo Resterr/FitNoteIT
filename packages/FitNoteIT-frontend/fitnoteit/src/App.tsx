@@ -126,6 +126,7 @@ function App() {
         <Routes>
           <Route element={<Navbar />}>
             <Route index element={<Home />} />
+            <Route path="*" element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="admin" element={<AdminPanel />} />
