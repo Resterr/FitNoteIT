@@ -72,8 +72,8 @@ export const Menu: React.FC<MenuProps> = ({ className }) => {
         </li>
         <li className={styles.navigation__item}>
           {currentUser ? (
-            <Link to="/addplan">
-              <p>stwórz plan</p>
+            <Link to="/plans">
+              <p>twoje plany</p>
             </Link>
           ) : (
             <p></p>

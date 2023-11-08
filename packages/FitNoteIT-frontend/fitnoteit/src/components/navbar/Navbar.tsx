@@ -121,8 +121,8 @@ export const Navbar: React.FC = () => {
           </div>
           <div className="right">
             {currentUser ? (
-              <Link to="/addplan">
-                <p>stwórz plan</p>
+              <Link to="/plans">
+                <p>twoje plany</p>
               </Link>
             ) : (
               <p></p>

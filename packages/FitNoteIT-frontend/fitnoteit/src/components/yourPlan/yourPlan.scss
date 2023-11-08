@@ -93,6 +93,12 @@
         font-size: 28px;
         position: relative;
 
+        &--center {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
         &-minus {
           position: absolute;
           right: 10px;
@@ -100,5 +106,40 @@
         }
       }
     }
+  }
+}
+
+.myModal {
+  label {
+    &:before {
+      borderbottomcolor: "#b17a41";
+    }
+    &:after {
+      borderbottomcolor: "#b17a41";
+    }
+    &:hover:before {
+      borderbottomcolor: "#b17a41";
+    }
+  }
+  .Mui-focused, .MuiOutlinedInput-notchedOutline {
+    color: $gold !important;
+    border-color:$gold !important;
+  }
+
+  input:focus {
+    border: $gold;
+  }
+
+  .MuiInputBase-input.MuiOutlinedInput-input {
+    color: $gold !important;
+  }
+
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    color: $gold !important;
+  }
+
+  .MuiButton-containedPrimary {
+    background-color: $gold !important;
+    color: black;
   }
 }

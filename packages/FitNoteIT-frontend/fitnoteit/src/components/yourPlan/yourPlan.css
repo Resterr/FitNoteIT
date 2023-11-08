@@ -87,10 +87,42 @@
   font-size: 28px;
   position: relative;
 }
+.add-plan-page-content__your-plan-list ul .add-plan-page-content__your-plan-list-element--center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .add-plan-page-content__your-plan-list ul .add-plan-page-content__your-plan-list-element-minus {
   position: absolute;
   right: 10px;
   cursor: pointer;
+}
+
+.myModal label:before {
+  borderbottomcolor: "#b17a41";
+}
+.myModal label:after {
+  borderbottomcolor: "#b17a41";
+}
+.myModal label:hover:before {
+  borderbottomcolor: "#b17a41";
+}
+.myModal .Mui-focused, .myModal .MuiOutlinedInput-notchedOutline {
+  color: #b17a41 !important;
+  border-color: #b17a41 !important;
+}
+.myModal input:focus {
+  border: #b17a41;
+}
+.myModal .MuiInputBase-input.MuiOutlinedInput-input {
+  color: #b17a41 !important;
+}
+.myModal .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  color: #b17a41 !important;
+}
+.myModal .MuiButton-containedPrimary {
+  background-color: #b17a41 !important;
+  color: black;
 }
 
 /*# sourceMappingURL=yourPlan.css.map */
