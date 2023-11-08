@@ -1,6 +1,6 @@
-﻿using FitNoteIT.Modules.Exercises.Shared.DTO;
-using FitNoteIT.Modules.Workouts.Core.Features.Commands;
+﻿using FitNoteIT.Modules.Workouts.Core.Features.Commands;
 using FitNoteIT.Modules.Workouts.Core.Features.Queries;
+using FitNoteIT.Modules.Workouts.Shared.DTO;
 using FitNoteIT.Shared.Dispatchers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -32,7 +32,7 @@ internal static class WorkoutPlanRequests
 				return Results.Ok(result);
 			})
 			.RequireAuthorization("user")
-			.Produces<List<RecordDto>>()
+			.Produces<List<WorkoutPlanDto>>()
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status404NotFound)
 			.WithMetadata(new SwaggerOperationAttribute("Get all workout plans for current user"));
