@@ -1,0 +1,113 @@
+@import "../../utils/variables.scss";
+
+.workout-page__workout-card {
+  width: 600px;
+  height: calc(100vh - 140px);
+  background: linear-gradient(160deg, #aa7f47 3.85%, #000 74.44%);
+  position: absolute;
+  left: calc(50vw - 300px);
+  border-left: solid 1px #aa7f47;
+  border-right: solid 1px #aa7f47;
+
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+    left: 0;
+    border: none;
+  }
+
+  &-title {
+    text-align: center;
+    padding-top: 30px;
+
+    h1 {
+      font-size: 42px;
+      color: #111;
+    }
+  }
+
+  ul {
+    backdrop-filter: blur(55px);
+    -webkit-backdrop-filter: blur(55px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding-bottom: 0px !important;
+
+    &::-webkit-scrollbar {
+      width: 8px !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $gold !important;
+      border-radius: 9999px !important;
+    }
+
+    .MuiListItem-gutters {
+      border-bottom: #aa7f47 solid 1px;
+    }
+  }
+
+  &-add {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+
+    button {
+      margin-top: 20px;
+      position: relative;
+      width: 150px;
+      height: 30px;
+      font-size: 16px;
+      background-color: #b17a41;
+      color: black;
+      border: none;
+
+      @media only screen and (max-width: 500px) {
+        bottom: 15px;
+      }
+
+      &:hover {
+        background: #f1ad64;
+      }
+    }
+
+    &-inputs {
+      input {
+        width: 40%;
+        margin: 10px 10px 0;
+        background-color: #0b0b0b !important;
+        border: none;
+        color: $gold;
+        outline: none !important;
+        padding-left: 10px;
+        margin-bottom: 15px;
+
+        &:focus {
+          border: none !important;
+          outline: none !important;
+        }
+      }
+    }
+  }
+
+  &-next-button {
+    button {
+      position: absolute;
+      bottom: 42px;
+      right: calc(50% - 75px);
+      width: 150px;
+      height: 30px;
+      font-size: 16px;
+      background-color: #b17a41;
+      color: black;
+      border: none;
+
+      @media only screen and (max-width: 500px) {
+        bottom: 15px;
+      }
+
+      &:hover {
+        background: #f1ad64;
+      }
+    }
+  }
+}
