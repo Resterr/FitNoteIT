@@ -37,6 +37,18 @@ internal static class WorkoutPlanRequests
 			.Produces(StatusCodes.Status404NotFound)
 			.WithMetadata(new SwaggerOperationAttribute("Get all workout plans for current user"));
 
+		group.MapGet("{id:guid}", async (IDispatcher dispatcher, [AsParameters] GetWorkoutPlanById request) =>
+			{
+				var result = await dispatcher.QueryAsync(request);
+
+				return Results.Ok(result);
+			})
+			.RequireAuthorization("user")
+			.Produces<WorkoutPlanDto>()
+			.Produces(StatusCodes.Status401Unauthorized)
+			.Produces(StatusCodes.Status404NotFound)
+			.WithMetadata(new SwaggerOperationAttribute("Get workout plan by id for current user"));
+		
 		group.MapPost("", async (IDispatcher dispatcher, [FromBody] CreateWorkoutPlan request) =>
 			{
 				await dispatcher.SendAsync(request);

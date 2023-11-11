@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FitNoteIT.Modules.Exercises.Shared;
+﻿using FitNoteIT.Modules.Exercises.Shared;
 using FitNoteIT.Modules.Users.Shared;
 using FitNoteIT.Modules.Workouts.Core.Abstractions;
 using FitNoteIT.Modules.Workouts.Core.Entities;

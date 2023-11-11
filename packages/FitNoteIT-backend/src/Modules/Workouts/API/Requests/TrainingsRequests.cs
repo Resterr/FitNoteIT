@@ -37,6 +37,18 @@ internal static class TrainingsRequests
 			.Produces(StatusCodes.Status404NotFound)
 			.WithMetadata(new SwaggerOperationAttribute("Training history for current user"));
 
+		group.MapGet("{id:guid}", async (IDispatcher dispatcher, [AsParameters] GetTrainingById request) =>
+			{
+				var result = await dispatcher.QueryAsync(request);
+
+				return Results.Ok(result);
+			})
+			.RequireAuthorization("user")
+			.Produces<TrainingDto>()
+			.Produces(StatusCodes.Status401Unauthorized)
+			.Produces(StatusCodes.Status404NotFound)
+			.WithMetadata(new SwaggerOperationAttribute("Training by id for current user"));
+		
 		group.MapPost("", async (IDispatcher dispatcher, [FromBody] CreateTraining request) =>
 			{
 				await dispatcher.SendAsync(request);
