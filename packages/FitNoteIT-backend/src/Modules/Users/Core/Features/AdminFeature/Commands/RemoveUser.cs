@@ -23,6 +23,10 @@ internal sealed class RemoveUserHandler : ICommandHandler<RemoveUser>
 
 	public async Task HandleAsync(RemoveUser request, CancellationToken cancellationToken)
 	{
+		var currentUserId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
+		var isCurrentUserExists = await _dbContext.Users.AnyAsync(x => x.Id == currentUserId);
+		if (!isCurrentUserExists) throw new UnauthorizedAccessException();
+		
 		var user = await _dbContext.Users.Include(x => x.Roles)
 				.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken) ??
 			throw new UserNotFoundException(request.Id);
