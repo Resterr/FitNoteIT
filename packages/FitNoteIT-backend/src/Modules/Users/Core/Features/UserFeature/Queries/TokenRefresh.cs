@@ -31,8 +31,7 @@ internal sealed class TokenRefreshHandler : IQueryHandler<TokenRefresh, TokensDt
 
 		var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
 
-		if (Guid.TryParse(principal.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
-			;
+		if (Guid.TryParse(principal.FindFirstValue(ClaimTypes.NameIdentifier), out var userId)) {}
 		else
 			throw new InvalidTokenException();
 

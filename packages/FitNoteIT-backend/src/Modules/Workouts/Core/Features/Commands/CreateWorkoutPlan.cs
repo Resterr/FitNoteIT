@@ -6,7 +6,6 @@ using FitNoteIT.Modules.Workouts.Core.Persistense.Clients;
 using FitNoteIT.Shared.Commands;
 using FitNoteIT.Shared.Services;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 
 namespace FitNoteIT.Modules.Workouts.Core.Features.Commands;
@@ -34,8 +33,9 @@ internal sealed class CreateWorkoutPlanHandler : ICommandHandler<CreateWorkoutPl
         var user = await _usersModule.GetUserAsync(userId);
         var id = Guid.NewGuid();
         var name = request.Name;
-        var isNameTaken =  _mongoClient.WorkoutPlans.AsQueryable()
-            .Where(x => x.UserId == userId).FirstOrDefault(x => x.Name == name);
+        var filter = Builders<WorkoutPlan>.Filter.Eq(x => x.Name, request.Name) & Builders<WorkoutPlan>.Filter.Eq(x => x.UserId, user.Id);
+        var isNameTaken =  await _mongoClient.WorkoutPlans.Find(filter)
+            .FirstOrDefaultAsync();
 
         if (isNameTaken != null) throw new WorkoutPlanNameIsTakenForUser(name);
         

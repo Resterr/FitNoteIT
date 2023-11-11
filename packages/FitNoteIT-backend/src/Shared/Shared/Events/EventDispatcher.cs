@@ -31,7 +31,7 @@ internal sealed class EventDispatcher : IEventDispatcher
 		var handlerType = typeof(IEventHandler<>).MakeGenericType(@event.GetType());
 		var handlers = scope.ServiceProvider.GetServices(handlerType);
 		var method = handlerType.GetMethod(nameof(IEventHandler<IEvent>.HandleAsync)) ?? throw new InvalidOperationException($"Event handler for '{@event.GetType().Name}' is invalid.");
-		var tasks = handlers.Select(x => (Task)method.Invoke(x, new object[] { @event, cancellationToken }));
+		var tasks = handlers.Select(x => (Task)method.Invoke(x, new object[] { @event, cancellationToken })!);
 		await Task.WhenAll(tasks);
 	}
 }

@@ -5,7 +5,6 @@ using FitNoteIT.Modules.Workouts.Core.Persistense.Clients;
 using FitNoteIT.Shared.Commands;
 using FitNoteIT.Shared.Services;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 
 namespace FitNoteIT.Modules.Workouts.Core.Features.Commands;
@@ -28,11 +27,12 @@ internal sealed class DeleteWorkoutPlanPlanHandler : ICommandHandler<RemoveWorko
     {
         var userId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
         var user = await _usersModule.GetUserAsync(userId);
-        var workoutPlan = _mongoClient.WorkoutPlans.AsQueryable().Where(x => x.UserId == user.Id).FirstOrDefault(x => x.Id == request.Id) ?? throw new WorkoutNotFoundForUser(request.Id);
-        var filter = Builders<WorkoutPlan>.Filter
+        var filter = Builders<WorkoutPlan>.Filter.Eq(x => x.Id, request.Id) & Builders<WorkoutPlan>.Filter.Eq(x => x.UserId, user.Id);
+        var workoutPlan = await _mongoClient.WorkoutPlans.Find(filter).FirstOrDefaultAsync() ?? throw new WorkoutNotFoundForUser(request.Id);
+        var deleteFilter = Builders<WorkoutPlan>.Filter
             .Eq(x => x.Id, workoutPlan.Id);
 
-        await _mongoClient.WorkoutPlans.DeleteOneAsync(filter);
+        await _mongoClient.WorkoutPlans.DeleteOneAsync(deleteFilter);
     }
     
     public class RemoveWorkoutPlanValidator : AbstractValidator<RemoveWorkoutPlan>
