@@ -1,7 +1,7 @@
 ﻿using FitNoteIT.Modules.Users.Shared;
+using FitNoteIT.Modules.Workouts.Core.Abstractions;
 using FitNoteIT.Modules.Workouts.Core.Entities;
 using FitNoteIT.Modules.Workouts.Core.Exceptions;
-using FitNoteIT.Modules.Workouts.Core.Persistense.Clients;
 using FitNoteIT.Shared.Commands;
 using FitNoteIT.Shared.Services;
 using FluentValidation;
@@ -12,11 +12,11 @@ public record RemoveWorkoutPlan(Guid Id) : ICommand;
 
 internal sealed class DeleteWorkoutPlanPlanHandler : ICommandHandler<RemoveWorkoutPlan>
 {
-    private readonly WorkoutsMongoClient _mongoClient;
+    private readonly IWorkoutsMongoClient _mongoClient;
     private readonly ICurrentUserService _currentUserService;
     private readonly IUsersModuleApi _usersModule;
 
-    public DeleteWorkoutPlanPlanHandler(WorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule)
+    public DeleteWorkoutPlanPlanHandler(IWorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule)
     {
         _mongoClient = mongoClient;
         _currentUserService = currentUserService;

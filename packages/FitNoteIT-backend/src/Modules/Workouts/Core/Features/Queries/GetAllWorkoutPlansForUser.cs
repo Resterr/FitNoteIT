@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using FitNoteIT.Modules.Exercises.Shared;
 using FitNoteIT.Modules.Users.Shared;
+using FitNoteIT.Modules.Workouts.Core.Abstractions;
 using FitNoteIT.Modules.Workouts.Core.Entities;
-using FitNoteIT.Modules.Workouts.Core.Persistense.Clients;
 using FitNoteIT.Modules.Workouts.Shared.DTO;
 using FitNoteIT.Shared.Queries;
 using FitNoteIT.Shared.Services;
@@ -14,13 +14,13 @@ public record GetAllWorkoutPlansForUser : IQuery<List<WorkoutPlanDto>>;
 
 internal sealed class GetAllWorkoutPlanForUserHandler : IQueryHandler<GetAllWorkoutPlansForUser, List<WorkoutPlanDto>>
 {
-	private readonly WorkoutsMongoClient _mongoClient;
+	private readonly IWorkoutsMongoClient _mongoClient;
 	private readonly ICurrentUserService _currentUserService;
 	private readonly IUsersModuleApi _usersModule;
 	private readonly IExercisesModuleApi _exercisesModule;
 	private readonly IMapper _mapper;
 
-	public GetAllWorkoutPlanForUserHandler(WorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule, IExercisesModuleApi exercisesModule, IMapper mapper)
+	public GetAllWorkoutPlanForUserHandler(IWorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule, IExercisesModuleApi exercisesModule, IMapper mapper)
 	{
 		_mongoClient = mongoClient;
 		_currentUserService = currentUserService;

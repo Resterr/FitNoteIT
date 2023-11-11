@@ -1,8 +1,8 @@
 ﻿using FitNoteIT.Modules.Exercises.Shared;
 using FitNoteIT.Modules.Users.Shared;
+using FitNoteIT.Modules.Workouts.Core.Abstractions;
 using FitNoteIT.Modules.Workouts.Core.Entities;
 using FitNoteIT.Modules.Workouts.Core.Exceptions;
-using FitNoteIT.Modules.Workouts.Core.Persistense.Clients;
 using FitNoteIT.Shared.Commands;
 using FitNoteIT.Shared.Services;
 using FluentValidation;
@@ -14,12 +14,12 @@ public record CreateWorkoutPlan(string Name, List<Guid> Exercises) : ICommand;
 
 internal sealed class CreateWorkoutPlanHandler : ICommandHandler<CreateWorkoutPlan>
 {
-    private readonly WorkoutsMongoClient _mongoClient;
+    private readonly IWorkoutsMongoClient _mongoClient;
     private readonly ICurrentUserService _currentUserService;
     private readonly IUsersModuleApi _usersModule;
     private readonly IExercisesModuleApi _exercisesModule;
 
-    public CreateWorkoutPlanHandler(WorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule, IExercisesModuleApi exercisesModule)
+    public CreateWorkoutPlanHandler(IWorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule, IExercisesModuleApi exercisesModule)
     {
         _mongoClient = mongoClient;
         _currentUserService = currentUserService;
