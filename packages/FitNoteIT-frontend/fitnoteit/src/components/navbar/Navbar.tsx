@@ -105,7 +105,7 @@ export const Navbar: React.FC = () => {
           <div className="center">
             {location.pathname === "/" ? (
               currentUser ? (
-                <Link to="/">
+                <Link to="/plans">
                   <button className="navbar__start-button">
                     Zacznij trening!
                   </button>
@@ -121,8 +121,8 @@ export const Navbar: React.FC = () => {
           </div>
           <div className="right">
             {currentUser ? (
-              <Link to="/plans">
-                <p>twoje plany</p>
+              <Link to="/addplan">
+                <p>Dodaj plan</p>
               </Link>
             ) : (
               <p></p>

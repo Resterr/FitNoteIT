@@ -134,7 +134,7 @@ function App() {
             <Route path="addplan" element={<AddPlanPage />} />
             <Route path="history" element={<HistoryPage />} />
             <Route path="workouthistory" element={<WorkoutHistory />} />
-            <Route path="workout" element={<WorkoutPage />} />
+            <Route path="workout/:id" element={<WorkoutPage />} />
             <Route path="plans" element={<PlansPage />} />
           </Route>
         </Routes>
