@@ -25,10 +25,10 @@ internal static class WorkoutPlanRequests
 
 	private static RouteGroupBuilder MapWorkoutPlansEndpoints(this RouteGroupBuilder group)
 	{
-		group.MapGet("", async (IDispatcher dispatcher, [AsParameters] GetAllWorkoutPlansForUser request) =>
+		group.MapGet("", async (IDispatcher dispatcher, [AsParameters] GetAllWorkoutPlans request) =>
 			{
 				var result = await dispatcher.QueryAsync(request);
-				
+
 				return Results.Ok(result);
 			})
 			.RequireAuthorization("user")

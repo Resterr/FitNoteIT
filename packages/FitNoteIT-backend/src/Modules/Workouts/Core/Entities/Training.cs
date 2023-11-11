@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace FitNoteIT.Modules.Workouts.Core.Entities;
 
-internal class WorkoutPlan
+internal class Training
 {
 	[BsonId]
 	[BsonRepresentation(BsonType.String)]
@@ -12,16 +12,14 @@ internal class WorkoutPlan
 	[BsonRepresentation(BsonType.String)]
 	public Guid UserId { get; private set; }
 
-	public string Name { get; private set; }
+	public DateOnly Date { get; private set; }
+	public List<TrainingDetail> TrainingDetails { get; private set; }
 
-	[BsonRepresentation(BsonType.String)]
-	public List<Guid> Exercises { get; private set; }
-
-	internal WorkoutPlan(Guid id, Guid userId, string name, List<Guid> exercises)
+	internal Training(Guid id, Guid userId, DateOnly date, List<TrainingDetail> trainingDetails)
 	{
 		Id = id;
 		UserId = userId;
-		Name = name;
-		Exercises = exercises;
+		Date = date;
+		TrainingDetails = trainingDetails;
 	}
 }

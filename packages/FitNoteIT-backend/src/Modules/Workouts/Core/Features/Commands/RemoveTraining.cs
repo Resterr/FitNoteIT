@@ -9,37 +9,37 @@ using MongoDB.Driver;
 
 namespace FitNoteIT.Modules.Workouts.Core.Features.Commands;
 
-public record RemoveWorkoutPlan(Guid Id) : ICommand;
+public record RemoveTraining(Guid Id) : ICommand;
 
-internal sealed class RemoveWorkoutPlanHandler : ICommandHandler<RemoveWorkoutPlan>
+internal sealed class RemoveTrainingHandler : ICommandHandler<RemoveTraining>
 {
 	private readonly ICurrentUserService _currentUserService;
 	private readonly IWorkoutsMongoClient _mongoClient;
 	private readonly IUsersModuleApi _usersModule;
 
-	public RemoveWorkoutPlanHandler(IWorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule)
+	public RemoveTrainingHandler(IWorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule)
 	{
 		_mongoClient = mongoClient;
 		_currentUserService = currentUserService;
 		_usersModule = usersModule;
 	}
 
-	public async Task HandleAsync(RemoveWorkoutPlan request, CancellationToken cancellationToken)
+	public async Task HandleAsync(RemoveTraining request, CancellationToken cancellationToken)
 	{
 		var userId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
 		var user = await _usersModule.GetUserAsync(userId);
-		var filter = Builders<WorkoutPlan>.Filter.Eq(x => x.Id, request.Id) & Builders<WorkoutPlan>.Filter.Eq(x => x.UserId, user.Id);
-		var workoutPlan = await _mongoClient.WorkoutPlans.Find(filter)
+		var filter = Builders<Training>.Filter.Eq(x => x.Id, request.Id) & Builders<Training>.Filter.Eq(x => x.UserId, user.Id);
+		var training = await _mongoClient.Trainings.Find(filter)
 				.FirstOrDefaultAsync() ??
-			throw new WorkoutNotFound(request.Id);
-		var deleteFilter = Builders<WorkoutPlan>.Filter.Eq(x => x.Id, workoutPlan.Id);
+			throw new TrainingNotFound(request.Id);
+		var deleteFilter = Builders<WorkoutPlan>.Filter.Eq(x => x.Id, training.Id);
 
 		await _mongoClient.WorkoutPlans.DeleteOneAsync(deleteFilter);
 	}
 
-	public class RemoveWorkoutPlanValidator : AbstractValidator<RemoveWorkoutPlan>
+	public class RemoveTrainingValidator : AbstractValidator<RemoveTraining>
 	{
-		public RemoveWorkoutPlanValidator()
+		public RemoveTrainingValidator()
 		{
 			RuleFor(x => x.Id)
 				.NotEmpty();

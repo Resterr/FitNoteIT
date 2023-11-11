@@ -10,5 +10,6 @@ internal class WorkoutsMappingProfile : Profile
 	{
 		CreateMap<WorkoutPlan, WorkoutPlanDto>()
 			.ForMember(dest => dest.Exercises, opt => opt.Ignore());
+		CreateMap<TrainingDetailAddDto, TrainingDetail>();
 	}
 }

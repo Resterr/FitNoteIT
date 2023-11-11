@@ -10,17 +10,17 @@ using MongoDB.Driver;
 
 namespace FitNoteIT.Modules.Workouts.Core.Features.Queries;
 
-public record GetAllWorkoutPlansForUser : IQuery<List<WorkoutPlanDto>>;
+public record GetAllWorkoutPlans : IQuery<List<WorkoutPlanDto>>;
 
-internal sealed class GetAllWorkoutPlanForUserHandler : IQueryHandler<GetAllWorkoutPlansForUser, List<WorkoutPlanDto>>
+internal sealed class GetAllWorkoutPlanHandler : IQueryHandler<GetAllWorkoutPlans, List<WorkoutPlanDto>>
 {
-	private readonly IWorkoutsMongoClient _mongoClient;
 	private readonly ICurrentUserService _currentUserService;
-	private readonly IUsersModuleApi _usersModule;
 	private readonly IExercisesModuleApi _exercisesModule;
 	private readonly IMapper _mapper;
+	private readonly IWorkoutsMongoClient _mongoClient;
+	private readonly IUsersModuleApi _usersModule;
 
-	public GetAllWorkoutPlanForUserHandler(IWorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule, IExercisesModuleApi exercisesModule, IMapper mapper)
+	public GetAllWorkoutPlanHandler(IWorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule, IExercisesModuleApi exercisesModule, IMapper mapper)
 	{
 		_mongoClient = mongoClient;
 		_currentUserService = currentUserService;
@@ -29,7 +29,7 @@ internal sealed class GetAllWorkoutPlanForUserHandler : IQueryHandler<GetAllWork
 		_mapper = mapper;
 	}
 
-	public async Task<List<WorkoutPlanDto>> HandleAsync(GetAllWorkoutPlansForUser request, CancellationToken cancellationToken)
+	public async Task<List<WorkoutPlanDto>> HandleAsync(GetAllWorkoutPlans request, CancellationToken cancellationToken)
 	{
 		var userId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
 		var user = await _usersModule.GetUserAsync(userId);
@@ -42,7 +42,7 @@ internal sealed class GetAllWorkoutPlanForUserHandler : IQueryHandler<GetAllWork
 		foreach (var workoutPlan in workoutPlans)
 		{
 			var exercises = await _exercisesModule.GetExercises(workoutPlan.Exercises);
-			var newWorkoutPlanDto = new WorkoutPlanDto()
+			var newWorkoutPlanDto = new WorkoutPlanDto
 			{
 				Id = workoutPlan.Id,
 				Name = workoutPlan.Name,
@@ -51,7 +51,7 @@ internal sealed class GetAllWorkoutPlanForUserHandler : IQueryHandler<GetAllWork
 
 			result.Add(newWorkoutPlanDto);
 		}
-		
+
 		return result;
 	}
 }
