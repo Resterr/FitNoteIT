@@ -3,6 +3,5 @@
 public class TrainingDetailAddDto
 {
 	public Guid ExerciseId { get; set; }
-	public int Number { get; set; }
-	public int Weight { get; set; }
+	public List<List<int>>? Series { get; set; }
 }

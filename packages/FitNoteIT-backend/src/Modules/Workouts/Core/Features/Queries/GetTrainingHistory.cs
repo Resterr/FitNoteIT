@@ -45,8 +45,7 @@ internal sealed class GetTrainingHistoryHandler : IQueryHandler<GetTrainingHisto
 				var newTrainingDetailDto = new TrainingDetailDto()
 				{
 					Exercise = await _exercisesModule.GetExercise(trainingDetail.ExerciseId),
-					Number = trainingDetail.Number,
-					Weight = trainingDetail.Weight
+					Series = trainingDetail.Series
 				};
 				
 				trainingDetails.Add(newTrainingDetailDto);

@@ -5,7 +5,6 @@ using FitNoteIT.Modules.Exercises.Shared;
 using FitNoteIT.Modules.Users.Shared;
 using FitNoteIT.Modules.Workouts.Core.Abstractions;
 using FitNoteIT.Modules.Workouts.Core.Entities;
-using FitNoteIT.Modules.Workouts.Core.Exceptions;
 using FitNoteIT.Modules.Workouts.Shared.DTO;
 using FitNoteIT.Shared.Commands;
 using FitNoteIT.Shared.Services;
@@ -19,17 +18,15 @@ internal sealed class CreateTrainingHandler : ICommandHandler<CreateTraining>
 {
 	private readonly ICurrentUserService _currentUserService;
 	private readonly IExercisesModuleApi _exercisesModule;
-	private readonly IMapper _mapper;
 	private readonly IWorkoutsMongoClient _mongoClient;
 	private readonly IUsersModuleApi _usersModule;
 
-	public CreateTrainingHandler(IWorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule, IExercisesModuleApi exercisesModule, IMapper mapper)
+	public CreateTrainingHandler(IWorkoutsMongoClient mongoClient, ICurrentUserService currentUserService, IUsersModuleApi usersModule, IExercisesModuleApi exercisesModule)
 	{
 		_mongoClient = mongoClient;
 		_currentUserService = currentUserService;
 		_usersModule = usersModule;
 		_exercisesModule = exercisesModule;
-		_mapper = mapper;
 	}
 
 	public async Task HandleAsync(CreateTraining request, CancellationToken cancellationToken)
@@ -49,8 +46,24 @@ internal sealed class CreateTrainingHandler : ICommandHandler<CreateTraining>
 		var format = "ddd MMM dd yyyy HH:mm:ss 'GMT'zzz";
 		var trainingDate = DateOnly.FromDateTime(DateTime.ParseExact(dateFormatted, format, CultureInfo.InvariantCulture));
 
-		var trainingDetails = _mapper.Map<List<TrainingDetail>>(request.Details) ?? throw new InvalidTrainingDetailData();
-		var training = new Training(id, user.Id, trainingDate, trainingDetails);
+		var trainingsDetails = new List<TrainingDetail>();
+		foreach (var detail in request.Details)
+		{
+			var series = new List<SeriesDto>();
+			if (detail.Series != null)
+			{
+				for (var i = 0; i < detail.Series.Count(); i++)
+				{
+					var newSerie = new SeriesDto() { Repeats = detail.Series[i][0], Weight = detail.Series[i][1] };
+					series.Add(newSerie);
+				}
+
+				var newTrainingDetail = new TrainingDetail(detail.ExerciseId, series);
+				trainingsDetails.Add(newTrainingDetail);
+			}
+		}
+		
+		var training = new Training(id, user.Id, trainingDate, trainingsDetails);
 
 		await _mongoClient.Trainings.InsertOneAsync(training);
 	}
