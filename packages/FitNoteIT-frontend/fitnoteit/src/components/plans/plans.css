@@ -41,6 +41,12 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   padding-bottom: 0px !important;
 }
+.plans-page__plans ul li {
+  cursor: pointer;
+}
+.plans-page__plans ul li:hover {
+  color: #fcdbc6;
+}
 .plans-page__plans ul::-webkit-scrollbar {
   width: 8px !important;
 }
