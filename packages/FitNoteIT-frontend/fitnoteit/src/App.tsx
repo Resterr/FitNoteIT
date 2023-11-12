@@ -133,8 +133,8 @@ function App() {
             <Route path="records" element={<Records />} />
             <Route path="addplan" element={<AddPlanPage />} />
             <Route path="history" element={<HistoryPage />} />
-            <Route path="workouthistory" element={<WorkoutHistory />} />
-            <Route path="workout" element={<WorkoutPage />} />
+            <Route path="workouthistory/:id" element={<WorkoutHistory />} />
+            <Route path="workout/:id" element={<WorkoutPage />} />
             <Route path="plans" element={<PlansPage />} />
           </Route>
         </Routes>

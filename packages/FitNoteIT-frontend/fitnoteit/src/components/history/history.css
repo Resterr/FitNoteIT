@@ -41,6 +41,9 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   padding-bottom: 0px !important;
 }
+.history-page__history ul li:hover {
+  color: #fcdbc6;
+}
 .history-page__history ul::-webkit-scrollbar {
   width: 8px !important;
 }

@@ -25,7 +25,6 @@ export const Plans: React.FC = () => {
     axiosInstance
       .get<Plan[]>("/api/workouts/plans", config2)
       .then((response: AxiosResponse<Plan[]>) => {
-        console.log(response);
         if (response.data.length !== 0) {
           setData(response.data);
         }
@@ -56,14 +55,16 @@ export const Plans: React.FC = () => {
         subheader={<li />}
       >
         {data.map((item) => (
-          <ListItem key={data.indexOf(item)}>
-            <ListItemText primary={item.name} />
-            <ListItemAvatar>
-              <Avatar sx={{ background: "#dbddd2" }}>
-                <FitnessCenterIcon sx={{ color: "#000" }} />
-              </Avatar>
-            </ListItemAvatar>
-          </ListItem>
+          <Link to={`/workout/${item.id}`} key={data.indexOf(item)}>
+            <ListItem>
+              <ListItemText primary={item.name} />
+              <ListItemAvatar>
+                <Avatar sx={{ background: "#dbddd2" }}>
+                  <FitnessCenterIcon sx={{ color: "#000" }} />
+                </Avatar>
+              </ListItemAvatar>
+            </ListItem>
+          </Link>
         ))}
       </List>
       <div className="plans-page__plans-add-plan-button">

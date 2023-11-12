@@ -4,14 +4,24 @@ import CloseIcon from "@mui/icons-material/Close";
 
 interface WorkoutHistoryTableProps {
   textButton: string;
+  name: string;
+  array: { repeats: number; weight: number }[];
+  myFunction: () => void;
+  currentPage: number;
+  maxPage: number;
 }
 export const WorkoutHistoryTable: React.FC<WorkoutHistoryTableProps> = ({
   textButton,
+  name,
+  array,
+  myFunction,
+  currentPage,
+  maxPage,
 }) => {
   return (
     <div className="workout-history-page-content__panel-table">
       <div className="workout-history-page-content__panel-table-name">
-        PRZYSIAD
+        {name}
       </div>
       <div className="workout-history-page-content__panel-table-legend">
         <span>POWTÓRZENIA</span>
@@ -20,38 +30,26 @@ export const WorkoutHistoryTable: React.FC<WorkoutHistoryTableProps> = ({
       </div>
       <div className="workout-history-page-content__panel-table-list">
         <ul>
-          <li className="workout-history-page-content__panel-table-list-element">
-            <span>10</span>
-            <span>20</span>
-          </li>{" "}
-          <li className="workout-history-page-content__panel-table-list-element">
-            <span>10</span>
-            <span>20</span>
-          </li>{" "}
-          <li className="workout-history-page-content__panel-table-list-element">
-            <span>10</span>
-            <span>20</span>
-          </li>{" "}
-          <li className="workout-history-page-content__panel-table-list-element">
-            <span>10</span>
-            <span>20</span>
-          </li>{" "}
-          <li className="workout-history-page-content__panel-table-list-element">
-            <span>10</span>
-            <span>20</span>
-          </li>{" "}
-          <li className="workout-history-page-content__panel-table-list-element">
-            <span>10</span>
-            <span>20</span>
-          </li>{" "}
-          <li className="workout-history-page-content__panel-table-list-element">
-            <span>10</span>
-            <span>20</span>
-          </li>
+          {array.map((secondArray) => (
+            <li
+              className="workout-history-page-content__panel-table-list-element"
+              key={array.indexOf(secondArray)}
+            >
+              {secondArray.repeats && <span>{secondArray.repeats}</span>}
+              {secondArray.weight && <span>{secondArray.weight}</span>}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="workout-history-page-content__panel-table-button">
-        <button type="button">{textButton}</button>
+        {(currentPage == 0 && textButton == "Poprzednia strona") ||
+        (currentPage + 2 == maxPage && textButton == "Następna strona") ? (
+          <></>
+        ) : (
+          <button onClick={myFunction} type="button">
+            {textButton}
+          </button>
+        )}
       </div>
     </div>
   );
