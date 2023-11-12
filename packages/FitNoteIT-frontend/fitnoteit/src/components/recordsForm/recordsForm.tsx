@@ -170,7 +170,11 @@ export const RecordsForm: React.FC = () => {
     let dataToSave = {
       exerciseId: selectedValueId,
       result: startWeight,
-      recordDate: startDate.toString(),
+      recordDate: startDate.toLocaleDateString("pl-PL", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }),
     };
 
     try {

@@ -55,8 +55,8 @@ export const Plans: React.FC = () => {
         subheader={<li />}
       >
         {data.map((item) => (
-          <Link to={`/workout/${item.id}`}>
-            <ListItem key={data.indexOf(item)}>
+          <Link to={`/workout/${item.id}`} key={data.indexOf(item)}>
+            <ListItem>
               <ListItemText primary={item.name} />
               <ListItemAvatar>
                 <Avatar sx={{ background: "#dbddd2" }}>
