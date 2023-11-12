@@ -7,6 +7,7 @@ import { Avatar, ListItemAvatar, ListItemIcon } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axiosInstance from "../../utils/axiosInstance";
 import { AxiosResponse } from "axios/index";
+import { useNavigate } from "react-router-dom";
 type Plan = {
   id: string;
   name: string;
@@ -20,7 +21,7 @@ type Exercise = {
 
 type Traning = {
   date: Date;
-  trainingDetails: Exercise[];
+  details: Exercise[];
 };
 
 type WorkoutCardProps = {
@@ -32,17 +33,15 @@ export const WorkoutCard: React.FC<WorkoutCardProps> = ({ id }) => {
   const [plan, setPlan] = useState<Plan>();
   const [traning, setTraning] = useState<Traning>({
     date: new Date(),
-    trainingDetails: [],
+    details: [],
   });
   const [index, setIndex] = useState<number>(0);
   const [exercisesName, setExercisesName] = useState<string>("");
   const [data, setData] = useState<ArrayOfNumbersArrays>([]);
   const [inputValue1, setInputValue1] = useState("");
   const [inputValue2, setInputValue2] = useState("");
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(plan);
-  }, [plan]);
   useEffect(() => {
     let token: string | null = localStorage.getItem("accessToken");
     let config2 = {
@@ -78,15 +77,47 @@ export const WorkoutCard: React.FC<WorkoutCardProps> = ({ id }) => {
   const handleNextExercise = () => {
     let tmpPartOfTraning = traning;
     let tmpExercise = { exercise: plan?.exercises[index], series: data };
-    tmpPartOfTraning.trainingDetails.push(tmpExercise);
+    tmpPartOfTraning.details.push(tmpExercise);
     setTraning(tmpPartOfTraning);
     if (plan && plan.exercises && index + 1 < plan.exercises.length) {
       setExercisesName(plan.exercises[index + 1].name);
       setIndex(index + 1);
       setData([]);
     } else {
-      console.log(traning);
+      let token: string | null = localStorage.getItem("accessToken");
+      let config2 = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      let data = traning.details.map((item) => ({
+        exerciseId: item.exercise.id,
+        series: item.series,
+      }));
+
+      let sendData = {
+        date: traning.date.toLocaleDateString("pl-PL", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }),
+        details: data,
+      };
+
+      console.log("send");
+      console.log(sendData);
+      console.log("send");
+
+      axiosInstance
+        .post("/api/trainings/", sendData, config2)
+        .then((response: AxiosResponse<Plan[]>) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
       alert("Skończyłeś trening");
+      navigate("/");
     }
   };
 
