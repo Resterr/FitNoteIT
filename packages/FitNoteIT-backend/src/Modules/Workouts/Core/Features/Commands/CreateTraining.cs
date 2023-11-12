@@ -1,12 +1,11 @@
 ﻿using System.Globalization;
-using System.Text.RegularExpressions;
-using AutoMapper;
 using FitNoteIT.Modules.Exercises.Shared;
 using FitNoteIT.Modules.Users.Shared;
 using FitNoteIT.Modules.Workouts.Core.Abstractions;
 using FitNoteIT.Modules.Workouts.Core.Entities;
 using FitNoteIT.Modules.Workouts.Shared.DTO;
 using FitNoteIT.Shared.Commands;
+using FitNoteIT.Shared.Exceptions;
 using FitNoteIT.Shared.Services;
 using FluentValidation;
 
@@ -39,13 +38,14 @@ internal sealed class CreateTrainingHandler : ICommandHandler<CreateTraining>
 			.ToList();
 		
 		await _exercisesModule.GetExercises(exerciseIds);
-
-		var pattern = @"\([^()]*\)";
-		var dateFormatted = Regex.Replace(request.Date, pattern, string.Empty)
-			.Trim();
-		var format = "ddd MMM dd yyyy HH:mm:ss 'GMT'zzz";
-		var trainingDate = DateOnly.FromDateTime(DateTime.ParseExact(dateFormatted, format, CultureInfo.InvariantCulture));
-
+		
+		var format = "dd.MM.yyyy";
+		
+		if(!DateTime.TryParseExact(request.Date, format,  null, DateTimeStyles.None, out var trainingDate))
+		{
+			throw new InvalidDateFormat(format);
+		}
+		
 		var trainingsDetails = new List<TrainingDetail>();
 		foreach (var detail in request.Details)
 		{
@@ -63,7 +63,7 @@ internal sealed class CreateTrainingHandler : ICommandHandler<CreateTraining>
 			}
 		}
 		
-		var training = new Training(id, user.Id, trainingDate, trainingsDetails);
+		var training = new Training(id, user.Id, DateOnly.FromDateTime(trainingDate), trainingsDetails);
 
 		await _mongoClient.Trainings.InsertOneAsync(training);
 	}

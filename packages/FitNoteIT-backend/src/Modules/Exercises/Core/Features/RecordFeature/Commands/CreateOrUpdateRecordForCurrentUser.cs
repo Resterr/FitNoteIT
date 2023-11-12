@@ -5,17 +5,15 @@ using FitNoteIT.Modules.Exercises.Core.Entities;
 using FitNoteIT.Modules.Exercises.Core.Exceptions;
 using FitNoteIT.Modules.Users.Shared;
 using FitNoteIT.Shared.Commands;
+using FitNoteIT.Shared.Exceptions;
 using FitNoteIT.Shared.Services;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitNoteIT.Modules.Exercises.Core.Features.RecordFeature.Commands;
 
-public record CreateOrUpdateRecordForCurrentUser(Guid ExerciseId, string RecordDate, int Result) : ICommand
-{
-	public Guid Id { get; init; } = Guid.NewGuid();
-}
-
+public record CreateOrUpdateRecordForCurrentUser(Guid ExerciseId, string RecordDate, int Result) : ICommand;
+	
 internal sealed class CreateOrUpdateRecordHandler : ICommandHandler<CreateOrUpdateRecordForCurrentUser>
 {
 	private readonly ICurrentUserService _currentUserService;
@@ -36,19 +34,22 @@ internal sealed class CreateOrUpdateRecordHandler : ICommandHandler<CreateOrUpda
 		var exercise = await _dbContext.Exercises.SingleOrDefaultAsync(x => x.Id == request.ExerciseId) ?? throw new ExerciseNotFoundException(request.ExerciseId);
 		var record = await _dbContext.Records.Where(x => x.UserId == user.Id)
 			.SingleOrDefaultAsync(x => x.ExerciseId == request.ExerciseId);
-
-		var pattern = @"\([^()]*\)";
-		var dateFormatted = Regex.Replace(request.RecordDate, pattern, string.Empty).Trim();
-		var format = "ddd MMM dd yyyy HH:mm:ss 'GMT'zzz";
-		var recordDate = DateTime.ParseExact(dateFormatted, format, CultureInfo.InvariantCulture).Date;
+		var id = Guid.NewGuid();
+		
+		var format = "dd.MM.yyyy";
+		
+		if(!DateTime.TryParseExact(request.RecordDate, format,  null, DateTimeStyles.None, out var recordDate))
+		{
+			throw new InvalidDateFormat(format);
+		}
 		
 		if (record != null)
 		{
-			record.Update(request.Result, recordDate);
+			record.Update(request.Result, recordDate.Date);
 		}
 		else
 		{
-			var newRecord = new Record(request.Id, userId, request.Result, recordDate, exercise);
+			var newRecord = new Record(id, userId, request.Result, recordDate, exercise);
 
 			await _dbContext.Records.AddAsync(newRecord);
 		}
