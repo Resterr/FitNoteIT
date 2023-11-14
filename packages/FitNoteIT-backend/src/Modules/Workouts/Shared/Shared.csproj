@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>FitNoteIT.Modules.Workouts.Shared</RootNamespace>
+        <AssemblyName>FitNoteIT.Modules.Workouts.Shared</AssemblyName>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\Shared\Shared.csproj"/>
+        <ProjectReference Include="..\..\Exercises\Shared\Shared.csproj"/>
+        <ProjectReference Include="..\..\Users\Shared\Shared.csproj"/>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+.workout-history-page-content__panel {
+  width: 65%;
+  background: linear-gradient(52deg, #2b2117 2.13%, #1e1d1d 96.15%);
+  border-top: 2px solid #b17a41;
+  border-left: 2px solid #b17a41;
+  color: #b17a41;
+  height: calc(100vh - 140px);
+  min-height: fit-content;
+  overflow: auto;
+}
+.workout-history-page-content__panel::-webkit-scrollbar {
+  width: 8px !important;
+}
+.workout-history-page-content__panel::-webkit-scrollbar-thumb {
+  background-color: #b17a41 !important;
+  border-radius: 9999px !important;
+}
+.workout-history-page-content__panel .MuiListItem-gutters {
+  border-bottom: #975414 solid 1px;
+  cursor: pointer;
+}
+@media only screen and (max-width: 1200px) {
+  .workout-history-page-content__panel {
+    width: 850px;
+  }
+}
+@media only screen and (max-width: 950px) {
+  .workout-history-page-content__panel {
+    width: 100vw;
+    border-left: none;
+  }
+}
+.workout-history-page-content__panel-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid #b17a41;
+  font-size: 48px;
+  text-align: center;
+  height: 120px;
+  width: 100%;
+}
+.workout-history-page-content__panel-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+@media only screen and (max-width: 800px) {
+  .workout-history-page-content__panel-body {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/*# sourceMappingURL=workoutHistoryPanel.css.map */

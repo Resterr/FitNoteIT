@@ -131,7 +131,7 @@ export default function CustomPaginationActionsTable() {
   const [data, setData] = useState<User[]>([]);
   const [allRoles] = useState<string[]>(["Admin", "User"]);
   const [userRoles, setUserRoles] = useState<RoleType | any[]>([]);
-
+  const currentUser = localStorage.getItem("currentUser");
   const token: string | null = localStorage.getItem("accessToken");
   const config2: { headers: { Authorization: string } } = {
     headers: { Authorization: `Bearer ${token}` },
@@ -191,10 +191,28 @@ export default function CustomPaginationActionsTable() {
         };
 
         await axiosInstance
-          .patch("/api/admin/role/remove", data, config2)
+          .get(`/api/users/current`, config2)
           .then((response: AxiosResponse<any, any>): void => {
             if (response.status == 200) {
-              alert("Usunieto role");
+              if (
+                response.data.roles.some(
+                  (role: any) =>
+                    role.name === "Admin" || role.name === "SuperAdmin",
+                )
+              ) {
+                axiosInstance
+                  .patch("/api/admin/role/remove", data, config2)
+                  .then((response: AxiosResponse<any, any>): void => {
+                    if (response.status == 200) {
+                      alert("Usunieto role");
+                    } else {
+                      alert("Blad usuwania roli");
+                    }
+                  })
+                  .catch((error) => console.log(error));
+              } else {
+                alert("Nie jestes adminem");
+              }
             } else {
               alert("Blad usuwania roli");
             }

@@ -63,8 +63,17 @@ export const Menu: React.FC<MenuProps> = ({ className }) => {
         </li>
         <li className={styles.navigation__item}>
           {currentUser ? (
-            <Link to="/">
+            <Link to="/history">
               <p>Historia</p>
+            </Link>
+          ) : (
+            <p></p>
+          )}
+        </li>{" "}
+        <li className={styles.navigation__item}>
+          {currentUser ? (
+            <Link to="/plans">
+              <p>Zacznij trening</p>
             </Link>
           ) : (
             <p></p>
@@ -72,8 +81,8 @@ export const Menu: React.FC<MenuProps> = ({ className }) => {
         </li>
         <li className={styles.navigation__item}>
           {currentUser ? (
-            <Link to="/">
-              <p>stwórz plan</p>
+            <Link to="/addplan">
+              <p>Dodaj plany</p>
             </Link>
           ) : (
             <p></p>

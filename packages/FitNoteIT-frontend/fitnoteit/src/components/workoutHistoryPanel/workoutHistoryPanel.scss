@@ -1,0 +1,58 @@
+@import "../../utils/variables.scss";
+
+.workout-history-page-content__panel {
+  width: 65%;
+  background: linear-gradient(52deg, #2b2117 2.13%, #1e1d1d 96.15%);
+  border-top: 2px solid $gold;
+  border-left: 2px solid $gold;
+  color: $gold;
+  height: calc(100vh - 140px);
+  min-height: fit-content;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $gold !important;
+    border-radius: 9999px !important;
+  }
+
+  .MuiListItem-gutters {
+    border-bottom: #975414 solid 1px;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    width: 850px;
+  }
+
+  @media only screen and (max-width: 950px) {
+    width: 100vw;
+    border-left: none;
+  }
+
+  &-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid $gold;
+    font-size: 48px;
+    text-align: center;
+    height: 120px;
+    width: 100%;
+  }
+
+  &-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+    @media only screen and (max-width: 800px) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}

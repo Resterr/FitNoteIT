@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+.add-plan-page-content {
+  display: flex;
+  flex-direction: row;
+}
+@media only screen and (max-width: 800px) {
+  .add-plan-page-content {
+    flex-direction: column;
+  }
+}
+.add-plan-page-content img {
+  max-height: calc(100vh - 140px);
+  min-height: 800px;
+  width: calc(100vw - 1200px);
+}
+@media only screen and (max-width: 1500px) {
+  .add-plan-page-content img {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=addPlanPage.css.map */

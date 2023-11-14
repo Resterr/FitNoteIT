@@ -1,0 +1,22 @@
+@import "../../utils/variables.scss";
+
+.workout-history-page {
+  &-content {
+    display: flex;
+    flex-direction: row;
+
+    &__photo {
+      height: calc(100vh - 140px);
+      width: 35%;
+      object-fit: cover;
+
+      @media only screen and (max-width: 1200px) {
+        width: calc(100vw - 850px);
+      }
+
+      @media only screen and (max-width: 950px) {
+        display: none;
+      }
+    }
+  }
+}
