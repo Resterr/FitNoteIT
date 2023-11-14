@@ -20,6 +20,10 @@ internal sealed class QueryDispatcher : IQueryDispatcher
 		if (method is null) throw new InvalidOperationException($"Query handler for '{typeof(TResult).Name}' is invalid.");
 
 		// ReSharper disable once PossibleNullReferenceException
-		return await (Task<TResult>)method.Invoke(handler, new object[] { query, cancellationToken });
+		#pragma warning disable CS8602 // Dereference of a possibly null reference.
+		
+		return await (Task<TResult>)method.Invoke(handler, new object[] { query, cancellationToken })!;
+		
+		#pragma warning restore CS8602 // Dereference of a possibly null reference.
 	}
 }

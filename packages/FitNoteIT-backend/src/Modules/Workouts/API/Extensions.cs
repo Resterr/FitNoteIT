@@ -17,7 +17,8 @@ public static class Extensions
     public static WebApplication RegisterWorkoutsModuleRequests(this WebApplication app)
     {
         app.RegisterWorkoutPlansRequests();
-
+        app.RegisterTrainingsRequests();
+        
         return app;
     }
 }

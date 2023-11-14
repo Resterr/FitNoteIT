@@ -11,33 +11,45 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace FitNoteIT.Modules.Workouts.API.Requests;
 
-internal static class WorkoutPlanRequests
+internal static class TrainingsRequests
 {
-	public static WebApplication RegisterWorkoutPlansRequests(this WebApplication app)
+	public static WebApplication RegisterTrainingsRequests(this WebApplication app)
 	{
-		app.MapGroup("api/workouts/plans/")
-			.MapWorkoutPlansEndpoints()
-			.WithTags("Workout plans")
+		app.MapGroup("api/trainings/")
+			.MapTrainingsEndpoints()
+			.WithTags("Trainings")
 			.AddFluentValidationAutoValidation();
 
 		return app;
 	}
 
-	private static RouteGroupBuilder MapWorkoutPlansEndpoints(this RouteGroupBuilder group)
+	private static RouteGroupBuilder MapTrainingsEndpoints(this RouteGroupBuilder group)
 	{
-		group.MapGet("", async (IDispatcher dispatcher, [AsParameters] GetAllWorkoutPlansForUser request) =>
+		group.MapGet("history", async (IDispatcher dispatcher, [AsParameters] GetTrainingHistory request) =>
 			{
 				var result = await dispatcher.QueryAsync(request);
-				
+
 				return Results.Ok(result);
 			})
 			.RequireAuthorization("user")
-			.Produces<List<WorkoutPlanDto>>()
+			.Produces<List<TrainingDto>>()
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status404NotFound)
-			.WithMetadata(new SwaggerOperationAttribute("Get all workout plans for current user"));
+			.WithMetadata(new SwaggerOperationAttribute("Training history for current user"));
 
-		group.MapPost("", async (IDispatcher dispatcher, [FromBody] CreateWorkoutPlan request) =>
+		group.MapGet("{id:guid}", async (IDispatcher dispatcher, [AsParameters] GetTrainingById request) =>
+			{
+				var result = await dispatcher.QueryAsync(request);
+
+				return Results.Ok(result);
+			})
+			.RequireAuthorization("user")
+			.Produces<TrainingDto>()
+			.Produces(StatusCodes.Status401Unauthorized)
+			.Produces(StatusCodes.Status404NotFound)
+			.WithMetadata(new SwaggerOperationAttribute("Training by id for current user"));
+		
+		group.MapPost("", async (IDispatcher dispatcher, [FromBody] CreateTraining request) =>
 			{
 				await dispatcher.SendAsync(request);
 				return Results.Ok();
@@ -47,11 +59,11 @@ internal static class WorkoutPlanRequests
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status404NotFound)
-			.WithMetadata(new SwaggerOperationAttribute("Create workout plan for current user"));
+			.WithMetadata(new SwaggerOperationAttribute("Create training for current user"));
 
 		group.MapDelete("{id:guid}", async (IDispatcher dispatcher, Guid id) =>
 			{
-				var request = new RemoveWorkoutPlan(id);
+				var request = new RemoveTraining(id);
 				await dispatcher.SendAsync(request);
 				return Results.NoContent();
 			})
@@ -60,7 +72,7 @@ internal static class WorkoutPlanRequests
 			.Produces(StatusCodes.Status400BadRequest)
 			.Produces(StatusCodes.Status401Unauthorized)
 			.Produces(StatusCodes.Status404NotFound)
-			.WithMetadata(new SwaggerOperationAttribute("Delete workout plan for current user"));
+			.WithMetadata(new SwaggerOperationAttribute("Delete training for current user"));
 
 		return group;
 	}

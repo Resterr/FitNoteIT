@@ -3,9 +3,9 @@ using FitNoteIT.Shared.Exceptions;
 
 namespace FitNoteIT.Modules.Workouts.Core.Exceptions;
 
-public class WorkoutNotFoundForUser : FitNoteITException
+public class WorkoutNotFound : FitNoteITException
 {
 	public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 
-	public WorkoutNotFoundForUser(Guid id) : base($"Workout plan id: {id} not found") { }
+	public WorkoutNotFound(Guid id) : base($"Workout plan id: {id} not found") { }
 }
